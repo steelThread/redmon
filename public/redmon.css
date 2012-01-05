@@ -1,0 +1,6 @@
+body, html{ height:100%; padding:0px;}
+body{ background:#3b3e45; color:#333; margin:0; padding:0; overflow-y:scroll; font: 12px/20px "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+#viewport{ float:left; margin-left:150px; margin-top:70px; border-radius:3px; min-width:790px; }
+#viewport{ background:#24272c; box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.4); }
+#container{ margin:6px; background:#fff; border-radius:2px; }

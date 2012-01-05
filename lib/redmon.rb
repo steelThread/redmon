@@ -39,10 +39,10 @@ module Redmon
         end
       end
 
-      redis = connect_redis(opts[:redis_url])
-      EM::PeriodicTimer.new(opts[:print_info]) do
-        print_info(redis)
-      end
+      # redis = connect_redis(opts[:redis_url])
+      # EM::PeriodicTimer.new(opts[:print_info]) do
+      #   print_info(redis)
+      # end
     end
   end
 
