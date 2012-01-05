@@ -1,14 +1,14 @@
-                                     _
-                                    | |
-                      ____ _____  __| |____   ___  ____
-                     / ___) ___ |/ _  |    \ / _ \|  _ \
-                    | |   | ____( (_| | | | | |_| | | | |
-                    |_|   |_____)\____|_|_|_|\___/|_| |_|
+                                                 _
+                                                | |
+                                  ____ _____  __| |____   ___  ____
+                                 / ___) ___ |/ _  |    \ / _ \|  _ \
+                                | |   | ____( (_| | | | | |_| | | | |
+                                |_|   |_____)\____|_|_|_|\___/|_| |_|
 
 ## Description
 redmon provides an administrative interface to redis servers.
 
 ## Testing
 ```bash
-$ bundle exec ruby sample/my_app.rb run
+$ ruby sample/app.rb
 ```

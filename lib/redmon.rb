@@ -10,11 +10,19 @@ require 'thin'
 
 module Redmon
 
+  #
+  # setup the options
+  #
   def self.default_options(opts)
-    opts[:web_interface] ||= ["0.0.0.0", "4242"]
+    opts[:redis_url]     ||= "redis://localhost:6379"
+    opts[:web_interface] ||= ["0.0.0.0", 4242]
+    opts[:print_info]    ||= 20
     opts
   end
 
+  #
+  # startup event machine
+  #
   def self.start_em(opts)
     EM.run do
       trap("TERM", &method(:shutdown))
@@ -31,13 +39,23 @@ module Redmon
         end
       end
 
+      redis = connect_redis(opts[:redis_url])
+      EM::PeriodicTimer.new(opts[:print_info]) do
+        print_info(redis)
+      end
     end
   end
 
+  #
+  # log to stdio
+  #
   def self.log(msg)
     puts "[#{Time.now.strftime("%y-%m-%d %H:%M:%S")}] #{msg}"
   end
 
+  #
+  # run remon
+  #
   def self.run(opts={})
     start_em(opts)
   rescue Exception => e
@@ -45,13 +63,25 @@ module Redmon
     sleep(1); run(opts)
   end
 
+  #
+  # open a redis connection
+  #
+  def self.connect_redis(redis_url)
+    EM::Hiredis.connect(redis_url)
+  end
+
+  #
+  # time to shutdown
+  #
   def self.shutdown
     log "shutting down, byebye"
     EM.stop
   end
 
-  def self.standalone
-    require "redmon/standalone"
+  def self.print_info(redis)
+    redis.info do |info|
+      log "Memory used: #{info[:used_memory_human]}"
+    end
   end
 
   require "redmon/app"
