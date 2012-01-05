@@ -31,7 +31,7 @@ module Redmon
       opts = default_options(opts)
       if opts[:web_interface]
         begin
-          app = Redmon::App.new
+          app = Redmon::App.new(opts)
           Thin::Server.start(*opts[:web_interface], app)
           log "listening on http##{opts[:web_interface].join(":")}"
         rescue Exception => e

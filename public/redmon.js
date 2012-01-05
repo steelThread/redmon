@@ -1,27 +1,58 @@
-var chart1; // globally available
+Highcharts.setOptions({
+   global: { useUTC: false }
+});
+
+var chart; // globally available
 $(document).ready(function() {
-  chart1 = new Highcharts.Chart({
+  chart = new Highcharts.Chart({
     chart: {
       renderTo: 'container',
-      type: 'bar'
+      defaultSeriesType: 'area',
+	  events: {
+	    load: requestData
+	  }
     },
     title: {
-      text: 'Fruit Consumption'
+      text: 'Redis Server Memory Usage'
     },
-    xAxis: {
-      categories: ['Apples', 'Bananas', 'Oranges']
-    },
+    xAxis: {type: 'datetime'},
     yAxis: {
-      title: {
-        text: 'Fruit eaten'
-      }
+      title: {text: 'Memory Used'}
+    },
+    legend: {
+      enabled: true,
+      borderWidth: 0
+    },
+    credits: {enabled: false},
+	plotOptions: {
+      area: {
+        marker: {enabled: false}
+     }
     },
     series: [{
-      name: 'Jane',
-      data: [1, 0, 4]
-    },{
-      name: 'John',
-      data: [5, 7, 3]
-    }]
+      name: 'redis://localhost:6379',
+      data: []
+    }],
   });
 });
+
+/**
+ * Request data from the server, add it to the graph and set a timeout to request again
+ */
+function requestData() {
+  $.ajax({
+    url: 'info',
+    dataType: 'json',
+    success: function(result) {
+	  var point = [
+	    new Date().getTime(),
+		parseInt(result.used_memory)
+	  ];
+
+      console.log(parseInt(result.used_memory));
+      var series = chart.series[0];
+      series.addPoint(point, true, series.data.length >= 50);
+      setTimeout(requestData, 5000);
+    }
+  });
+}
