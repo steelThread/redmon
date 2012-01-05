@@ -1,0 +1,73 @@
+GIT
+  remote: git://github.com/brianmario/yajl-ruby.git
+  revision: b08b3f7ffd2fe5fad051f9d4a78db7ce71d7a5fc
+  specs:
+    yajl-ruby (1.1.0)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activesupport (3.1.3)
+      multi_json (~> 1.0)
+    bson (1.5.2)
+    bson_ext (1.5.2)
+      bson (= 1.5.2)
+    chronic (0.6.6)
+    daemons (1.1.5)
+    delorean (1.2.0)
+      chronic
+    diff-lcs (1.1.3)
+    em-hiredis (0.1.0)
+      hiredis (~> 0.3.0)
+    eventmachine (0.12.10)
+    haml (3.1.4)
+    hiredis (0.3.2)
+    i18n (0.6.0)
+    json (1.6.4)
+    multi_json (1.0.4)
+    rack (1.4.0)
+    rack-protection (1.2.0)
+      rack
+    rack-test (0.6.1)
+      rack (>= 1.0)
+    redis (2.2.2)
+    rspec (2.6.0)
+      rspec-core (~> 2.6.0)
+      rspec-expectations (~> 2.6.0)
+      rspec-mocks (~> 2.6.0)
+    rspec-core (2.6.4)
+    rspec-expectations (2.6.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.6.0)
+    shoulda (2.11.3)
+    sinatra (1.3.2)
+      rack (~> 1.3, >= 1.3.6)
+      rack-protection (~> 1.2)
+      tilt (~> 1.3, >= 1.3.3)
+    thin (1.3.1)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
+    tilt (1.3.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport
+  bson_ext (>= 1.4.0)
+  bundler (~> 1.0.0)
+  delorean
+  em-hiredis
+  eventmachine
+  haml
+  i18n
+  json
+  rack
+  rack-test
+  redis (>= 2.2.2)
+  rspec (~> 2.6.0)
+  shoulda
+  sinatra (>= 1.2.6)
+  thin
+  yajl-ruby!
