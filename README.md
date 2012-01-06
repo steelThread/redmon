@@ -12,3 +12,5 @@ redmon provides an administrative interface to redis servers.
 ```bash
 $ ruby sample/app.rb
 ```
+
+Open your browser to http://0.0.0.0:4242
