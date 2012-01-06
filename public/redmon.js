@@ -6,7 +6,7 @@ var chart; // globally available
 $(document).ready(function() {
   chart = new Highcharts.Chart({
     chart: {
-      renderTo: 'container',
+      renderTo: 'memory-container',
       defaultSeriesType: 'area',
 	  events: {
 	    load: requestData
@@ -51,7 +51,7 @@ function requestData() {
 
       console.log(parseInt(result.used_memory));
       var series = chart.series[0];
-      series.addPoint(point, true, series.data.length >= 50);
+      series.addPoint(point, true, series.data.length >= 100);
       setTimeout(requestData, 5000);
     }
   });

@@ -8,8 +8,27 @@
     %script(type="text/javascript" src="vendor/highcharts.js")
     %script(type="text/javascript" src="redmon.js")
 
+    %link(type="text/css" rel="stylesheet" href="vendor/bootstrap.min.css")
     %link(type="text/css" rel="stylesheet" href="redmon.css")
 
   %body
-    #viewport
-      #container{:style => "width:790px;height:300px"}
+    .topbar
+      .fill
+        .container
+          %a.brand Redmon
+          %ul.nav
+            %li
+              %a About
+            %li
+              %a Sign Up
+          %form.pull-right
+            %input{:type => "text",     :class => "input-small", :placeholder => "Username"}
+            %input{:type => "password", :class => "input-small", :placeholder => "Password"}
+            %button{:type => "Submit",   :class => "btn"} Sign In
+    .container
+      .content
+        .page-header
+          %h1 Redis Server Dashboard
+        .row
+          #viewport
+            #memory-container{:style => "width:790px;height:300px"}

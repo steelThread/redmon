@@ -19,10 +19,6 @@ class Redmon::App < Sinatra::Base
     haml :app
   end
 
-  get '/random' do
-    {value: rand(100)}.to_json
-  end
-
   get '/info' do
     @redis.info.to_json
   end
