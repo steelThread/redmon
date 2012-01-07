@@ -8,26 +8,39 @@ $(document).ready(function() {
     chart: {
       renderTo: 'memory-container',
       defaultSeriesType: 'areaspline',
+      zoomType: 'x',
 	  events: {
 	    load: requestData
 	  }
     },
     title: {
-      text: 'Redis Server Memory Usage'
+      text: 'Memory Used'
     },
-    xAxis: {type: 'datetime'},
-    yAxis: {
-      title: {text: 'Memory Used'}
+    xAxis: {
+	  type: 'datetime',
+  	  tickPixelInterval: 150,
+      title: {text: null}
     },
-    legend: {
-      enabled: true,
-      borderWidth: 0
-    },
+    yAxis: {title: null},
+    legend: {enabled: false},
     credits: {enabled: false},
 	plotOptions: {
-      area: {
-        marker: {enabled: false}
-     }
+      series: {
+        lineWidth: 1,
+	    marker: {
+		  radius: 2,
+   		  fillColor: '#FFFFFF',
+		  lineWidth: 2,
+		  lineColor: null
+		},
+		fillColor: {
+          linearGradient: [0, 0, 0, 300],
+          stops: [
+              [0, 'rgb(69, 114, 167)'],
+              [1, 'rgba(2,0,0,0)']
+          ]
+        }
+      }
     },
     series: [{
       name: 'redis://localhost:6379',
@@ -51,7 +64,7 @@ function requestData() {
 
       console.log(parseInt(result.used_memory));
       var series = chart.series[0];
-      series.addPoint(point, true, series.data.length >= 100);
+      series.addPoint(point, true, series.data.length >= 60);
       setTimeout(requestData, 5000);
     }
   });

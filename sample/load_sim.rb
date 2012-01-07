@@ -13,7 +13,7 @@ loop do
     redis.set("key-#{i}", "abcdedghijklmnopqrstuvwxyz")
   end
 
-  start.upto(multi   * start) do |i|
+  start.upto(multi * start) do |i|
     redis.del("key-#{i}")
   end
 end

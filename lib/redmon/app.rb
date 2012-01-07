@@ -6,7 +6,10 @@ class Redmon::App < Sinatra::Base
 
   helpers do
     include Rack::Utils
-    alias_method :h, :escape_html
+
+    def redis_url
+      @opts[:redis_url]
+    end
   end
 
   def initialize(opts)
