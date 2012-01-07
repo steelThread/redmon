@@ -7,7 +7,7 @@ $(document).ready(function() {
   chart = new Highcharts.Chart({
     chart: {
       renderTo: 'memory-container',
-      defaultSeriesType: 'area',
+      defaultSeriesType: 'areaspline',
 	  events: {
 	    load: requestData
 	  }
