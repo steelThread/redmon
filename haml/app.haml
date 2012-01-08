@@ -18,7 +18,7 @@
     .container
       .content
         .page-header
-          %h1 #{redis_url}
+          %h1 #{opts[:redis_url]}
         .row
           .span8
             .widget
@@ -27,4 +27,8 @@
             .widget
               #keyspace-container{:style => "width:450px;height:200px"}
 :javascript
-  $(document).ready(Redmon.init);
+  $(document).ready(function() {
+    Redmon.init({
+      pollInterval: #{opts[:poll_interval]} * 1000
+    });
+  });
