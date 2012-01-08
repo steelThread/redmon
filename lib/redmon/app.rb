@@ -1,5 +1,4 @@
 class Redmon::App < Sinatra::Base
-
   set :haml, :format => :html5
   set :views,         ::File.expand_path('../../../haml', __FILE__)
   set :public_folder, ::File.expand_path('../../../public', __FILE__)
@@ -13,8 +12,8 @@ class Redmon::App < Sinatra::Base
   end
 
   def initialize(opts)
+    @opts  = opts
     @redis = Redis.connect(:url => opts[:redis_url])
-    @opts = opts
     super(nil)
   end
 
@@ -23,6 +22,11 @@ class Redmon::App < Sinatra::Base
   end
 
   get '/info' do
-    @redis.info.to_json
+    content_type :json
+    @redis.zrevrange(Redmon.key, count, -1).to_json
+  end
+
+  def count
+    -params[:count].to_i
   end
 end
