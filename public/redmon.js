@@ -2,7 +2,7 @@ Highcharts.setOptions({
    global: { useUTC: false }
 });
 
-var chart; // globally available
+var memoryChart, keyspaceChart;
 $(document).ready(load);
 
 /**
@@ -10,14 +10,7 @@ $(document).ready(load);
  */
 function load() {
   request(100, function(data) {
-    var points = [];
-    data.forEach(function(info) {
-      points.push([
-	    parseInt(info.time),
-		parseInt(info.used_memory)
-	  ]);
-    });
-    render(points);
+	render(data);
     poll();
   });
 }
@@ -32,8 +25,17 @@ function poll() {
         parseInt(info.time),
         parseInt(info.used_memory)
       ];
-      var series = chart.series[0];
+      var series = memoryChart.series[0];
       series.addPoint(point, true, series.data.length >= 100);
+
+  	  var time = parseInt(info.time);
+      var hit  = [time, parseInt(info.keyspace_hits)];
+      var hits = keyspaceChart.series[0];
+      hits.addPoint(hit, true, hits.data.length >= 100);
+
+      var misses = keyspaceChart.series[1];
+      var miss   = [time, parseInt(info.keyspace_misses)];
+      misses.addPoint(miss, true, misses.data.length >= 100);
 	});
     setTimeout(poll, 5000);
   });
@@ -55,21 +57,47 @@ function request(count, callback) {
   });
 }
 
+function memoryPoints(data) {
+  var points = [];
+  data.forEach(function(info) {
+    points.push([
+      parseInt(info.time),
+      parseInt(info.used_memory)
+    ]);
+  });
+
+  return points;
+}
+
+function keyspacePoints(data) {
+  var points = [];
+  data.forEach(function(info) {
+	var time = parseInt(info.time);
+    points.push([
+      [time, parseInt(info.keyspace_hits)],
+      [time, parseInt(info.keyspace_misses)]
+    ]);
+  });
+
+  return points;
+}
+
 /**
  * Render the dashboard.
  */
 function render(data) {
   renderMemoryUsageChart(data);
+  renderKeyspaceChart(data);
 };
 
 function renderMemoryUsageChart(data) {
-  chart = new Highcharts.Chart({
+  memoryChart = new Highcharts.Chart({
     chart: {
       renderTo: 'memory-container',
       defaultSeriesType: 'areaspline',
       zoomType: 'x'
     },
-    title: {text: 'Live Memory Usage'},
+    title: {text: 'Memory Usage'},
     xAxis: {
 	  type: 'datetime',
   	  tickPixelInterval: 150,
@@ -96,9 +124,57 @@ function renderMemoryUsageChart(data) {
         }
       }
     },
+    series: [{data: memoryPoints(data)}],
+  });
+};
+
+function renderKeyspaceChart(data) {
+  var hits = [],
+    misses = [];
+  var points = keyspacePoints(data);
+  points.forEach(function(point) {
+    hits.push(point[0]);
+    misses.push(point[1]);
+  });
+
+  keyspaceChart = new Highcharts.Chart({
+    chart: {
+      renderTo: 'keyspace-container',
+      defaultSeriesType: 'spline'
+    },
+    title: {text: 'Keyspace Hits/Misses'},
+    xAxis: {
+	  type: 'datetime',
+  	  tickPixelInterval: 150,
+      title: {text: null}
+    },
+    yAxis: {title: null},
+    legend: {
+	  layout: 'vertical',
+	  align: 'right',
+	  verticalAlign: 'top',
+	  x: -10,
+	  y: 100,
+	  borderWidth: 0
+	},
+	credits: {enabled: false},
+	plotOptions: {
+      series: {
+        lineWidth: 2,
+	    marker: {
+		  radius: 0,
+   		  fillColor: '#FFFFFF',
+		  lineWidth: 2,
+		  lineColor: null
+		}
+      }
+    },
     series: [{
-      name: 'redis://localhost:6379',
-      data: data
+	  name: 'Hits',
+      data: hits
+    },{
+	  name: 'Misses',
+      data: misses
     }],
   });
 };

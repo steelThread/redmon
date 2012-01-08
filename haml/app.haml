@@ -20,5 +20,9 @@
         .page-header
           %h1 #{redis_url}
         .row
-          #viewport
-            #memory-container{:style => "width:1000px;height:200px"}
+          .span8
+            .widget
+              #memory-container{:style => "width:450px;height:200px"}
+          .span8
+            .widget
+              #keyspace-container{:style => "width:450px;height:200px"}
