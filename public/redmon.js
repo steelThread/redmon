@@ -3,6 +3,7 @@ Highcharts.setOptions({
 });
 
 var Redmon = (function() {
+  var events = {};
 
   /**
    * Loads the last 100 events and starts the periodic polling for new events.
@@ -43,8 +44,7 @@ var Redmon = (function() {
    */
   function poll() {
     requestData(1, function(data) {
-	  memoryChart.update(data);
-      keyspaceChart.update(data);
+	  $(events).trigger('update', data[0]);
       setTimeout(poll, 5000);
     });
   }
@@ -92,30 +92,29 @@ var Redmon = (function() {
       });
     }
 
-    function update(data) {
-      var series = chart.series[0];
-	  var point = points(data)[0]
-      series.addPoint(point, true, series.data.length >= 100);
-    }
-
     function points(data) {
-      var points = [];
-      data.forEach(function(info) {
-        points.push([
-          parseInt(info.time),
-          parseInt(info.used_memory)
-        ]);
-      });
-
-      return points;
+      return data.map(point);
     }
+
+    function point(info) {
+	  return [
+        parseInt(info.time),
+        parseInt(info.used_memory)
+      ];
+    }
+
+    function update(ev, data) {
+      var series = chart.series[0];
+      series.addPoint(point(data), true, series.data.length >= 100);
+    }
+
+    // observe update events
+	$(events).bind( 'update', update);
 
     return {
-	  render: render,
-	  update: update
+	  render: render
     }
   })();
-
 
   //////////////////////////////////////////////////////////////////////
   // encapsulate the keyspace chart
@@ -125,8 +124,7 @@ var Redmon = (function() {
     function render(data) {
       var hits = [],
         misses = [];
-      var points = keyspacePoints(data);
-      points.forEach(function(point) {
+      points(data).forEach(function(point) {
         hits.push(point[0]);
         misses.push(point[1]);
       });
@@ -173,35 +171,32 @@ var Redmon = (function() {
       });
     }
 
-    function update(data) {
-  	  data.forEach(function(info) {
-  	    var time = parseInt(info.time);
-        var hit  = [time, parseInt(info.keyspace_hits)];
-        var hits = chart.series[0];
-        hits.addPoint(hit, true, hits.data.length >= 100);
-
-        var misses = chart.series[1];
-        var miss   = [time, parseInt(info.keyspace_misses)];
-        misses.addPoint(miss, true, misses.data.length >= 100);
-      });
+    function points(data) {
+      return data.map(point);
     }
 
-    function keyspacePoints(data) {
-      var points = [];
-      data.forEach(function(info) {
-  	    var time = parseInt(info.time);
-        points.push([
-          [time, parseInt(info.keyspace_hits)],
-          [time, parseInt(info.keyspace_misses)]
-        ]);
-      });
-
-      return points;
+    function point(info) {
+  	  var time = parseInt(info.time);
+      return [
+        [time, parseInt(info.keyspace_hits)],
+        [time, parseInt(info.keyspace_misses)]
+      ];
     }
+
+    function update(ev, data) {
+	  var newPoint = point(data);
+      var hits = chart.series[0];
+      hits.addPoint(newPoint[0], true, hits.data.length >= 100);
+
+      var misses = chart.series[1];
+      misses.addPoint(newPoint[1], true, misses.data.length >= 100);
+    }
+
+    // observe update events
+	$(events).bind('update', update);
 
     return {
-	  render: render,
-	  update: update
+	  render: render
     }
   })();
 
