@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title Redmon Dashboard
+    %title Redmon
 
     %script(type="text/javascript" src="vendor/jquery-1.7.1.min.js")
     %script(type="text/javascript" src="vendor/highcharts.js")
@@ -19,7 +19,7 @@
             %li.active
               %a Runtime Dashboard
             %li
-              %a Configuration Settings
+              %a Configuration
             %li
               %a Slow Log
             %li
@@ -45,15 +45,15 @@
                 .widget
                   .headbar
                     %h2 Keyspace Hits/Misses
-                  #keyspace-container{:style => "width:750px;height:256px"}
+                  #keyspace-container{:style => "width:880px;height:256px"}
 
-          .span5
+          .span6
             .widget
               .headbar
-                %h2 General
+                %h2 Info
               %table.condensed-table
                 %tr
-                  %td{:style => "width: 75%"} Version
+                  %td{:style => "width: 70%"} Version
                   %td 2.4.4
                 %tr
                   %td Role
@@ -86,8 +86,11 @@
                   %td Pub/Sub Patterns
                   %td 24
                 %tr
-                  %td Total Connections Received
+                  %td Connections Received
                   %td 14433445
+                %tr
+                  %td Commands Processed
+                  %td 10020204847
                 %tr
                   %td Connected Clients
                   %td 15
@@ -99,7 +102,7 @@
                   %td 0
                 %tr
                   %td Last Save
-                  %td Sun Jan 08, 2012
+                  %td 01/08 23:20:22
                 %tr
                   %td Changes Since Last Save
                   %td 12211
