@@ -24,9 +24,10 @@ module Redmon
 
       @opts = DEFAULT_OPTS.merge opts
 
-      # if @opts[:worker]
-      #   Worker.new(@opts).run!
-      # end
+      if @opts[:worker]
+        log "starting worker"
+        Worker.new(@opts).run!
+      end
 
       if @opts[:web_interface]
         begin

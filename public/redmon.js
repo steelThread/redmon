@@ -11,6 +11,7 @@ var Redmon = (function() {
    */
   function init(opts) {
     config = opts;
+    nav.init();
     requestData(100, function(data) {
       renderDashboard(data);
       poll();
@@ -51,6 +52,42 @@ var Redmon = (function() {
       setTimeout(poll, config.pollInterval);
     });
   }
+
+  //////////////////////////////////////////////////////////////////////
+  // encapsulate the keyspace chart
+  var nav = (function() {
+    var mapping = {};
+    var current = {};
+
+    function init() {
+      ["dashboard", "cli", "config", "slow"].forEach(function(el) {
+        mapping[el] = $('#'+el)
+        mapping[el].click(onClick);
+      });
+      current.tab   = mapping.dashboard;
+      current.panel = $('.viewport .dashboard');
+    }
+
+    function onClick(ev) {
+      var tab = $(ev.currentTarget);
+      if (!tab.hasClass('active')) {
+        tab.addClass('active');
+        current.tab.removeClass('active');
+
+        var panel = $('.viewport .'+tab.attr('id'));
+        console.log(panel)
+        current.panel.addClass('hidden');
+        panel.removeClass('hidden').addClass('show');
+
+        current.tab   = tab;
+        current.panel = panel;
+      }
+    }
+
+    return {
+      init: init
+    }
+  })();
 
   //////////////////////////////////////////////////////////////////////
   // encapsulate the keyspace chart
@@ -142,7 +179,6 @@ var Redmon = (function() {
         title: {text: ''},
         xAxis: {
           type: 'datetime',
-          //tickPixelInterval: 100,
           title: {text: null}
         },
         yAxis: {title: null},

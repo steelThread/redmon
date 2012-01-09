@@ -18,20 +18,21 @@
         .container
           %a.brand Redmon
           %ul.nav
-            %li.active
+            %li.active{:id => 'dashboard'}
               %a Runtime Dashboard
-            %li
-              %a Configuration
-            %li
-              %a Slow Log
-            %li
+            %li{:id => 'cli'}
               %a CLI
+            %li{:id => 'config'}
+              %a Configuration
+            %li{:id => 'slow'}
+              %a Slow Log
           .pull-right
             %a.brand #{opts[:redis_url]}
             %form
               %button.btn.primary Reset Statistics
-    .container
-      .dashboard{:style => "display:none"}
+
+    .container.viewport
+      .dashboard
         .content
           .page-header
             %h1 Runtime Dashboard
@@ -49,7 +50,6 @@
                     .headbar
                       %h2 Keyspace Hits/Misses
                     #keyspace-container{:style => "width:880px;height:256px"}
-
             .span6
               .widget
                 .headbar
@@ -112,13 +112,22 @@
                   %tr
                     %td VM Enabled
                     %td{:id => "vm_enabled"}
-      .cli
+      .cli.hidden
         .content
           .page-header
             %h1 Command Line Interface
           .row
             .span21{:style => "height:500px"}
               #wterm.cli.wterm_terminal.wterm_theme_green_on_black
+
+      .config.hidden
+        .content
+          .page-header
+            %h1 Configuration
+      .slow.hidden
+        .content
+          .page-header
+            %h1 Slow Log
 
 :javascript
   $(document).ready(function() {
