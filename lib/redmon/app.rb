@@ -5,13 +5,14 @@ class Redmon::App < Sinatra::Base
 
   helpers do
     include Rack::Utils
+    include RedisUtils
 
     def opts
       @opts
     end
 
-    def unquoted
-      %w{string OK} << "(empty list or set)"
+    def count
+      -params[:count].to_i
     end
   end
 
@@ -32,7 +33,7 @@ class Redmon::App < Sinatra::Base
 
   get '/cli' do
     args = params[:tokens].split
-    cmd  = args.shift.intern
+    cmd  = args.shift.downcase.intern
     begin
       @result = @redis.send(cmd, *args)
       @result = '(empty list or set)' if @result == []
@@ -40,9 +41,5 @@ class Redmon::App < Sinatra::Base
     rescue
       "(error) ERR wrong number of arguments for '#{cmd.to_s}' command"
     end
-  end
-
-  def count
-    -params[:count].to_i
   end
 end

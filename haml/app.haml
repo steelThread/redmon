@@ -143,11 +143,12 @@
       PS1: "#{opts[:redis_url].gsub('://', ' ')}>"
     });
     var command_directory = {
-       'keys': '/cli',
-       'type': '/cli',
-       'get': '/cli',
-       'set': '/cli',
-       'del': '/cli',
+       'keys'   : '/cli',
+       'dbsize' : '/cli',
+       'type'   : '/cli',
+       'get'    : '/cli',
+       'set'    : '/cli',
+       'del'    : '/cli',
 
        'strrev': {
          PS1: 'strrev $',
@@ -172,10 +173,11 @@
 
     $.register_command( 'help', function() {
       return 'Redmon CLI supports a subset of the redis commands.' + '<br>' +
-        'keys - Find all keys matching the given pattern<br>'
-        'set  - Set the string value of a key<br>'
-        'get  - Get the value of a key<br>'
-        'del  - Delete a key<br>'
-        'type - Determine the type stored at key<br>'
+        'keys   - Find all keys matching the given pattern<br>' +
+        'dbsize - Return the number of keys in the selected database<br>' +
+        'set    - Set the string value of a key<br>' +
+        'get    - Get the value of a key<br>' +
+        'del    - Delete a key<br>' +
+        'type   - Determine the type stored at key<br>'
     });
   });

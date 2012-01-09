@@ -63,6 +63,8 @@ module Redmon
     puts "[#{Time.now.strftime("%y-%m-%d %H:%M:%S")}] #{msg}"
   end
 
-  require "redmon/app"
-  require "redmon/worker"
 end
+
+require "redmon/redis_utils"
+require "redmon/app"
+require "redmon/worker"

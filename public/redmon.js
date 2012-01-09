@@ -75,12 +75,10 @@ var Redmon = (function() {
         current.tab.removeClass('active');
 
         var panel = $('.viewport .'+tab.attr('id'));
-        console.log(panel)
         current.panel.addClass('hidden');
         panel.removeClass('hidden').addClass('show');
 
-        current.tab   = tab;
-        current.panel = panel;
+        current = {tab: tab, panel: panel};
       }
     }
 
