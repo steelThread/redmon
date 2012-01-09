@@ -14,7 +14,7 @@ module Redmon
     :namespace     => "redmon",
     :web_interface => ["0.0.0.0", 4567],
     :worker        => true,
-    :poll_interval => 5
+    :poll_interval => 10
   }
 
   def self.start_em(opts)

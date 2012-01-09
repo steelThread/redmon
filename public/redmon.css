@@ -10,7 +10,7 @@ body {
   text-align: center; /* center align it with the container */
 }
 .container {
-  width: 80%; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
+  width: 1200px;
 }
 
 /* The white background content wrapper */
@@ -33,24 +33,27 @@ body {
   margin: -20px -20px 20px;
 }
 
-/* Styles you shouldn't keep as they are for displaying this base example only */
-.content .span10,
-.content .span4 {
-  min-height: 500px;
-}
-/* Give a quick and non-cross-browser friendly divider */
-.content .span4 {
-  margin-left: 0;
-  padding-left: 19px;
-  border-left: 1px solid #eee;
+.headbar {
+  height:36px;
+  background-color: #f5f5f5;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f4f4), to(#e9e9e9));
+  background-image: -webkit-linear-gradient(top, #f4f4f4, #e9e9e9);
+  background-image: -moz-linear-gradient(top, #f4f4f4, #e9e9e9);
+  background-image: -ms-linear-gradient(top, #f4f4f4, #e9e9e9);
+  background-image: -o-linear-gradient(top, #f4f4f4, #e9e9e9);
+  background-image: linear-gradient(top, #f4f4f4, #e9e9e9);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f4f4f4', EndColorStr='#e9e9e9');
+  padding: 0 15px;
+  border-bottom: 1px solid #C9C9C9;
+  border-top: 1px solid #d0d0d0;
+  font-size:13px;
+  line-height:29px;
+  text-shadow: 1px 0px 2px rgba(255, 255, 255, 1);
+  -moz-text-shadow: 1px 0px 2px rgba(255,255,255,1);
+  -webkit-text-shadow: 1px 0px 2px rgba(255,255,255,1);
+  overflow:hidden;
 }
 
-.topbar .btn {
-  border: 0;
-}
+.headbar.small{ height:29px; }
 
-.widget{ float:left; margin-left:10px; border-radius:3px;}
-.widget{ background:#24272c; box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.4); }
-
-#memory-container{ margin:2px; background:#fff; border-radius:2px; }
-#keyspace-container{ margin:2px; background:#fff; border-radius:2px; }
+.headbar h2{ line-height:37px; margin:0; float:left; font-size:14px; }

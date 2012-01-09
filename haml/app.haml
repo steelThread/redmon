@@ -15,17 +15,100 @@
       .fill
         .container
           %a.brand Redmon
+          %ul.nav
+            %li.active
+              %a Runtime Dashboard
+            %li
+              %a Configuration Settings
+            %li
+              %a Slow Log
+            %li
+              %a CLI
+          .pull-right
+            %a.brand #{opts[:redis_url]}
+            %form
+              %button.btn.primary Reset Statistics
     .container
       .content
         .page-header
-          %h1 #{opts[:redis_url]}
+          %h1 Runtime Dashboard
         .row
-          .span8
+          .span15
+            .row
+              .span15
+                .widget
+                  .headbar
+                    %h2 Memory Usage
+                  #memory-container{:style => "width:880px;height:256px"}
+            .row
+              .span15
+                .widget
+                  .headbar
+                    %h2 Keyspace Hits/Misses
+                  #keyspace-container{:style => "width:750px;height:256px"}
+
+          .span5
             .widget
-              #memory-container{:style => "width:450px;height:200px"}
-          .span8
-            .widget
-              #keyspace-container{:style => "width:450px;height:200px"}
+              .headbar
+                %h2 General
+              %table.condensed-table
+                %tr
+                  %td{:style => "width: 75%"} Version
+                  %td 2.4.4
+                %tr
+                  %td Role
+                  %td Master
+                %tr
+                  %td Uptime
+                  %td 16 days
+                %tr
+                  %td Memory Used
+                  %td 48.19M
+                %tr
+                  %td Memory Peak
+                  %td 413.64M
+                %tr
+                  %td Memory Fragmentation Ratio
+                  %td 1.44%
+                %tr
+                  %td Keys
+                  %td 1234422
+                %tr
+                  %td Keyspace Hits
+                  %td 1234422
+                %tr
+                  %td Keyspace Misses
+                  %td 1234422
+                %tr
+                  %td Pub/Sub Channels
+                  %td 144
+                %tr
+                  %td Pub/Sub Patterns
+                  %td 24
+                %tr
+                  %td Total Connections Received
+                  %td 14433445
+                %tr
+                  %td Connected Clients
+                  %td 15
+                %tr
+                  %td Blocked Clients
+                  %td 0
+                %tr
+                  %td Connected Slaves
+                  %td 0
+                %tr
+                  %td Last Save
+                  %td Sun Jan 08, 2012
+                %tr
+                  %td Changes Since Last Save
+                  %td 12211
+                %tr
+                  %td AOF Enabled
+                  %td No
+                %tr
+                  %td VM Enabled
+                  %td No
 :javascript
   $(document).ready(function() {
     Redmon.init({

@@ -63,18 +63,20 @@ var Redmon = (function() {
           defaultSeriesType: 'areaspline',
           zoomType: 'x'
         },
-        title: {text: 'Memory Usage'},
+        title: {text: ''},
         xAxis: {
           type: 'datetime',
-          tickPixelInterval: 150,
           title: {text: null}
         },
         yAxis: {title: null},
         legend: {enabled: false},
         credits: {enabled: false},
         plotOptions: {
+          line: {
+            shadow: false,
+            lineWidth: 3
+          },
           series: {
-            lineWidth: 1,
             marker: {
               radius: 0,
               fillColor: '#FFFFFF',
@@ -107,10 +109,10 @@ var Redmon = (function() {
 
     function onData(ev, data) {
       var series = chart.series[0];
-      series.addPoint(point(data), true, series.data.length >= 100);
+      series.addPoint(point(data), true, series.data.length >= 25);
     }
 
-    // observe update events
+    // observe data events
     events.bind('data', onData);
 
     return {
@@ -134,27 +136,31 @@ var Redmon = (function() {
       chart = new Highcharts.Chart({
         chart: {
           renderTo: 'keyspace-container',
-          defaultSeriesType: 'spline'
+          defaultSeriesType: 'line'
         },
-        title: {text: 'Keyspace Hits/Misses'},
+        title: {text: ''},
         xAxis: {
           type: 'datetime',
-          tickPixelInterval: 150,
+          //tickPixelInterval: 100,
           title: {text: null}
         },
         yAxis: {title: null},
         legend: {
-          layout: 'vertical',
-          align: 'right',
+          layout: 'horizontal',
+          align: 'top',
           verticalAlign: 'top',
-          x: -10,
-          y: 100,
+          x: -5,
+          y: -3,
+          margin: 25,
           borderWidth: 0
         },
         credits: {enabled: false},
         plotOptions: {
+          line: {
+            shadow: false,
+            lineWidth: 3
+          },
           series: {
-            lineWidth: 2,
             marker: {
               radius: 0,
               fillColor: '#FFFFFF',
@@ -188,13 +194,13 @@ var Redmon = (function() {
     function onData(ev, data) {
       var newPoint = point(data);
       var hits = chart.series[0];
-      hits.addPoint(newPoint[0], true, hits.data.length >= 100);
+      hits.addPoint(newPoint[0], true, hits.data.length >= 25);
 
       var misses = chart.series[1];
-      misses.addPoint(newPoint[1], true, misses.data.length >= 100);
+      misses.addPoint(newPoint[1], true, misses.data.length >= 25);
     }
 
-    // observe update events
+    // observe data events
     events.bind('data', onData);
 
     return {

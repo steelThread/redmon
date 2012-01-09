@@ -14,6 +14,7 @@ loop do
   end
 
   start.upto(multi * start) do |i|
+    redis.get("key-#{i}")
     redis.del("key-#{i}")
   end
 end
