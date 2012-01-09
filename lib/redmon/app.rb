@@ -29,12 +29,12 @@ class Redmon::App < Sinatra::Base
   get '/cli' do
     args = params[:tokens].split
     cmd  = args.shift.intern
-    begin
+    # begin
       @result = @redis.send(cmd, *args)
-    rescue
-      @result = "(error) ERR wrong number of arguments for '#{cmd.to_s}' command"
-    end
-    haml :cli_result
+      haml :cli_result
+    # rescue
+    #   "(error) ERR wrong number of arguments for '#{cmd.to_s}' command"
+    # end
   end
 
   def count

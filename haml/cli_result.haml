@@ -2,6 +2,10 @@
   - @result.each_with_index do |item, index|
     %span= "#{index+1}) \"#{item}\""
     %br
+- elsif @result.is_a? Fixnum
+  %span= "(integer) #{@result}"
+  %br
 - else
+  - @result = "\"#{@result}\"" unless @result == 'string'
   %span= @result
   %br
