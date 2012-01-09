@@ -51,67 +51,64 @@
             .widget
               .headbar
                 %h2 Info
-              %table.condensed-table
+              %table.condensed-table{:id => "info-table"}
                 %tr
                   %td{:style => "width: 70%"} Version
-                  %td 2.4.4
+                  %td{:id => "redis_version"}
                 %tr
                   %td Role
-                  %td Master
+                  %td{:id => "role"}
                 %tr
                   %td Uptime
-                  %td 16 days
+                  %td{:id => "uptime_in_days"}
                 %tr
                   %td Memory Used
-                  %td 48.19M
+                  %td{:id => "used_memory_human"}
                 %tr
                   %td Memory Peak
-                  %td 413.64M
+                  %td{:id => ""}
                 %tr
                   %td Memory Fragmentation Ratio
-                  %td 1.44%
+                  %td{:id => "mem_fragmentation_ratio"}
                 %tr
                   %td Keys
-                  %td 1234422
+                  %td{:id => "db0:keys"}
                 %tr
                   %td Keyspace Hits
-                  %td 1234422
+                  %td{:id => "keyspace_hits"}
                 %tr
                   %td Keyspace Misses
-                  %td 1234422
+                  %td{:id => "keyspace_misses"}
                 %tr
                   %td Pub/Sub Channels
-                  %td 144
+                  %td{:id => "pubsub_channels"}
                 %tr
                   %td Pub/Sub Patterns
-                  %td 24
+                  %td{:id => "pubsub_patterns"}
                 %tr
-                  %td Connections Received
-                  %td 14433445
+                  %td Total Connections Received
+                  %td{:id => "total_connections_received"}
                 %tr
-                  %td Commands Processed
-                  %td 10020204847
-                %tr
-                  %td Connected Clients
-                  %td 15
+                  %td Total Commands Processed
+                  %td{:id => "total_commands_processed"}
                 %tr
                   %td Blocked Clients
-                  %td 0
+                  %td{:id => "blocked_clients"}
                 %tr
                   %td Connected Slaves
-                  %td 0
+                  %td{:id => "blocked_clients"}
                 %tr
                   %td Last Save
-                  %td 01/08 23:20:22
+                  %td{:id => "blocked_clients"}
                 %tr
                   %td Changes Since Last Save
-                  %td 12211
+                  %td{:id => "changes_since_last_sav"}
                 %tr
                   %td AOF Enabled
-                  %td No
+                  %td{:id => "aof_enabled"}
                 %tr
                   %td VM Enabled
-                  %td No
+                  %td{:id => "vm_enabled"}
 :javascript
   $(document).ready(function() {
     Redmon.init({

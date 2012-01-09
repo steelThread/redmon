@@ -23,7 +23,6 @@ var Redmon = (function() {
   function renderDashboard(data) {
     memoryWidget.render(data);
     keyspaceWidget.render(data);
-    infoWidget.render(data);
   }
 
   /**
@@ -199,35 +198,6 @@ var Redmon = (function() {
 
       var misses = chart.series[1];
       misses.addPoint(newPoint[1], true, misses.data.length >= 25);
-    }
-
-    // observe data events
-    events.bind('data', onData);
-
-    return {
-      render: render
-    }
-  })();
-
-  //////////////////////////////////////////////////////////////////////
-  // encapsulate the info widget
-  var infoWidget = (function() {
-
-    function render(data) {
-      updateTable(data[data.length-1]);
-    }
-
-    function onData(ev, data) {
-      updateTable(data);
-    }
-
-    function updateTable(data) {
-      $('#info-table td[id]').each(function() {
-        var el = $(this),
-         field = el.attr("id")
-        if (data[field])
-          el.text(data[field]);
-      });
     }
 
     // observe data events
