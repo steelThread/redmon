@@ -9,6 +9,10 @@ class Redmon::App < Sinatra::Base
     def opts
       @opts
     end
+
+    def unquoted
+      %w{string OK} << "(empty list or set)"
+    end
   end
 
   def initialize(opts)
@@ -29,12 +33,13 @@ class Redmon::App < Sinatra::Base
   get '/cli' do
     args = params[:tokens].split
     cmd  = args.shift.intern
-    # begin
+    begin
       @result = @redis.send(cmd, *args)
+      @result = '(empty list or set)' if @result == []
       haml :cli_result
-    # rescue
-    #   "(error) ERR wrong number of arguments for '#{cmd.to_s}' command"
-    # end
+    rescue
+      "(error) ERR wrong number of arguments for '#{cmd.to_s}' command"
+    end
   end
 
   def count

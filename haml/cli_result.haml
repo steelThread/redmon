@@ -6,6 +6,6 @@
   %span= "(integer) #{@result}"
   %br
 - else
-  - @result = "\"#{@result}\"" unless @result == 'string'
+  - @result = "\"#{@result}\"" unless unquoted.include? @result
   %span= @result
   %br
