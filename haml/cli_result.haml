@@ -1,0 +1,7 @@
+- if @result.respond_to? :each_with_index
+  - @result.each_with_index do |item, index|
+    %span= "#{index+1}) \"#{item}\""
+    %br
+- else
+  %span= @result
+  %br

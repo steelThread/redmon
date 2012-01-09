@@ -10,7 +10,7 @@ require 'yajl'
 module Redmon
 
   DEFAULT_OPTS = {
-    :redis_url     => "redis://localhost:6379",
+    :redis_url     => "redis://127.0.0.1:6379",
     :namespace     => "redmon",
     :web_interface => ["0.0.0.0", 4567],
     :worker        => true,

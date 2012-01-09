@@ -55,5 +55,6 @@ body {
 }
 
 .headbar.small{ height:29px; }
-
 .headbar h2{ line-height:37px; margin:0; float:left; font-size:14px; }
+
+#wterm input:focus{box-shadow:none; padding:0px;}

@@ -4,10 +4,12 @@
     %title Redmon
 
     %script(type="text/javascript" src="vendor/jquery-1.7.1.min.js")
+    %script(type="text/javascript" src="vendor/wterm.jquery.js")
     %script(type="text/javascript" src="vendor/highcharts.js")
     %script(type="text/javascript" src="redmon.js")
 
     %link(type="text/css" rel="stylesheet" href="vendor/bootstrap.min.css")
+    %link(type="text/css" rel="stylesheet" href="vendor/wterm.css")
     %link(type="text/css" rel="stylesheet" href="redmon.css")
 
   %body
@@ -29,89 +31,136 @@
             %form
               %button.btn.primary Reset Statistics
     .container
-      .content
-        .page-header
-          %h1 Runtime Dashboard
-        .row
-          .span15
-            .row
-              .span15
-                .widget
-                  .headbar
-                    %h2 Memory Usage
-                  #memory-container{:style => "width:880px;height:256px"}
-            .row
-              .span15
-                .widget
-                  .headbar
-                    %h2 Keyspace Hits/Misses
-                  #keyspace-container{:style => "width:880px;height:256px"}
+      .dashboard{:style => "display:none"}
+        .content
+          .page-header
+            %h1 Runtime Dashboard
+          .row
+            .span15
+              .row
+                .span15
+                  .widget
+                    .headbar
+                      %h2 Memory Usage
+                    #memory-container{:style => "width:880px;height:256px"}
+              .row
+                .span15
+                  .widget
+                    .headbar
+                      %h2 Keyspace Hits/Misses
+                    #keyspace-container{:style => "width:880px;height:256px"}
 
-          .span6
-            .widget
-              .headbar
-                %h2 Info
-              %table.condensed-table{:id => "info-table"}
-                %tr
-                  %td{:style => "width: 70%"} Version
-                  %td{:id => "redis_version"}
-                %tr
-                  %td Role
-                  %td{:id => "role"}
-                %tr
-                  %td Uptime
-                  %td{:id => "uptime_in_days"}
-                %tr
-                  %td Memory Used
-                  %td{:id => "used_memory_human"}
-                %tr
-                  %td Memory Peak
-                  %td{:id => ""}
-                %tr
-                  %td Memory Fragmentation Ratio
-                  %td{:id => "mem_fragmentation_ratio"}
-                %tr
-                  %td Keys
-                  %td{:id => "db0:keys"}
-                %tr
-                  %td Keyspace Hits
-                  %td{:id => "keyspace_hits"}
-                %tr
-                  %td Keyspace Misses
-                  %td{:id => "keyspace_misses"}
-                %tr
-                  %td Pub/Sub Channels
-                  %td{:id => "pubsub_channels"}
-                %tr
-                  %td Pub/Sub Patterns
-                  %td{:id => "pubsub_patterns"}
-                %tr
-                  %td Total Connections Received
-                  %td{:id => "total_connections_received"}
-                %tr
-                  %td Total Commands Processed
-                  %td{:id => "total_commands_processed"}
-                %tr
-                  %td Blocked Clients
-                  %td{:id => "blocked_clients"}
-                %tr
-                  %td Connected Slaves
-                  %td{:id => "blocked_clients"}
-                %tr
-                  %td Last Save
-                  %td{:id => "blocked_clients"}
-                %tr
-                  %td Changes Since Last Save
-                  %td{:id => "changes_since_last_sav"}
-                %tr
-                  %td AOF Enabled
-                  %td{:id => "aof_enabled"}
-                %tr
-                  %td VM Enabled
-                  %td{:id => "vm_enabled"}
+            .span6
+              .widget
+                .headbar
+                  %h2 Info
+                %table.condensed-table{:id => "info-table"}
+                  %tr
+                    %td{:style => "width: 70%"} Version
+                    %td{:id => "redis_version"}
+                  %tr
+                    %td Role
+                    %td{:id => "role"}
+                  %tr
+                    %td Uptime
+                    %td{:id => "uptime_in_days"}
+                  %tr
+                    %td Memory Used
+                    %td{:id => "used_memory_human"}
+                  %tr
+                    %td Memory Peak
+                    %td{:id => ""}
+                  %tr
+                    %td Memory Fragmentation Ratio
+                    %td{:id => "mem_fragmentation_ratio"}
+                  %tr
+                    %td Keys
+                    %td{:id => "db0:keys"}
+                  %tr
+                    %td Keyspace Hits
+                    %td{:id => "keyspace_hits"}
+                  %tr
+                    %td Keyspace Misses
+                    %td{:id => "keyspace_misses"}
+                  %tr
+                    %td Pub/Sub Channels
+                    %td{:id => "pubsub_channels"}
+                  %tr
+                    %td Pub/Sub Patterns
+                    %td{:id => "pubsub_patterns"}
+                  %tr
+                    %td Total Connections Received
+                    %td{:id => "total_connections_received"}
+                  %tr
+                    %td Total Commands Processed
+                    %td{:id => "total_commands_processed"}
+                  %tr
+                    %td Blocked Clients
+                    %td{:id => "blocked_clients"}
+                  %tr
+                    %td Connected Slaves
+                    %td{:id => "blocked_clients"}
+                  %tr
+                    %td Last Save
+                    %td{:id => "blocked_clients"}
+                  %tr
+                    %td Changes Since Last Save
+                    %td{:id => "changes_since_last_sav"}
+                  %tr
+                    %td AOF Enabled
+                    %td{:id => "aof_enabled"}
+                  %tr
+                    %td VM Enabled
+                    %td{:id => "vm_enabled"}
+      .cli
+        .content
+          .page-header
+            %h1 Command Line Interface
+          .row
+            .span21{:style => "height:500px"}
+              #wterm.cli.wterm_terminal.wterm_theme_green_on_black
+
 :javascript
   $(document).ready(function() {
     Redmon.init({
       pollInterval: #{opts[:poll_interval]} * 1000
+    });
+
+
+    $('#wterm').wterm( {
+      WIDTH: '100%',
+      HEIGHT: '100%',
+      WELCOME_MESSAGE: "Welcome to Redmon's CLI. To Begin Using type <strong>help</strong>",
+      PS1: "#{opts[:redis_url].gsub('://', ' ')}>"
+    });
+    var command_directory = {
+       'keys': '/cli',
+       'type': '/cli',
+
+       'strrev': {
+         PS1: 'strrev $',
+
+         EXIT_HOOK: function() {
+           return 'exit interface commands';
+         },
+
+         START_HOOK: function() {
+           return 'exit interface commands';
+         },
+
+         DISPATCH: function( tokens ) {
+           return tokens.join('').reverse();
+         }
+       }
+    };
+
+    for( var j in command_directory ) {
+      $.register_command( j, command_directory[j] );
+    }
+
+    $.register_command( 'help', function() {
+      return 'Redmon CLI supports a subset of the redis commands.' + '<br>' +
+        'keys - Find all keys matching the given pattern<br>'
+        'type - Determine the type stored at key<br>'
     });
   });
