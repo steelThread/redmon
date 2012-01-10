@@ -5,15 +5,15 @@
  * @desc   :
  *
  * Allows Emulation of Terminal on the browser.
- * Completely Extendible. 
+ * Completely Extendible.
  * Command History.
- * Commandline Editing. 
+ * Commandline Editing.
  *
  * */
 
 ( function( $ ) {
 
-   
+
   var VERSION = '0.0.4';
 
   /**
@@ -30,11 +30,11 @@
       // PS1 : The Primary Prompt
       PS1                : 'wterm $',
 
-      // TERMINAL_CLASS  
+      // TERMINAL_CLASS
       // Will be applied to the primary terminal container
       TERMINAL_CLASS     : 'wterm_terminal',
 
-      // PROMPT_CLASS 
+      // PROMPT_CLASS
       // Will Applied to prompt container
       PROMPT_CLASS       : 'wterm_prompt',
 
@@ -54,18 +54,18 @@
       // The Class that is applied to keywords
       KEYWORD_CLASS      : 'wterm_keyword',
 
-      // CONTENT_CLASS 
-      // The Class that is applied to content section 
+      // CONTENT_CLASS
+      // The Class that is applied to content section
       KEYWORD_CLASS      : 'wterm_content',
 
       // WIDTH | HIGHT
       // Explicitly set width and height of the terminal
       // container. This may also be done in TERMINAL_CLASS
       WIDTH              : '90%',
-      HEIGHT             : '90%', 
+      HEIGHT             : '90%',
 
       // WELCOME_MESSAGE
-      // Message to be shown when the terminal is first 
+      // Message to be shown when the terminal is first
       // published
       WELCOME_MESSAGE    : 'Welcome to Wterm version-' + VERSION ,
 
@@ -104,20 +104,20 @@
     };
   };
 
- 
+
   /**
   * @property : dispatch
   * @accessor : $.register_command ( See Below )
   * @private
-  * @desc     : 
+  * @desc     :
   *
   * dispatch table stores command name and action
   * to be taken when user enters a command. See
-  * Manual for more details on how to implement 
+  * Manual for more details on how to implement
   * your own commands
   *
   **/
-  var dispatch = { 
+  var dispatch = {
   };
 
 
@@ -125,7 +125,7 @@
   *
   * @method : wterm
   * @public
-  * @desc   : Sets up the terminal on the JQ object that 
+  * @desc   : Sets up the terminal on the JQ object that
   * represents a ( or a group ) of HTML NODE (s)
   *
   **/
@@ -139,11 +139,11 @@
     // JQ Plugin surprised??
     return this.each( function() {
 
-      
+
       var element  = $( this );
       var history  = [ ];
       var hcurrent = null;
-      
+
       // Set up some markup in the element
       // required for terminal emulation
       element.addClass( settings.TERMINAL_CLASS ).addClass( settings.THEME_CLASS_PREFIX + settings.DEFAULT_THEME );
@@ -152,10 +152,10 @@
 
       element.append( '<div class="' + settings.CONTENT_CLASS + '"></div>' );
       element.append( '<div><span class="' + settings.PROMPT_CLASS + '">' + settings.PS1 + '&nbsp;</span>' +
-                      '<form> <input type="text" ></form></div>' ); 
+                      '<form> <input type="text" ></form></div>' );
 
 
-      // Representing prompt, form, input and content section 
+      // Representing prompt, form, input and content section
       // in the terminal
       var _prompt    = element.find( 'div:last span:last' );
       var input_form = element.find( 'div:last form' );
@@ -170,7 +170,7 @@
 
       // Temporary store for current prompt
       var cprompt    = null;
-      
+
       // Curson always needs to be on the prompt
       input.focus();
       element.click( function() { input.focus(); } );
@@ -186,7 +186,7 @@
       };
 
       /**
-      * @method   : show 
+      * @method   : show
       * @private  :
       * @desc     : Shows the prompt
       **/
@@ -194,7 +194,7 @@
         _prompt.show();
         input.focus();
       };
-   
+
       /**
       * @method   : update_content
       * @private  :
@@ -203,7 +203,7 @@
       **/
       var update_content = function( p, cmd, data ) {
         content.append( '<div><span>' + p + ' ' + cmd + '</span><div>' + ( ( data ) ? data : '' ) + '</div></div>' );
-      }; 
+      };
 
       /**
       * @method   : clear_content
@@ -221,16 +221,16 @@
 
 
       /**
-      * @method   : set_prompt 
+      * @method   : set_prompt
       * @private  :
       * @desc     : Set the current prompt
-      * @args     : string 
+      * @args     : string
       **/
       set_prompt = function( p ) {
         if( p && p.length ) element.find( '.' + settings.PROMPT_CLASS).html( p + '&nbsp;' );
       };
 
- 
+
 
       /**
       *
@@ -249,13 +249,13 @@
           if( history.length > settings.HISTORY_ENTRIES ) history.shift();
           history.push( value );
         }
-        
+
         // Reset The Input
         input.attr( 'value', '' );
         var tokens = value.split( /\s+/ );
         var key    = tokens[0];
-        
-        hide(); 
+
+        hide();
 
         var get_current_prompt = function() {
           return ( cprompt ) ? cprompt : settings.PS1;
@@ -273,7 +273,7 @@
             var on_complete = function( data, text_status ) {
               update_content( get_current_prompt(), value, data )
             };
-           
+
             $[ settings.AJAX_METHOD.toLowerCase() ](  key, to_send, on_complete );
           }
         };
@@ -281,7 +281,7 @@
         if( key == '' ) {
           update_content( get_current_prompt() , '' )
         } else if( cdispatch && key == 'exit' ) {
-           
+
            // Recover old configuration and Dispatch exit hook
            settings.AUTOCOMPLETE = ( ac_save ) ? ac_save : false ;
 
@@ -291,9 +291,9 @@
            } else {
              _dispatch( function() { return '<b></b>' }, tokens );
            }
-       
+
           // Clear temporary values
-          cdispatch = null;  
+          cdispatch = null;
           cprompt   = null;
 
           // Reset the prompt
@@ -302,7 +302,7 @@
         } else if( cdispatch ) {
 
           // Dispatch to the custom dispatcher
-          _dispatch( cdispatch.DISPATCH, tokens ); 
+          _dispatch( cdispatch.DISPATCH, tokens );
 
         } else if( dispatch[ key ] ) {
           if( typeof dispatch[ key ] === 'object' ) {
@@ -322,7 +322,7 @@
             }
           } else {
             _dispatch( dispatch[ key ], tokens );
-          } 
+          }
         } else {
           update_content( settings.PS1, value, settings.NOT_FOUND.replace( 'CMD', tokens[0] ));
         }
@@ -349,7 +349,7 @@
             e.preventDefault();
 
             if( settings.AUTOCOMPLETE ) {
-              var commands      = [ ];   
+              var commands      = [ ];
               var current_value = input.attr( 'value' );
               // Command Completion
               if( current_value.match( /^[^\s]{0,}$/ ) ) {
@@ -360,11 +360,11 @@
                     commands.push( i );
                   }
                 }
-               
-                if( commands.length > 1 ) { 
+
+                if( commands.length > 1 ) {
                   update_content( settings.PS1, current_value, commands.join( '<br>' ) );
                 } else if( commands.length == 1 ) {
-                  input.attr( 'value', commands.pop() + ' ' );  
+                  input.attr( 'value', commands.pop() + ' ' );
                 }
               }
             }

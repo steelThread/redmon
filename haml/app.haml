@@ -118,7 +118,7 @@
             %h1 Command Line Interface
           .row
             .span21{:style => "height:500px"}
-              #wterm.cli.wterm_terminal.wterm_theme_green_on_black
+              #wterm.cli.wterm_terminal.wterm_theme_green_on_black{:style => "scroll:vertical"}
 
       .config.hidden
         .content
@@ -138,8 +138,8 @@
 
     $('#wterm').wterm( {
       WIDTH: '100%',
-      HEIGHT: '100%',
-      WELCOME_MESSAGE: "Welcome to Redmon's CLI. To Begin Using type <strong>help</strong>",
+      HEIGHT: '500px',
+      WELCOME_MESSAGE: "Welcome to redmon-cli. To Begin Using type <strong>help</strong>",
       PS1: "#{opts[:redis_url].gsub('://', ' ')}>"
     });
     var command_directory = {
@@ -172,7 +172,7 @@
     }
 
     $.register_command( 'help', function() {
-      return 'Redmon CLI supports a subset of the redis commands.' + '<br>' +
+      return 'redmon-cli supports a subset of the redis commands.' + '<br>' +
         'keys   - Find all keys matching the given pattern<br>' +
         'dbsize - Return the number of keys in the selected database<br>' +
         'set    - Set the string value of a key<br>' +
