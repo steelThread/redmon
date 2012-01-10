@@ -9,7 +9,7 @@ project I was inspired to write this.  Some of the ideas there have be carried o
 
 Watch your redis server live.
 
-![](http://dl.dropbox.com/u/27525257/dashboard.png)
+![](http://dl.dropbox.com/u/27525257/dash.png)
 
 ----
 
