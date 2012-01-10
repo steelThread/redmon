@@ -55,10 +55,6 @@ module Redmon
     EM.stop
   end
 
-  def self.key
-    "#{@opts[:namespace]}:redis.info"
-  end
-
   def self.log(msg)
     puts "[#{Time.now.strftime("%y-%m-%d %H:%M:%S")}] #{msg}"
   end

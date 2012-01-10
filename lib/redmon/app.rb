@@ -11,8 +11,8 @@ class Redmon::App < Sinatra::Base
       @opts
     end
 
-    def count
-      -params[:count].to_i
+    def count()
+      -(params[:count] ? params[:count].to_i : 1)
     end
   end
 
@@ -28,7 +28,7 @@ class Redmon::App < Sinatra::Base
 
   get '/info' do
     content_type :json
-    @redis.zrange(Redmon.key, count, -1).to_json
+    @redis.zrange(key, count, -1).to_json
   end
 
   get '/cli' do
@@ -42,4 +42,11 @@ class Redmon::App < Sinatra::Base
       "(error) ERR wrong number of arguments for '#{cmd.to_s}' command"
     end
   end
+
+  private
+
+    def key
+      "#{@opts[:namespace]}:redis.info"
+    end
+
 end
