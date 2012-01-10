@@ -25,6 +25,7 @@ $ ruby sample/app.rb
 ```
 
 If you want to simulate a weak load on redis
+
 ```bash
 $ ruby sample/load_sim.rb
 ```
