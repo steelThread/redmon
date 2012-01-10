@@ -17,6 +17,16 @@ Interact with redis using a familiar cli interface.
 
 ![](http://dl.dropbox.com/u/27525257/cli.png)
 
+----
+
+Dynamically update your server configuration.  ** Coming Soon **
+
+
+----
+
+View your slow log.  ** Coming Soon **
+
+
 ## Usage
 Currently not a registered gem, but soon.  For now clone the repo &
 
