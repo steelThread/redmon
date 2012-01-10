@@ -1,8 +1,8 @@
 # Redmon
 
 ** Work in progress **
-My personal administrative dashbord for redis.  After seeing [fnordmetric] project I was inspired to
-write this.  I've wanting something like this for a while now.
+Simple sinatra based dashbord for redis.  After seeing the [fnordmetric](https://github.com/paulasmuth/fnordmetric)
+project I was inspired to write this.  Some of the ideas there have be carried over here.
 
 ----
 
@@ -12,7 +12,7 @@ Watch your redis server live.
 
 ----
 
-Interact with your redis server using a familiar cli interface a la redis-cli.
+Interact with redis using a familiar cli interface.
 
 ![](http://dl.dropbox.com/u/27525257/cli.png)
 
