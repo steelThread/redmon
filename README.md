@@ -1,6 +1,7 @@
 # Redmon
 
-** Work in progress **
+** Work in progress in the very early stages of dev **
+
 Simple sinatra based dashbord for redis.  After seeing the [fnordmetric](https://github.com/paulasmuth/fnordmetric)
 project I was inspired to write this.  Some of the ideas there have be carried over here.
 
@@ -29,3 +30,5 @@ If you want to simulate a weak load on redis
 ```bash
 $ ruby sample/load_sim.rb
 ```
+
+Open your browser to 0.0.0.0:4567
