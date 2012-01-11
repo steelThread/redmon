@@ -28,7 +28,7 @@ class Redmon::App < Sinatra::Base
 
   get '/info' do
     content_type :json
-    @redis.zrange(Redmon.info_key, count, -1).to_json
+    @redis.zrange(key, count, -1).to_json
   end
 
   get '/cli' do
@@ -46,5 +46,10 @@ class Redmon::App < Sinatra::Base
       connection_refused_for @opts[:redis_url]
     end
   end
+
+  private
+    def key
+      "#{@opts[:namespace]}:redis.info"
+    end
 
 end

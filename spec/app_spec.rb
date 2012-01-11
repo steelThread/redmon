@@ -5,7 +5,7 @@ include Rack::Test::Methods
 describe "app" do
 
   def app
-    Redmon::App.new(Redmon::DEFAULT_OPTS)
+    Redmon::App.new Redmon::DEFAULT_OPTS
   end
 
   describe "GET /" do
@@ -17,18 +17,23 @@ describe "app" do
   end
 
   describe "GET /info" do
-    it "should render json" do
+    it "should render a single json result" do
+      stub_redis ['redmon:redis.info', -1, -1]
       get "/info"
       last_response.should be_ok
       last_response.headers["Content-Type"].should == "application/json;charset=utf-8"
     end
 
-    it "should render the correct # of results" do
-      get "/info?count=1"
-      JSON.parse(last_response.body).length.should == 1
+    it "should request the correct # of historical info records from redis" do
+      stub_redis ['redmon:redis.info', -666, -1]
+      get "/info?count=666"
+      last_response.should be_ok
+    end
 
-      get "/info?count=2"
-      JSON.parse(last_response.body).length.should == 2
+    def stub_redis(args)
+      redis = Redis.new
+      redis.should_receive(:zrange).with(*args).and_return({})
+      Redis.stub(:new).and_return(redis)
     end
   end
 

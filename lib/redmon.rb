@@ -24,14 +24,8 @@ module Redmon
       trap("INT",  &method(:shutdown))
 
       @opts = DEFAULT_OPTS.merge opts
-
-      if @opts[:worker]
-        Worker.new(@opts).run!
-      end
-
-      if @opts[:web_interface]
-        start_app
-      end
+      Worker.new(@opts).run! if @opts[:worker]
+      start_app if @opts[:web_interface]
     end
   end
 
@@ -55,10 +49,6 @@ module Redmon
 
   def shutdown
     EM.stop
-  end
-
-  def info_key
-    "#{@opts[:namespace]}:redis.info"
   end
 
   def log(msg)

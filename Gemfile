@@ -14,7 +14,7 @@ gem "yajl-ruby", :git => "git://github.com/brianmario/yajl-ruby.git"
 gem "thin"
 gem "activesupport"
 
-group :development do
+group :test do
   gem "rake"
   gem "rspec", "~> 2.6.0"
   gem "shoulda", ">= 0"
