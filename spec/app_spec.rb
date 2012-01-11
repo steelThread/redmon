@@ -8,6 +8,16 @@ describe "app" do
     Redmon::App.new Redmon::DEFAULT_OPTS
   end
 
+  def stub_redis_cmd(cmd, *args)
+    mock_redis.should_receive(cmd).with(*args).and_return({})
+  end
+
+  def mock_redis
+    redis = Redis.new
+    Redis.stub(:new).and_return(redis)
+    redis
+  end
+
   describe "GET /" do
     it "should render the app" do
       get "/"
@@ -77,13 +87,4 @@ describe "app" do
     end
   end
 
-  def stub_redis_cmd(cmd, *args)
-    mock_redis.should_receive(cmd).with(*args).and_return({})
-  end
-
-  def mock_redis
-    redis = Redis.new
-    Redis.stub(:new).and_return(redis)
-    redis
-  end
 end

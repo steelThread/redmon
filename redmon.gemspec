@@ -18,5 +18,21 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
+  s.add_dependency "bson_ext", ">= 1.4.0"
+  s.add_dependency "sinatra", ">= 1.2.6"
+  s.add_dependency "redis", ">= 2.2.2"
+  s.add_dependency "eventmachine"
+  s.add_dependency "em-hiredis"
+  s.add_dependency "i18n"
+  s.add_dependency "haml"
+  s.add_dependency "rack"
+  s.add_dependency "thin"
+  s.add_dependency "activesupport"
+
   s.add_development_dependency "rspec"
+  s.add_development_dependency "rack-test"
+  s.add_development_dependency "rake"
+  s.add_development_dependency "rspec", "~> 2.6.0"
+  s.add_development_dependency "shoulda", ">= 0"
+  s.add_development_dependency "bundler", "~> 1.0.0"
 end

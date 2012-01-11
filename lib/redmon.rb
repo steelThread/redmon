@@ -5,7 +5,6 @@ require 'haml'
 require 'redis'
 require 'sinatra/base'
 require 'thin'
-require 'yajl'
 
 module Redmon
   extend self
