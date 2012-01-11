@@ -27,4 +27,8 @@ module RedisUtils
     "Could not connect to Redis at #{url.gsub(/\w*:\/\//, '')}: Connection refused"
   end
 
+  def info_key(ns)
+    "#{ns}:redis.info"
+  end
+
 end

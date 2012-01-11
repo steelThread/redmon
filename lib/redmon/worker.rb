@@ -1,4 +1,6 @@
 class Redmon::Worker
+  include RedisUtils
+
   def initialize(opts)
     @ns, @url, @interval = opts[:namespace], opts[:redis_url], opts[:poll_interval]
   end
@@ -8,12 +10,9 @@ class Redmon::Worker
     EM::PeriodicTimer.new(@interval) do
       redis.info do |info|
         info[:time] = ts = Time.now.to_i * 1000
-        redis.zadd(key, ts, info.to_json)
+        redis.zadd(info_key(@ns), ts, info.to_json)
       end
     end
   end
 
-  def key
-    @key ||= "#{@ns}:redis.info"
-  end
 end

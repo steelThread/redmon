@@ -24,8 +24,9 @@ module Redmon
       trap("INT",  &method(:shutdown))
 
       @opts = DEFAULT_OPTS.merge opts
-      Worker.new(@opts).run! if @opts[:worker]
-      start_app if @opts[:web_interface]
+
+      start_app    if @opts[:web_interface]
+      start_worker if @opts[:worker]
     end
   end
 
@@ -37,14 +38,16 @@ module Redmon
   end
 
   def start_app
-    begin
-      app = Redmon::App.new(@opts)
-      Thin::Server.start(*@opts[:web_interface], app)
-      log "listening on http##{@opts[:web_interface].join(":")}"
-    rescue Exception => e
-      log "got an error #{e}"
-      log "can't start Redmon::App. port in use?"
-    end
+    app = Redmon::App.new(@opts)
+    Thin::Server.start(*@opts[:web_interface], app)
+    log "listening on http##{@opts[:web_interface].join(":")}"
+  rescue Exception => e
+    log "got an error #{e}"
+    log "can't start Redmon::App. port in use?"
+  end
+
+  def start_worker
+    Worker.new(@opts).run!
   end
 
   def shutdown

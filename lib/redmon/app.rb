@@ -1,4 +1,5 @@
 class Redmon::App < Sinatra::Base
+
   set :haml, :format => :html5
   set :views,         ::File.expand_path('../../../haml', __FILE__)
   set :public_folder, ::File.expand_path('../../../public', __FILE__)
@@ -28,7 +29,7 @@ class Redmon::App < Sinatra::Base
 
   get '/info' do
     content_type :json
-    @redis.zrange(key, count, -1).to_json
+    @redis.zrange(info_key(@opts[:namespace]), count, -1).to_json
   end
 
   get '/cli' do
@@ -46,10 +47,5 @@ class Redmon::App < Sinatra::Base
       connection_refused_for @opts[:redis_url]
     end
   end
-
-  private
-    def key
-      "#{@opts[:namespace]}:redis.info"
-    end
 
 end
