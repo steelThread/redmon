@@ -56,13 +56,22 @@ describe "app" do
       last_response.body.include? RedisUtils.wrong_number_of_arguments_for(:keys)
     end
 
-    it "should return a connection refused result" do
+    it "should return an unknown result" do
       redis = mock_redis
       redis.stub(:send).and_raise(RuntimeError)
 
       get URI.encode("/cli?tokens=keys *")
       last_response.should be_ok
       last_response.body.include? RedisUtils.unknown(:keys)
+    end
+
+    it "should return a connection refused result" do
+      redis = mock_redis
+      redis.stub(:send).and_raise(Errno::ECONNREFUSED)
+
+      get URI.encode("/cli?tokens=keys *")
+      last_response.should be_ok
+      last_response.body.include? RedisUtils.connection_refused_for(Redmon::DEFAULT_OPTS[:redis_url])
     end
   end
 
