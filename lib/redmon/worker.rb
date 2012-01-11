@@ -1,8 +1,6 @@
 class Redmon::Worker
   def initialize(opts)
-    @ns        = opts[:namespace]
-    @url       = opts[:redis_url]
-    @interval  = opts[:poll_interval]
+    @ns, @url, @interval = opts[:namespace], opts[:redis_url], opts[:poll_interval]
   end
 
   def run!
