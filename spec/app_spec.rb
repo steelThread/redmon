@@ -8,7 +8,7 @@ describe "app" do
     Redmon::App.new(Redmon::DEFAULT_OPTS)
   end
 
-  context "/" do
+  describe "GET /" do
     it "should render the app" do
       get "/"
       last_response.should be_ok
@@ -16,7 +16,7 @@ describe "app" do
     end
   end
 
-  context "/info" do
+  describe "GET /info" do
     it "should render json" do
       get "/info"
       last_response.should be_ok
@@ -32,7 +32,7 @@ describe "app" do
     end
   end
 
-  context "/cli" do
+  describe "GET /cli" do
 
   end
 end

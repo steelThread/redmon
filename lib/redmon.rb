@@ -8,6 +8,7 @@ require 'thin'
 require 'yajl'
 
 module Redmon
+  extend self
 
   DEFAULT_OPTS = {
     :redis_url     => "redis://127.0.0.1:6379",
@@ -17,7 +18,7 @@ module Redmon
     :poll_interval => 10
   }
 
-  def self.start_em(opts)
+  def start_em(opts)
     EM.run do
       trap("TERM", &method(:shutdown))
       trap("INT",  &method(:shutdown))
@@ -25,37 +26,42 @@ module Redmon
       @opts = DEFAULT_OPTS.merge opts
 
       if @opts[:worker]
-        log "starting worker"
         Worker.new(@opts).run!
       end
 
       if @opts[:web_interface]
-        begin
-          app = Redmon::App.new(@opts)
-          Thin::Server.start(*@opts[:web_interface], app)
-          log "listening on http##{@opts[:web_interface].join(":")}"
-        rescue Exception => e
-          log "got an error #{e}"
-          log "can't start Redmon::App. port in use?"
-        end
+        start_app
       end
     end
   end
 
-  def self.run(opts={})
+  def run(opts={})
     start_em(opts)
   rescue Exception => e
-    puts e
     log "!!! eventmachine died, restarting... #{e.message}"
     sleep(1); run(opts)
   end
 
-  def self.shutdown
-    log "shutting down, byebye"
+  def start_app
+    begin
+      app = Redmon::App.new(@opts)
+      Thin::Server.start(*@opts[:web_interface], app)
+      log "listening on http##{@opts[:web_interface].join(":")}"
+    rescue Exception => e
+      log "got an error #{e}"
+      log "can't start Redmon::App. port in use?"
+    end
+  end
+
+  def shutdown
     EM.stop
   end
 
-  def self.log(msg)
+  def info_key
+    "#{@opts[:namespace]}:redis.info"
+  end
+
+  def log(msg)
     puts "[#{Time.now.strftime("%y-%m-%d %H:%M:%S")}] #{msg}"
   end
 

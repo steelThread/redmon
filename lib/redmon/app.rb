@@ -11,14 +11,14 @@ class Redmon::App < Sinatra::Base
       @opts
     end
 
-    def count()
+    def count
       -(params[:count] ? params[:count].to_i : 1)
     end
   end
 
   def initialize(opts)
     @opts  = opts
-    @redis = Redis.connect(:url => opts[:redis_url])
+    @redis = Redis.new(:url => opts[:redis_url])
     super(nil)
   end
 
@@ -28,25 +28,23 @@ class Redmon::App < Sinatra::Base
 
   get '/info' do
     content_type :json
-    @redis.zrange(key, count, -1).to_json
+    @redis.zrange(Redmon.info_key, count, -1).to_json
   end
 
   get '/cli' do
     args = params[:tokens].split
-    cmd  = args.shift.downcase.intern
+    cmd  = args.shift.downcase
     begin
-      @result = @redis.send(cmd, *args)
-      @result = '(empty list or set)' if @result == []
-      haml :cli_result
-    rescue
-      "(error) ERR wrong number of arguments for '#{cmd.to_s}' command"
+      @result = @redis.send(cmd.intern, *args)
+      @result = empty_result if @result == []
+      haml :cli
+    rescue ArgumentError
+      wrong_number_of_arguments_for cmd
+    rescue RuntimeError
+      unknown cmd
+    rescue Errno::ECONNREFUSED
+      connection_refused_for @opts[:redis_url]
     end
   end
-
-  private
-
-    def key
-      "#{@opts[:namespace]}:redis.info"
-    end
 
 end
