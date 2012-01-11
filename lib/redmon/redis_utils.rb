@@ -1,4 +1,6 @@
 module RedisUtils
+  extend self
+
   FORBIDDEN = [:quit]
 
   def unquoted

@@ -18,26 +18,61 @@ describe "app" do
 
   describe "GET /info" do
     it "should render a single json result" do
-      stub_redis ['redmon:redis.info', -1, -1]
+      stub_redis_cmd :zrange, 'redmon:redis.info', -1, -1
       get "/info"
       last_response.should be_ok
       last_response.headers["Content-Type"].should == "application/json;charset=utf-8"
     end
 
     it "should request the correct # of historical info records from redis" do
-      stub_redis ['redmon:redis.info', -666, -1]
+      stub_redis_cmd :zrange, 'redmon:redis.info', -666, -1
       get "/info?count=666"
       last_response.should be_ok
-    end
-
-    def stub_redis(args)
-      redis = Redis.new
-      redis.should_receive(:zrange).with(*args).and_return({})
-      Redis.stub(:new).and_return(redis)
     end
   end
 
   describe "GET /cli" do
+    it "should execute the passed command" do
+      stub_redis_cmd :keys, '*'
+      get URI.encode("/cli?tokens=keys *")
+      last_response.should be_ok
+    end
 
+    it "should render an empty list result" do
+      redis = mock_redis
+      redis.stub(:send).and_return([])
+
+      get URI.encode("/cli?tokens=keys *")
+      last_response.should be_ok
+      last_response.body.include? RedisUtils.empty_result
+    end
+
+    it "should render the wrong arguments result" do
+      redis = mock_redis
+      redis.stub(:send).and_raise(ArgumentError)
+
+      get URI.encode("/cli?tokens=keys *")
+      last_response.should be_ok
+      last_response.body.include? RedisUtils.wrong_number_of_arguments_for(:keys)
+    end
+
+    it "should return a connection refused result" do
+      redis = mock_redis
+      redis.stub(:send).and_raise(RuntimeError)
+
+      get URI.encode("/cli?tokens=keys *")
+      last_response.should be_ok
+      last_response.body.include? RedisUtils.unknown(:keys)
+    end
+  end
+
+  def stub_redis_cmd(cmd, *args)
+    mock_redis.should_receive(cmd).with(*args).and_return({})
+  end
+
+  def mock_redis
+    redis = Redis.new
+    Redis.stub(:new).and_return(redis)
+    redis
   end
 end
