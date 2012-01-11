@@ -1,5 +1,5 @@
 class Redmon::Worker
-  include RedisUtils
+  include Redmon::RedisUtils
 
   def initialize(opts)
     @ns, @url, @interval = opts[:namespace], opts[:redis_url], opts[:poll_interval]

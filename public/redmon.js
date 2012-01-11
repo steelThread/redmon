@@ -220,6 +220,7 @@ var Redmon = (function() {
 
     function point(info) {
       var time = parseInt(info.time);
+      console.log(time)
       return [
         [time, parseInt(info.keyspace_hits)],
         [time, parseInt(info.keyspace_misses)]

@@ -55,7 +55,7 @@ describe "app" do
 
       get "/cli?tokens=#{params}"
       last_response.should be_ok
-      last_response.body.include? RedisUtils.empty_result
+      last_response.body.include? Redmon::RedisUtils.empty_result
     end
 
     it "should render the wrong arguments result" do
@@ -64,7 +64,7 @@ describe "app" do
 
       get "/cli?tokens=#{params}"
       last_response.should be_ok
-      last_response.body.include? RedisUtils.wrong_number_of_arguments_for(:keys)
+      last_response.body.include? Redmon::RedisUtils.wrong_number_of_arguments_for(:keys)
     end
 
     it "should return an unknown result" do
@@ -73,7 +73,7 @@ describe "app" do
 
       get "/cli?tokens=#{params}"
       last_response.should be_ok
-      last_response.body.include? RedisUtils.unknown(:keys)
+      last_response.body.include? Redmon::RedisUtils.unknown(:keys)
     end
 
     it "should return a connection refused result" do
@@ -82,7 +82,7 @@ describe "app" do
 
       get "/cli?tokens=#{params}"
       last_response.should be_ok
-      last_response.body.include? RedisUtils.connection_refused_for(Redmon::DEFAULT_OPTS[:redis_url])
+      last_response.body.include? Redmon::RedisUtils.connection_refused_for(Redmon::DEFAULT_OPTS[:redis_url])
     end
   end
 

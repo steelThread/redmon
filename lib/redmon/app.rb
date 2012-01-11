@@ -6,7 +6,7 @@ class Redmon::App < Sinatra::Base
 
   helpers do
     include Rack::Utils
-    include RedisUtils
+    include Redmon::RedisUtils
 
     def opts
       @opts

@@ -7,7 +7,7 @@ require 'em-hiredis'
 require 'rack'
 require 'redis'
 
-require 'delorean'
-require 'rack/test'
 require 'rspec'
+require 'rack/test'
+require 'delorean'
 

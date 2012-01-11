@@ -23,7 +23,6 @@ module Redmon
       trap("INT",  &method(:shutdown))
 
       @opts = DEFAULT_OPTS.merge opts
-
       start_app    if @opts[:web_interface]
       start_worker if @opts[:worker]
     end
