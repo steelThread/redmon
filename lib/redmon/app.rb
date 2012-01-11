@@ -19,7 +19,7 @@ class Redmon::App < Sinatra::Base
 
   def initialize(opts)
     @opts  = opts
-    @redis = Redis.new(:url => opts[:redis_url])
+    @redis = Redis.new(:url => redis_url)
     super(nil)
   end
 
@@ -29,7 +29,7 @@ class Redmon::App < Sinatra::Base
 
   get '/info' do
     content_type :json
-    @redis.zrange(info_key(@opts[:namespace]), count, -1).to_json
+    @redis.zrange(info_key(ns), count, -1).to_json
   end
 
   get '/cli' do
@@ -44,8 +44,15 @@ class Redmon::App < Sinatra::Base
     rescue RuntimeError
       unknown cmd
     rescue Errno::ECONNREFUSED
-      connection_refused_for @opts[:redis_url]
+      connection_refused_for redis_url
     end
   end
 
+  def ns
+    @opts[:namespace]
+  end
+
+  def redis_url
+    @opts[:redis_url]
+  end
 end
