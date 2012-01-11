@@ -21,7 +21,10 @@ GEM
     bson (1.5.2)
     bson_ext (1.5.2)
       bson (= 1.5.2)
+    chronic (0.6.6)
     daemons (1.1.5)
+    delorean (1.2.0)
+      chronic
     diff-lcs (1.1.3)
     em-hiredis (0.1.0)
       hiredis (~> 0.3.0)
@@ -60,7 +63,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.0.0)
+  delorean
   rack-test
   rake
   redmon!

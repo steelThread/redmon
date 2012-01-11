@@ -1,13 +1,13 @@
-require 'rubygems'
-require 'json'
-require 'rspec'
-require 'redis'
-require 'rack'
-require 'rack/test'
-
+$:.unshift File.expand_path('../../lib', __FILE__)
 ENV['RACK_ENV'] = "test"
 
-$: << ::File.expand_path('../../lib', __FILE__)
 require "redmon"
 require "eventmachine"
 require 'em-hiredis'
+require 'rack'
+require 'redis'
+
+require 'delorean'
+require 'rack/test'
+require 'rspec'
+

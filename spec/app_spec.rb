@@ -1,8 +1,7 @@
-require ::File.expand_path('../spec_helper.rb', __FILE__)
-
-include Rack::Test::Methods
+require 'spec_helper'
 
 describe "app" do
+  include Rack::Test::Methods
 
   def app
     Redmon::App.new Redmon::DEFAULT_OPTS
