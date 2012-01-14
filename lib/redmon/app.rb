@@ -36,6 +36,7 @@ class Redmon::App < Sinatra::Base
     args = params[:tokens].split
     cmd  = args.shift.downcase
     begin
+      raise RuntimeError unless supported? cmd
       @result = @redis.send(cmd.intern, *args)
       @result = empty_result if @result == []
       haml :cli

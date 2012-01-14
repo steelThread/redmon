@@ -2,14 +2,26 @@ module Redmon
   module RedisUtils
     extend self
 
-    FORBIDDEN = [:quit]
+    UNSUPPORTED = [
+      :eval,
+      :exec,
+      :monitor,
+      :multi,
+      :psubscribe,
+      :publish,
+      :punsubscribe,
+      :subscribe,
+      :unsubscribe,
+      :unwatch,
+      :watch
+    ]
 
     def unquoted
       %w{string OK} << "(empty list or set)"
     end
 
-    def forbidden?(cmd)
-      FORBIDDEN.include? cmd
+    def supported?(cmd)
+      !UNSUPPORTED.include? cmd
     end
 
     def empty_result
@@ -33,3 +45,4 @@ module Redmon
     end
   end
 end
+
