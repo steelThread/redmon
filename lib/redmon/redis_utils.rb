@@ -4,11 +4,7 @@ module Redmon
 
     UNSUPPORTED = [
       :eval,
-      :exec,
-      :monitor,
-      :multi,
       :psubscribe,
-      :publish,
       :punsubscribe,
       :subscribe,
       :unsubscribe,
