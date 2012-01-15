@@ -4,7 +4,7 @@ describe "app" do
   include Rack::Test::Methods
 
   def app
-    Redmon::App.new Redmon::DEFAULT_OPTS
+    Redmon::App.new(Redmon::DEFAULT_OPTS)
   end
 
   def stub_redis_cmd(cmd, *args)
@@ -12,7 +12,7 @@ describe "app" do
   end
 
   def mock_redis
-    redis = Redis.new
+    redis = double :redis
     Redis.stub(:new).and_return(redis)
     redis
   end

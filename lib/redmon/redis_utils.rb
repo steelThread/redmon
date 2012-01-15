@@ -41,4 +41,3 @@ module Redmon
     end
   end
 end
-
