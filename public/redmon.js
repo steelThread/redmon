@@ -387,6 +387,7 @@ var Redmon = (function() {
         "sync"             : '/cli',
         "ttl"              : '/cli',
         "type"             : '/cli',
+        "watch"            : '/cli',
         "zadd"             : '/cli',
         "zcard"            : '/cli',
         "zcount"           : '/cli',

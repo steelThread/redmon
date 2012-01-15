@@ -15,6 +15,10 @@ class Redmon::App < Sinatra::Base
     def count
       -(params[:count] ? params[:count].to_i : 1)
     end
+
+    def config
+      @redis.config :get, '*'
+    end
   end
 
   def initialize(opts)
@@ -25,11 +29,6 @@ class Redmon::App < Sinatra::Base
 
   get '/' do
     haml :app
-  end
-
-  get '/info' do
-    content_type :json
-    @redis.zrange(info_key(ns), count, -1).to_json
   end
 
   get '/cli' do
@@ -47,6 +46,22 @@ class Redmon::App < Sinatra::Base
     rescue Errno::ECONNREFUSED
       connection_refused_for redis_url
     end
+  end
+
+  get '/config' do
+    content_type :json
+    config.to_json
+  end
+
+  put '/config' do
+    param = params[:param]
+    value = params[:value]
+    @redis.config(:set, param, value)
+  end
+
+  get '/info' do
+    content_type :json
+    @redis.zrange(info_key(ns), count, -1).to_json
   end
 
   def ns

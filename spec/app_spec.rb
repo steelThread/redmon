@@ -17,6 +17,8 @@ describe "app" do
     redis
   end
 
+  let(:json) {"application/json;charset=utf-8"}
+
   describe "GET /" do
     it "should render the app" do
       get "/"
@@ -25,17 +27,19 @@ describe "app" do
     end
   end
 
-  describe "GET /info" do
-    it "should render a single json result" do
-      stub_redis_cmd :zrange, 'redmon:redis.info', -1, -1
-      get "/info"
+  describe "GET /config" do
+    it "should render the redis config params" do
+      stub_redis_cmd :config, :get, '*'
+      get "/config"
       last_response.should be_ok
-      last_response.headers["Content-Type"].should == "application/json;charset=utf-8"
+      last_response.headers["Content-Type"].should == json
     end
+  end
 
-    it "should request the correct # of historical info records from redis" do
-      stub_redis_cmd :zrange, 'redmon:redis.info', -666, -1
-      get "/info?count=666"
+  describe "PUT /config" do
+    it "should set a redis config param" do
+      stub_redis_cmd :config, :set, 'param', 'value'
+      put "/config?param=param&value=value"
       last_response.should be_ok
     end
   end
@@ -83,6 +87,21 @@ describe "app" do
       get "/cli?tokens=#{params}"
       last_response.should be_ok
       last_response.body.include? Redmon::RedisUtils.connection_refused_for(Redmon::DEFAULT_OPTS[:redis_url])
+    end
+  end
+
+  describe "GET /info" do
+    it "should render a single json result" do
+      stub_redis_cmd :zrange, 'redmon:redis.info', -1, -1
+      get "/info"
+      last_response.should be_ok
+      last_response.headers["Content-Type"].should == json
+    end
+
+    it "should request the correct # of historical info records from redis" do
+      stub_redis_cmd :zrange, 'redmon:redis.info', -666, -1
+      get "/info?count=666"
+      last_response.should be_ok
     end
   end
 
