@@ -8,8 +8,8 @@ class Redmon::App < Sinatra::Base
     include Rack::Utils
     include Redmon::RedisUtils
 
-    def opts
-      @opts
+    def redis_url
+      @opts[:redis_url]
     end
 
     def count
@@ -18,6 +18,14 @@ class Redmon::App < Sinatra::Base
 
     def config
       @redis.config :get, '*'
+    end
+
+    def prompt
+      "#{@opts[:redis_url].gsub('://', ' ')}>"
+    end
+
+    def poll_interval
+      @opts[:poll_interval] * 1000
     end
   end
 

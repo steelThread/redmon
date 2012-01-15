@@ -27,7 +27,7 @@
             %li{:id => 'slow'}
               %a Slow Log
           .pull-right
-            %a.brand #{opts[:redis_url]}
+            %a.brand #{redis_url}
             %form
               %button.btn.primary Reset Statistics
 
@@ -132,7 +132,7 @@
 :javascript
   $(document).ready(function() {
     Redmon.init({
-      pollInterval: #{opts[:poll_interval]} * 1000,
-      cliPrompt: "#{opts[:redis_url].gsub('://', ' ')}>"
+      pollInterval : #{poll_interval},
+      cliPrompt    : "#{prompt}"
     });
   });
