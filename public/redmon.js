@@ -11,6 +11,7 @@ var Redmon = (function() {
    */
   function init(opts) {
     config = opts;
+
     nav.init();
     cli.init();
     requestData(100, function(data) {
@@ -260,7 +261,7 @@ var Redmon = (function() {
     function updateTable(data) {
       $('#info-table td[id]').each(function() {
         var el = $(this),
-         field = el.attr("id")
+         field = el.attr('id')
         if (data[field])
           el.text(data[field]);
       });
@@ -277,16 +278,34 @@ var Redmon = (function() {
   //////////////////////////////////////////////////////////////////////
   // encapsulate the config widget
   var configWidget = (function() {
+    var selects = {
+      'appendonly'                : 'yes,no',
+      'no-appendfsync-on-rewrite' : 'yes,no',
+      'slave-serve-stale-data'    : 'yes,no',
+      'loglevel'                  : 'debug,verbose,notice,warning',
+      'maxmemory-policy'          : 'volatile-lru,allkeys-lru,volatile-random,allkeys-random,volatile-ttl,noeviction',
+      'appendfsync'               : 'always,everysec,no'
+    };
 
     function render(data) {
       $('#config-table .editable').each(function() {
-        $(this).editInPlace({
-          url           : 'test',
+        var editable = $(this),
+                  id = editable.attr('id');
+
+        var config = {
+          url           : '/config',
           show_buttons  :  true,
           save_button   : '<button style="margin-left:5px;"class="btn primary">Save</button>',
           cancel_button : '<button class="btn">Cancel</button>',
           default_text  : '&nbsp'
-        });
+        };
+
+        if (selects[id]) {
+          config.field_type     = 'select';
+          config.select_options = selects[id];
+        }
+
+        editable.editInPlace(config);
       });
     }
 

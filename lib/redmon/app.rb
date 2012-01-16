@@ -1,6 +1,7 @@
 class Redmon::App < Sinatra::Base
 
   set :haml, :format => :html5
+  set :show_exceptions => false
   set :views,         ::File.expand_path('../../../haml', __FILE__)
   set :public_folder, ::File.expand_path('../../../public', __FILE__)
 
@@ -61,10 +62,11 @@ class Redmon::App < Sinatra::Base
     config.to_json
   end
 
-  put '/config' do
-    param = params[:param]
-    value = params[:value]
+  post '/config' do
+    param = params[:element_id].intern
+    value = params[:update_value]
     @redis.config(:set, param, value)
+    value
   end
 
   get '/info' do
