@@ -63,8 +63,8 @@ class Redmon::App < Sinatra::Base
   end
 
   post '/config' do
-    param = params[:element_id].intern
-    value = params[:update_value]
+    param = params[:param].intern
+    value = params[:value]
     @redis.config(:set, param, value)
     value
   end

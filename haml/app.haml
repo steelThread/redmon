@@ -21,6 +21,8 @@
           %ul.nav
             %li.active{:id => 'dashboard'}
               %a Dashboard
+            %li{:id => 'keys'}
+              %a Keys
             %li{:id => 'cli'}
               %a CLI
             %li{:id => 'config'}
@@ -30,7 +32,8 @@
           .pull-right
             %a.brand #{redis_url}
             %form
-              %button.btn.primary Reset Statistics
+              %button.btn.primary{:id => 'flush'} Flush DB
+              %button.btn.primary{:id => 'reset'} Reset Statistics
 
     .container.viewport
       .dashboard
@@ -64,20 +67,20 @@
                       %td Role
                       %td{:id => "role"}
                     %tr
-                      %td Uptime
+                      %td Uptime Days
                       %td{:id => "uptime_in_days"}
                     %tr
                       %td Memory Used
                       %td{:id => "used_memory_human"}
                     %tr
                       %td Memory Peak
-                      %td{:id => ""}
+                      %td{:id => "used_memory_peak_human"}
                     %tr
                       %td Memory Fragmentation Ratio
                       %td{:id => "mem_fragmentation_ratio"}
                     %tr
-                      %td Keys
-                      %td{:id => "db0:keys"}
+                      %td DB Size (Keys)
+                      %td{:id => "dbsize"}
                     %tr
                       %td Keyspace Hits
                       %td{:id => "keyspace_hits"}
@@ -107,20 +110,25 @@
                       %td{:id => "blocked_clients"}
                     %tr
                       %td Changes Since Last Save
-                      %td{:id => "changes_since_last_sav"}
+                      %td{:id => "changes_since_last_save"}
                     %tr
                       %td AOF Enabled
                       %td{:id => "aof_enabled"}
                     %tr
                       %td VM Enabled
                       %td{:id => "vm_enabled"}
+      .keys.hidden
+        .content
+          .page-header
+            %h1 Keys - Coming soon!
+
       .cli.hidden
         .content
           .page-header
             %h1 Command Line Interface
           .row
             .span21{:style => "height:500px"}
-              #wterm.cli.wterm_terminal.wterm_theme_green_on_black{:style => "scroll:vertical"}
+              #wterm.cli.wterm_terminal
 
       .config.hidden
         .content
@@ -140,7 +148,7 @@
       .slow.hidden
         .content
           .page-header
-            %h1 Slow Log
+            %h1 Slow Log - Coming Soon
 
 :javascript
   $(document).ready(function() {

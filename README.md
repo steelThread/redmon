@@ -23,6 +23,9 @@ Interact with redis using a familiar cli interface.
 
 Dynamically update your server configuration.  ** Coming Soon **
 
+----
+
+Intuitively introspect registered keys.  ** Coming Soon **
 
 ----
 

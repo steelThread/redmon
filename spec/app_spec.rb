@@ -40,7 +40,7 @@ describe "app" do
   describe "POST /config" do
     it "should set a redis config param" do
       stub_redis_cmd :config, :set, :param, 'value'
-      post "/config?element_id=param&update_value=value"
+      post "/config?param=param&value=value"
       last_response.should be_ok
     end
   end

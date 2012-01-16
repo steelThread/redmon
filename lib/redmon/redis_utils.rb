@@ -13,7 +13,7 @@ module Redmon
     ]
 
     def unquoted
-      %w{string OK} << "(empty list or set)"
+      %w{string OK} << '(empty list or set)'
     end
 
     def supported?(cmd)
