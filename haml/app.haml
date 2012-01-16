@@ -124,6 +124,17 @@
         .content
           .page-header
             %h1 Configuration
+            .widget
+              .headbar
+                %h2 Parameters
+              %table.condensed-table{:id => "config-table"}
+                %tbody
+                - config.each do |k,v|
+                  %tr
+                    %td{:style => "width: 20%"}= k
+                    %td
+                      .editable= v
+
       .slow.hidden
         .content
           .page-header

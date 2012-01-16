@@ -31,7 +31,7 @@ class Redmon::App < Sinatra::Base
 
   def initialize(opts)
     @opts  = opts
-    @redis = Redis.new(:url => redis_url)
+    @redis = Redis.connect(:url => redis_url)
     super(nil)
   end
 

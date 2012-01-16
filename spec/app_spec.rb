@@ -13,7 +13,7 @@ describe "app" do
 
   def mock_redis
     redis = double :redis
-    Redis.stub(:new).and_return(redis)
+    Redis.stub(:connect).and_return(redis)
     redis
   end
 
@@ -21,6 +21,7 @@ describe "app" do
 
   describe "GET /" do
     it "should render the app" do
+      stub_redis_cmd :config, :get, '*'
       get "/"
       last_response.should be_ok
       last_response.body.include?('Redmon')
