@@ -5,6 +5,7 @@
 
     %script(type="text/javascript" src="vendor/jquery-1.7.1.min.js")
     %script(type="text/javascript" src="vendor/wterm.jquery.js")
+    %script(type="text/javascript" src="vendor/jquery.editinplace.js")
     %script(type="text/javascript" src="vendor/highcharts.js")
     %script(type="text/javascript" src="redmon.js")
 
@@ -55,63 +56,64 @@
                 .headbar
                   %h2 Info
                 %table.condensed-table{:id => "info-table"}
-                  %tr
-                    %td{:style => "width: 70%"} Version
-                    %td{:id => "redis_version"}
-                  %tr
-                    %td Role
-                    %td{:id => "role"}
-                  %tr
-                    %td Uptime
-                    %td{:id => "uptime_in_days"}
-                  %tr
-                    %td Memory Used
-                    %td{:id => "used_memory_human"}
-                  %tr
-                    %td Memory Peak
-                    %td{:id => ""}
-                  %tr
-                    %td Memory Fragmentation Ratio
-                    %td{:id => "mem_fragmentation_ratio"}
-                  %tr
-                    %td Keys
-                    %td{:id => "db0:keys"}
-                  %tr
-                    %td Keyspace Hits
-                    %td{:id => "keyspace_hits"}
-                  %tr
-                    %td Keyspace Misses
-                    %td{:id => "keyspace_misses"}
-                  %tr
-                    %td Pub/Sub Channels
-                    %td{:id => "pubsub_channels"}
-                  %tr
-                    %td Pub/Sub Patterns
-                    %td{:id => "pubsub_patterns"}
-                  %tr
-                    %td Total Connections Received
-                    %td{:id => "total_connections_received"}
-                  %tr
-                    %td Total Commands Processed
-                    %td{:id => "total_commands_processed"}
-                  %tr
-                    %td Blocked Clients
-                    %td{:id => "blocked_clients"}
-                  %tr
-                    %td Connected Slaves
-                    %td{:id => "blocked_clients"}
-                  %tr
-                    %td Last Save
-                    %td{:id => "blocked_clients"}
-                  %tr
-                    %td Changes Since Last Save
-                    %td{:id => "changes_since_last_sav"}
-                  %tr
-                    %td AOF Enabled
-                    %td{:id => "aof_enabled"}
-                  %tr
-                    %td VM Enabled
-                    %td{:id => "vm_enabled"}
+                  %tbody
+                    %tr
+                      %td{:style => "width: 70%"} Version
+                      %td{:id => "redis_version"}
+                    %tr
+                      %td Role
+                      %td{:id => "role"}
+                    %tr
+                      %td Uptime
+                      %td{:id => "uptime_in_days"}
+                    %tr
+                      %td Memory Used
+                      %td{:id => "used_memory_human"}
+                    %tr
+                      %td Memory Peak
+                      %td{:id => ""}
+                    %tr
+                      %td Memory Fragmentation Ratio
+                      %td{:id => "mem_fragmentation_ratio"}
+                    %tr
+                      %td Keys
+                      %td{:id => "db0:keys"}
+                    %tr
+                      %td Keyspace Hits
+                      %td{:id => "keyspace_hits"}
+                    %tr
+                      %td Keyspace Misses
+                      %td{:id => "keyspace_misses"}
+                    %tr
+                      %td Pub/Sub Channels
+                      %td{:id => "pubsub_channels"}
+                    %tr
+                      %td Pub/Sub Patterns
+                      %td{:id => "pubsub_patterns"}
+                    %tr
+                      %td Total Connections Received
+                      %td{:id => "total_connections_received"}
+                    %tr
+                      %td Total Commands Processed
+                      %td{:id => "total_commands_processed"}
+                    %tr
+                      %td Blocked Clients
+                      %td{:id => "blocked_clients"}
+                    %tr
+                      %td Connected Slaves
+                      %td{:id => "blocked_clients"}
+                    %tr
+                      %td Last Save
+                      %td{:id => "blocked_clients"}
+                    %tr
+                      %td Changes Since Last Save
+                      %td{:id => "changes_since_last_sav"}
+                    %tr
+                      %td AOF Enabled
+                      %td{:id => "aof_enabled"}
+                    %tr
+                      %td VM Enabled
+                      %td{:id => "vm_enabled"}
       .cli.hidden
         .content
           .page-header
@@ -133,7 +135,7 @@
                   %tr
                     %td{:style => "width: 20%"}= k
                     %td
-                      .editable= v
+                      .editable{:id => "#{k}"}= v
 
       .slow.hidden
         .content

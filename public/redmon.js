@@ -26,6 +26,7 @@ var Redmon = (function() {
     memoryWidget.render(data);
     keyspaceWidget.render(data);
     infoWidget.render(data);
+    configWidget.render();
   }
 
   /**
@@ -272,6 +273,28 @@ var Redmon = (function() {
       render: render
     }
   })();
+
+  //////////////////////////////////////////////////////////////////////
+  // encapsulate the config widget
+  var configWidget = (function() {
+
+    function render(data) {
+      $('#config-table .editable').each(function() {
+        $(this).editInPlace({
+          url           : 'test',
+          show_buttons  :  true,
+          save_button   : '<button style="margin-left:5px;"class="btn primary">Save</button>',
+          cancel_button : '<button class="btn">Cancel</button>',
+          default_text  : '&nbsp'
+        });
+      });
+    }
+
+    return {
+      render: render
+    }
+  })();
+
 
   //////////////////////////////////////////////////////////////////////
   // encapsulate the terminal emulator
