@@ -21,8 +21,9 @@ Interact with redis using a familiar cli interface.
 
 ----
 
-Dynamically update your server configuration.  ** Coming Soon **
+Dynamically update your server configuration.
 
+![](http://dl.dropbox.com/u/27525257/config.png)
 
 ----
 
