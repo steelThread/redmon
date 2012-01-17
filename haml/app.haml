@@ -61,7 +61,7 @@
                 %table.condensed-table{:id => "info-table"}
                   %tbody
                     %tr
-                      %td{:style => "width: 70%"} Version
+                      %td{:style => "width: 65%"} Version
                       %td{:id => "redis_version"}
                     %tr
                       %td Role
@@ -83,34 +83,34 @@
                       %td{:id => "dbsize"}
                     %tr
                       %td Keyspace Hits
-                      %td{:id => "keyspace_hits"}
+                      %td{:id => "keyspace_hits", :type => 'number'}
                     %tr
                       %td Keyspace Misses
-                      %td{:id => "keyspace_misses"}
+                      %td{:id => "keyspace_misses", :type => 'number'}
                     %tr
                       %td Pub/Sub Channels
-                      %td{:id => "pubsub_channels"}
+                      %td{:id => "pubsub_channels", :type => 'number'}
                     %tr
                       %td Pub/Sub Patterns
-                      %td{:id => "pubsub_patterns"}
+                      %td{:id => "pubsub_patterns", :type => 'number'}
                     %tr
                       %td Total Connections Received
-                      %td{:id => "total_connections_received"}
+                      %td{:id => "total_connections_received", :type => 'number'}
                     %tr
                       %td Total Commands Processed
-                      %td{:id => "total_commands_processed"}
+                      %td{:id => "total_commands_processed", :type => 'number'}
                     %tr
                       %td Blocked Clients
-                      %td{:id => "blocked_clients"}
+                      %td{:id => "blocked_clients", :type => 'number'}
                     %tr
                       %td Connected Slaves
-                      %td{:id => "blocked_clients"}
+                      %td{:id => "connected_slaves", :type => 'number'}
                     %tr
                       %td Last Save
-                      %td{:id => "blocked_clients"}
+                      %td{:id => "last_save_time", :type => 'date'}
                     %tr
                       %td Changes Since Last Save
-                      %td{:id => "changes_since_last_save"}
+                      %td{:id => "changes_since_last_save", :type => 'number'}
                     %tr
                       %td AOF Enabled
                       %td{:id => "aof_enabled"}

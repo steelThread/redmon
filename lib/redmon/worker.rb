@@ -13,6 +13,7 @@ class Redmon::Worker
       # ndefined method `chomp' for nil:NilClass @client.rb:137
       redis.info do |info|
         info[:time] = ts = Time.now.to_i * 1000
+        info[:last_save_time] = info[:last_save_time].to_i * 1000
         redis.dbsize do |dbsize|
           info[:dbsize] = dbsize
           redis.zadd(info_key(@ns), ts, info.to_json)

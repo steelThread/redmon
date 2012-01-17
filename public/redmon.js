@@ -261,13 +261,32 @@ var Redmon = (function() {
     function updateTable(data) {
       $('#info-table td[id]').each(function() {
         var el = $(this),
-         field = el.attr('id')
-        if (data[field])
-          el.text(data[field]);
+         field = el.attr('id');
+
+        if (data[field]) {
+          var type = el.attr('type')
+          if (type && type == 'date')
+            el.text(formatDate(data[field]));
+          else if (type && type == 'number')
+            el.text(formatNumber(data[field]))
+          else
+            el.text(data[field]);
+        }
       });
     }
 
-    // observe data events
+    function formatDate(date) {
+      var d = new Date(parseInt(parseInt(date)));
+      return d.getMonth()+1+'/'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+    }
+
+    function formatNumber(num) {
+      return (num + "").replace(/(\d)(?=(\d{3})+(\.\d+|)\b)/g, "$1,");
+    }
+
+    function delimitNumbers(str) {
+      return (str + "").replace(/(\d)(?=(\d{3})+(\.\d+|)\b)/g, "$1,");
+    }    // observe data events
     events.bind('data', onData);
 
     return {
