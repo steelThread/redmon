@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
   s.add_dependency "activesupport"
 
   s.add_development_dependency "delorean"
+  s.add_development_dependency "sinatra-contrib", "~> 1.3.1"
   s.add_development_dependency "rack-test"
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec", "~> 2.6.0"

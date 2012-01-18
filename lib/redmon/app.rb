@@ -5,6 +5,12 @@ class Redmon::App < Sinatra::Base
   set :views,         ::File.expand_path('../../../haml', __FILE__)
   set :public_folder, ::File.expand_path('../../../public', __FILE__)
 
+
+  configure :development do
+    require "sinatra/reloader"
+    register Sinatra::Reloader
+  end
+
   helpers do
     include Rack::Utils
     include Redmon::RedisUtils
