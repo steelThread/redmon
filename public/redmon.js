@@ -11,8 +11,7 @@ var Redmon = (function() {
    */
   function init(opts) {
     config = opts;
-
-    nav.init();
+    toolbar.init();
     cli.init();
     requestData(100, function(data) {
       renderDashboard(data);
@@ -57,21 +56,29 @@ var Redmon = (function() {
   }
 
   //////////////////////////////////////////////////////////////////////
-  // encapsulate the keyspace chart
-  var nav = (function() {
+  // toolbar: nav + event listeners
+  var toolbar = (function() {
     var mapping = {};
     var current = {};
 
     function init() {
       ['dashboard', 'keys', 'cli', 'config', 'slow'].forEach(function(el) {
         mapping[el] = $('#'+el)
-        mapping[el].click(onClick);
+        mapping[el].click(onNavClick);
       });
       current.tab   = mapping.dashboard;
       current.panel = $('.viewport .dashboard');
+
+      $('#flushBtn').click(function() {
+        onBtnClick('flushdb');
+      });
+
+      $('#resetBtn').click(function() {
+        onBtnClick('config resetstat');
+      });
     }
 
-    function onClick(ev) {
+    function onNavClick(ev) {
       var tab = $(ev.currentTarget);
       if (!tab.hasClass('active')) {
         tab.addClass('active');
@@ -83,6 +90,11 @@ var Redmon = (function() {
 
         current = {tab: tab, panel: panel};
       }
+    }
+
+    function onBtnClick(cmd) {
+      // TODO: error handling?
+      $.ajax({url: 'cli?command='+cmd});
     }
 
     return {
@@ -147,12 +159,14 @@ var Redmon = (function() {
     }
 
     function onData(ev, data) {
-      var series = chart.series[0];
-      series.addPoint(point(data), true, series.data.length >= 25);
+      if (data) {
+        var series = chart.series[0];
+        series.addPoint(point(data), true, series.data.length >= 25);
+      }
     }
 
     // observe data events
-    events.bind('data'   , onData);
+    events.bind('data', onData);
 
     return {
       render: render
@@ -230,12 +244,14 @@ var Redmon = (function() {
     }
 
     function onData(ev, data) {
-      var newPoint = point(data);
-      var hits = chart.series[0];
-      hits.addPoint(newPoint[0], true, hits.data.length >= 25);
+      if (data) {
+        var newPoint = point(data);
+        var hits = chart.series[0];
+        hits.addPoint(newPoint[0], true, hits.data.length >= 25);
 
-      var misses = chart.series[1];
-      misses.addPoint(newPoint[1], true, misses.data.length >= 25);
+        var misses = chart.series[1];
+        misses.addPoint(newPoint[1], true, misses.data.length >= 25);
+      }
     }
 
     // observe data events
@@ -255,7 +271,8 @@ var Redmon = (function() {
     }
 
     function onData(ev, data) {
-      updateTable(data);
+      if (data)
+        updateTable(data);
     }
 
     function updateTable(data) {
@@ -284,9 +301,6 @@ var Redmon = (function() {
       return (num + "").replace(/(\d)(?=(\d{3})+(\.\d+|)\b)/g, "$1,");
     }
 
-    function delimitNumbers(str) {
-      return (str + "").replace(/(\d)(?=(\d{3})+(\.\d+|)\b)/g, "$1,");
-    }    // observe data events
     events.bind('data', onData);
 
     return {
@@ -342,10 +356,11 @@ var Redmon = (function() {
 
     function init() {
       $('#wterm').wterm({
-        WIDTH: '100%',
-        HEIGHT: '500px',
-        WELCOME_MESSAGE: 'Welcome to redmon-cli. To Begin Using type <strong>help</strong>',
-        PS1: config.cliPrompt
+        WIDTH           : '100%',
+        HEIGHT          : '500px',
+        WELCOME_MESSAGE : 'Welcome to redmon-cli. To Begin Using type <strong>help</strong>',
+        PS1             : config.cliPrompt,
+        AJAX_PARAM      : 'command'
       });
 
       var command_directory = {

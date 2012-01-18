@@ -46,11 +46,11 @@ describe "app" do
   end
 
   describe "GET /cli" do
-    let(:params) { URI.encode("keys *") }
+    let(:command) { URI.encode("keys *") }
 
     it "should execute the passed command" do
       stub_redis_cmd :keys, '*'
-      get URI.encode("/cli?tokens=keys *")
+      get URI.encode("/cli?command=keys *")
       last_response.should be_ok
     end
 
@@ -58,7 +58,7 @@ describe "app" do
       redis = mock_redis
       redis.stub(:send).and_return([])
 
-      get "/cli?tokens=#{params}"
+      get "/cli?command=#{command}"
       last_response.should be_ok
       last_response.body.include? Redmon::RedisUtils.empty_result
     end
@@ -67,7 +67,7 @@ describe "app" do
       redis = mock_redis
       redis.stub(:send).and_raise(ArgumentError)
 
-      get "/cli?tokens=#{params}"
+      get "/cli?command=#{command}"
       last_response.should be_ok
       last_response.body.include? Redmon::RedisUtils.wrong_number_of_arguments_for(:keys)
     end
@@ -76,7 +76,7 @@ describe "app" do
       redis = mock_redis
       redis.stub(:send).and_raise(RuntimeError)
 
-      get "/cli?tokens=#{params}"
+      get "/cli?command=#{command}"
       last_response.should be_ok
       last_response.body.include? Redmon::RedisUtils.unknown(:keys)
     end
@@ -85,7 +85,7 @@ describe "app" do
       redis = mock_redis
       redis.stub(:send).and_raise(Errno::ECONNREFUSED)
 
-      get "/cli?tokens=#{params}"
+      get "/cli?command=#{command}"
       last_response.should be_ok
       last_response.body.include? Redmon::RedisUtils.connection_refused_for(Redmon::DEFAULT_OPTS[:redis_url])
     end

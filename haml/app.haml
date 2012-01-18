@@ -31,9 +31,9 @@
               %a Slow Log
           .pull-right
             %a.brand #{redis_url}
-            %form
-              %button.btn.primary{:id => 'flush'} Flush DB
-              %button.btn.primary{:id => 'reset'} Reset Statistics
+            .btns
+              %button.btn.primary{:id => 'flushBtn'} Flush DB
+              %button.btn.primary{:id => 'resetBtn'} Reset Statistics
 
     .container.viewport
       .dashboard

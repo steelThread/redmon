@@ -41,7 +41,7 @@ class Redmon::App < Sinatra::Base
   end
 
   get '/cli' do
-    args = params[:tokens].split
+    args = params[:command].split
     cmd  = args.shift.downcase
     begin
       raise RuntimeError unless supported? cmd
