@@ -5,7 +5,6 @@ class Redmon::App < Sinatra::Base
   set :views,         ::File.expand_path('../../../haml', __FILE__)
   set :public_folder, ::File.expand_path('../../../public', __FILE__)
 
-
   configure :development do
     require "sinatra/reloader"
     register Sinatra::Reloader
@@ -80,11 +79,26 @@ class Redmon::App < Sinatra::Base
     @redis.zrange(info_key(ns), count, -1).to_json
   end
 
-  def ns
-    @opts[:namespace]
+  get '/slowlog' do
+    content_type :json
+    @redis.slowlog(:get).map do |entry|
+      {
+        :id           => entry.shift,
+        :timestamp    => entry.shift,
+        :process_time => entry.shift,
+        :command      => (cmd = entry.shift).shift,
+        :args         => (cmd.shift || []).join(' ')
+      }.to_json
+    end
   end
 
-  def redis_url
-    @opts[:redis_url]
-  end
+  private
+    def ns
+      @opts[:namespace]
+    end
+
+    def redis_url
+      @opts[:redis_url]
+    end
+
 end

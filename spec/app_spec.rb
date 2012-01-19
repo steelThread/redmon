@@ -20,7 +20,7 @@ describe "app" do
   let(:json) {"application/json;charset=utf-8"}
 
   describe "GET /" do
-    it "should render the app" do
+    it "should render app" do
       stub_redis_cmd :config, :get, '*'
       get "/"
       last_response.should be_ok
@@ -29,7 +29,7 @@ describe "app" do
   end
 
   describe "GET /config" do
-    it "should render the redis config params" do
+    it "should call redis#config get *" do
       stub_redis_cmd :config, :get, '*'
       get "/config"
       last_response.should be_ok
@@ -38,7 +38,7 @@ describe "app" do
   end
 
   describe "POST /config" do
-    it "should set a redis config param" do
+    it "should call redis#config set value" do
       stub_redis_cmd :config, :set, :param, 'value'
       post "/config?param=param&value=value"
       last_response.should be_ok
@@ -99,11 +99,19 @@ describe "app" do
       last_response.headers["Content-Type"].should == json
     end
 
-    it "should request the correct # of historical info records from redis" do
+    it "should request the correct # of historical info entries" do
       stub_redis_cmd :zrange, 'redmon:redis.info', -666, -1
       get "/info?count=666"
       last_response.should be_ok
     end
   end
 
+  describe "GET /slowlog" do
+    it "should render a json result" do
+      get "/slowlog"
+      last_response.should be_ok
+      last_response.headers["Content-Type"].should == json
+    end
+
+  end
 end
