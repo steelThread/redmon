@@ -97,8 +97,4 @@ class Redmon::App < Sinatra::Base
       @opts[:namespace]
     end
 
-    def redis_url
-      @opts[:redis_url]
-    end
-
 end
