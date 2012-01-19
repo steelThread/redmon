@@ -41,6 +41,10 @@ class Redmon::App < Sinatra::Base
     super(nil)
   end
 
+  def ns
+    @opts[:namespace]
+  end
+
   get '/' do
     haml :app
   end
@@ -87,14 +91,9 @@ class Redmon::App < Sinatra::Base
         :timestamp    => entry.shift,
         :process_time => entry.shift,
         :command      => (cmd = entry.shift).shift,
-        :args         => (cmd.shift || []).join(' ')
-      }.to_json
-    end
+        :args         => cmd.join(' ')
+      }
+    end.to_json
   end
-
-  private
-    def ns
-      @opts[:namespace]
-    end
 
 end
