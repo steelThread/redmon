@@ -62,7 +62,7 @@ var Redmon = (function() {
     var current = {};
 
     function init() {
-      ['dashboard', 'keys', 'cli', 'config', 'slow'].forEach(function(el) {
+      ['dashboard', 'keys', 'cli', 'config'].forEach(function(el) {
         mapping[el] = $('#'+el)
         mapping[el].click(onNavClick);
       });

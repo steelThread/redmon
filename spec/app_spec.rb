@@ -126,8 +126,7 @@ describe "app" do
           :id           => expect[0],
           :timestamp    => expect[1],
           :process_time => expect[2],
-          :command      => expect[3][0],
-          :args         => expect[3][1..-1].join(' ')
+          :command      => expect[3].join(' ')
         }
       ].to_json
     end

@@ -27,8 +27,6 @@
               %a CLI
             %li{:id => 'config'}
               %a Configuration
-            %li{:id => 'slow'}
-              %a Slow Log
           .pull-right
             %a.brand #{redis_url}
             .btns
@@ -47,13 +45,49 @@
                   .widget
                     .headbar
                       %h2 Memory Usage
-                    #memory-container{:style => "width:880px;height:256px"}
+                    #memory-container{:style => "width:880px;height:225px"}
               .row
                 .span15
                   .widget
                     .headbar
-                      %h2 Keyspace Hits/Misses
-                    #keyspace-container{:style => "width:880px;height:256px"}
+                      %h2 Keyspace
+                    #keyspace-container{:style => "width:880px;height:225px"}
+              .row
+                .span15
+                  .widget
+                    .headbar
+                      %h2 Slow Log
+                    %div{:style => "height:225px;overflow-y:scroll;"}
+                      %table.condensed-table{:id => "slow"}
+                        %tbody
+                          %tr
+                            %td{:style => "width: 65%; font-weight:bold;"} keys *
+                            %td 123231232 micro secs
+                            %td 1/19/2012 01:12:12
+                          %tr
+                            %td flushdb
+                            %td 123231232 micro secs
+                            %td 1/19/2012 01:12:12
+                          %tr
+                            %td flushdb
+                            %td 123231232 micro secs
+                            %td 1/19/2012 01:12:12
+                          %tr
+                            %td flushdb
+                            %td 123231232 micro secs
+                            %td 1/19/2012 01:12:12
+                          %tr
+                            %td flushdb
+                            %td 123231232 micro secs
+                            %td 1/19/2012 01:12:12
+                          %tr
+                            %td flushdb
+                            %td 123231232 micro secs
+                            %td 1/19/2012 01:12:12
+                          %tr
+                            %td flushdb
+                            %td 123231232 micro secs
+                            %td 1/19/2012 01:12:12
             .span6
               .widget
                 .headbar
@@ -144,11 +178,6 @@
                     %td{:style => "width: 20%"}= k
                     %td
                       .editable{:id => "#{k}"}= v
-
-      .slow.hidden
-        .content
-          .page-header
-            %h1 Slow Log - Coming Soon
 
 :javascript
   $(document).ready(function() {

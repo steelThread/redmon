@@ -83,15 +83,18 @@ class Redmon::App < Sinatra::Base
     @redis.zrange(info_key(ns), count, -1).to_json
   end
 
+  #
+  # This needs to be captured as part of the workers stats recording
+  #
   get '/slowlog' do
     content_type :json
-    @redis.slowlog(:get).map do |entry|
+    slowlog = @redis.slowlog(:get).sort_by{|a| a[2]}.reverse!
+    slowlog.map do |entry|
       {
         :id           => entry.shift,
         :timestamp    => entry.shift,
         :process_time => entry.shift,
-        :command      => (cmd = entry.shift).shift,
-        :args         => cmd.join(' ')
+        :command      => entry.shift.join(' ')
       }
     end.to_json
   end
