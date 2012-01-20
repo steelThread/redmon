@@ -9,7 +9,9 @@ require 'thin'
 module Redmon
   extend self
 
-  DEFAULT_OPTS = {
+  attr_reader :opts
+
+  @opts = {
     :redis_url     => 'redis://127.0.0.1:6379',
     :namespace     => 'redmon',
     :web_interface => ['0.0.0.0', 4567],
@@ -22,7 +24,7 @@ module Redmon
       trap('TERM', &method(:shutdown))
       trap('INT',  &method(:shutdown))
 
-      @opts = DEFAULT_OPTS.merge opts
+      @opts = @opts.merge opts
       start_app    if @opts[:web_interface]
       start_worker if @opts[:worker]
     end
@@ -37,16 +39,16 @@ module Redmon
   end
 
   def start_app
-    app = Redmon::App.new(@opts)
-    Thin::Server.start(*@opts[:web_interface], app)
-    log "listening on http##{@opts[:web_interface].join(':')}"
+    app = Redmon::App.new
+    Thin::Server.start(*opts[:web_interface], app)
+    log "listening on http##{opts[:web_interface].join(':')}"
   rescue Exception => e
     log "got an error #{e}"
     log "can't start Redmon::App. port in use?"
   end
 
   def start_worker
-    Worker.new(@opts).run!
+    Worker.new.run!
   end
 
   def shutdown
@@ -57,8 +59,12 @@ module Redmon
     puts "[#{Time.now.strftime('%y-%m-%d %H:%M:%S')}] #{msg}"
   end
 
+  def [](option)
+    opts[option]
+  end
+
 end
 
-require 'redmon/redis_utils'
+require 'redmon/redis'
 require 'redmon/app'
 require 'redmon/worker'

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "worker" do
 
   before(:all) do
-    @worker = Redmon::Worker.new(Redmon::DEFAULT_OPTS)
+    @worker = Redmon::Worker.new
   end
 
   describe "run!" do

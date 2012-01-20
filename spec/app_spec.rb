@@ -4,7 +4,7 @@ describe "app" do
   include Rack::Test::Methods
 
   def app
-    Redmon::App.new(Redmon::DEFAULT_OPTS)
+    Redmon::App.new
   end
 
   def stub_redis_cmd(cmd, *args)
@@ -60,7 +60,7 @@ describe "app" do
 
       get "/cli?command=#{command}"
       last_response.should be_ok
-      last_response.body.include? Redmon::RedisUtils.empty_result
+      last_response.body.include? Redmon::Redis.empty_result
     end
 
     it "should render the wrong arguments result" do
@@ -69,7 +69,7 @@ describe "app" do
 
       get "/cli?command=#{command}"
       last_response.should be_ok
-      last_response.body.include? Redmon::RedisUtils.wrong_number_of_arguments_for(:keys)
+      last_response.body.include? Redmon::Redis.wrong_number_of_arguments_for(:keys)
     end
 
     it "should return an unknown result" do
@@ -78,7 +78,7 @@ describe "app" do
 
       get "/cli?command=#{command}"
       last_response.should be_ok
-      last_response.body.include? Redmon::RedisUtils.unknown(:keys)
+      last_response.body.include? Redmon::Redis.unknown(:keys)
     end
 
     it "should return a connection refused result" do
@@ -87,7 +87,7 @@ describe "app" do
 
       get "/cli?command=#{command}"
       last_response.should be_ok
-      last_response.body.include? Redmon::RedisUtils.connection_refused_for(Redmon::DEFAULT_OPTS[:redis_url])
+      last_response.body.include? Redmon::Redis.connection_refused
     end
   end
 

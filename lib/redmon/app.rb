@@ -12,37 +12,23 @@ class Redmon::App < Sinatra::Base
 
   helpers do
     include Rack::Utils
-    include Redmon::RedisUtils
-
-    def redis_url
-      @opts[:redis_url]
-    end
+    include Redmon::Redis
 
     def count
       -(params[:count] ? params[:count].to_i : 1)
     end
 
     def config
-      @redis.config :get, '*'
+      redis.config :get, '*'
     end
 
     def prompt
-      "#{@opts[:redis_url].gsub('://', ' ')}>"
+      "#{redis_url.gsub('://', ' ')}>"
     end
 
     def poll_interval
-      @opts[:poll_interval] * 1000
+      Redmon[:poll_interval] * 1000
     end
-  end
-
-  def initialize(opts)
-    @opts  = opts
-    @redis = Redis.connect(:url => redis_url)
-    super(nil)
-  end
-
-  def ns
-    @opts[:namespace]
   end
 
   get '/' do
@@ -54,7 +40,7 @@ class Redmon::App < Sinatra::Base
     cmd  = args.shift.downcase
     begin
       raise RuntimeError unless supported? cmd
-      @result = @redis.send(cmd.intern, *args)
+      @result = redis.send(cmd.intern, *args)
       @result = empty_result if @result == []
       haml :cli
     rescue ArgumentError
@@ -62,7 +48,7 @@ class Redmon::App < Sinatra::Base
     rescue RuntimeError
       unknown cmd
     rescue Errno::ECONNREFUSED
-      connection_refused_for redis_url
+      connection_refused
     end
   end
 
@@ -74,13 +60,13 @@ class Redmon::App < Sinatra::Base
   post '/config' do
     param = params[:param].intern
     value = params[:value]
-    @redis.config(:set, param, value)
+    redis.config(:set, param, value)
     value
   end
 
   get '/info' do
     content_type :json
-    @redis.zrange(info_key(ns), count, -1).to_json
+    redis.zrange(info_key, count, -1).to_json
   end
 
   #
@@ -88,7 +74,7 @@ class Redmon::App < Sinatra::Base
   #
   get '/slowlog' do
     content_type :json
-    slowlog = @redis.slowlog(:get).sort_by{|a| a[2]}.reverse!
+    slowlog = redis.slowlog(:get).sort_by{|a| a[2]}.reverse!
     slowlog.map do |entry|
       {
         :id           => entry.shift,
