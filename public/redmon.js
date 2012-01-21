@@ -74,13 +74,28 @@ var Redmon = (function() {
       current.tab   = mapping.dashboard;
       current.panel = $('.viewport .dashboard');
 
-      $('#flushBtn').click(function() {
-        onBtnClick('flushdb');
+      $('#flush-btn').click(function() {
+        $('#flush-confirm').modal({
+          backdrop: true,
+          keyboard: true,
+          show:     true
+        });
       });
 
-      $('#resetBtn').click(function() {
+      $('#flush-cancel-btn').click(closeModal);
+
+      $('#flush-confirm-btn').click(function() {
+        onBtnClick('flushdb');
+        closeModal();
+      });
+
+      $('#reset-btn').click(function() {
         onBtnClick('config resetstat');
       });
+    }
+
+    function closeModal() {
+      $('#flush-confirm').modal('hide');
     }
 
     function onNavClick(ev) {

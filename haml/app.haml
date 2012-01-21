@@ -7,6 +7,7 @@
     %script(type="text/javascript" src="vendor/wterm.jquery.js")
     %script(type="text/javascript" src="vendor/jquery.editinplace.js")
     %script(type="text/javascript" src="vendor/highcharts.js")
+    %script(type="text/javascript" src="vendor/bootstrap-modal.js")
     %script(type="text/javascript" src="redmon.js")
 
     %link(type="text/css" rel="stylesheet" href="vendor/bootstrap.min.css")
@@ -30,8 +31,8 @@
           .pull-right
             %a.brand #{redis_url}
             .btns
-              %button.btn.primary{:id => 'flushBtn'} Flush DB
-              %button.btn.primary{:id => 'resetBtn'} Reset Statistics
+              %button.btn.primary{:id => 'flush-btn'} Flush DB
+              %button.btn.primary{:id => 'reset-btn'} Reset Statistics
 
     .container.viewport
       .dashboard
@@ -151,6 +152,16 @@
                     %td{:style => "width: 20%"}= k
                     %td
                       .editable{:id => "#{k}"}= v
+
+    #flush-confirm.modal.hide
+      .modal-header
+        %a.close x
+        %h3 Flush DB
+      .modal-body
+        %p This action will, without a doubt, delete all the keys of the redis server.
+      .modal-footer
+        %button.btn.secondary{:id => 'flush-cancel-btn'} Well On Second Though
+        %button.btn.danger{:id => 'flush-confirm-btn'} Just Do It Already!
 
 :javascript
   $(document).ready(function() {
