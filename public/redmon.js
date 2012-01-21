@@ -55,6 +55,11 @@ var Redmon = (function() {
     });
   }
 
+  function formatDate(date) {
+    var d = new Date(parseInt(parseInt(date)));
+    return d.getMonth()+1+'/'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+  }
+
   //////////////////////////////////////////////////////////////////////
   // toolbar: nav + event listeners
   var toolbar = (function() {
@@ -276,7 +281,7 @@ var Redmon = (function() {
     }
 
     function updateTable(data) {
-      $('#info-table td[id]').each(function() {
+      $('#info-tbl td[id]').each(function() {
         var el = $(this),
          field = el.attr('id');
 
@@ -292,11 +297,6 @@ var Redmon = (function() {
       });
     }
 
-    function formatDate(date) {
-      var d = new Date(parseInt(parseInt(date)));
-      return d.getMonth()+1+'/'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
-    }
-
     function formatNumber(num) {
       return (num + "").replace(/(\d)(?=(\d{3})+(\.\d+|)\b)/g, "$1,");
     }
@@ -306,6 +306,42 @@ var Redmon = (function() {
     return {
       render: render
     }
+  })();
+
+  //////////////////////////////////////////////////////////////////////
+  // encapsulate the info widget
+  var slowlogWidget = (function() {
+
+    function render(data) {
+      updateTable(data[data.length-1]);
+    }
+
+    function onData(ev, data) {
+      if (data)
+        updateTable(data);
+    }
+
+    function updateTable(data) {
+      $('#slow-tbl tr').remove();
+      data.slowlog.forEach(function(entry) {
+        $('#slow-tbl').append(
+          $('<tr></tr>')
+            .append(
+              $('<td style="width: 65%; font-weight:bold;"></td>').html(entry.command)
+            ).append(
+              $('<td></td>').html((entry.process_time / 1000) + ' ms')
+            ).append(
+              $('<td></td>').html(formatDate(entry.timestamp))
+            )
+        );
+      });
+    }
+
+    function formatNumber(num) {
+      return (num + "").replace(/(\d)(?=(\d{3})+(\.\d+|)\b)/g, "$1,");
+    }
+
+    events.bind('data', onData);
   })();
 
   //////////////////////////////////////////////////////////////////////

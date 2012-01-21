@@ -69,20 +69,4 @@ class Redmon::App < Sinatra::Base
     redis.zrange(stats_key, count, -1).to_json
   end
 
-  #
-  # This needs to be captured as part of the workers stats recording
-  #
-  get '/slowlog' do
-    content_type :json
-    slowlog = redis.slowlog(:get).sort_by{|a| a[2]}.reverse!
-    slowlog.map do |entry|
-      {
-        :id           => entry.shift,
-        :timestamp    => entry.shift,
-        :process_time => entry.shift,
-        :command      => entry.shift.join(' ')
-      }
-    end.to_json
-  end
-
 end

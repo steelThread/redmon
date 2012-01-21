@@ -106,29 +106,4 @@ describe "app" do
     end
   end
 
-  describe "GET /slowlog" do
-    it "should render a json result" do
-      get "/slowlog"
-      last_response.should be_ok
-      last_response.headers["Content-Type"].should == json
-    end
-
-    it "should call redis#slowlog" do
-      fixture = ['id', 1326763950, 150121, ['cmd','args']]
-      expect  = Marshal.load(Marshal.dump(fixture))
-      redis   = mock_redis
-      redis.should_receive(:slowlog).with(:get).and_return([fixture])
-
-      get "/slowlog"
-      last_response.should be_ok
-      last_response.body.should == [
-        {
-          :id           => expect[0],
-          :timestamp    => expect[1],
-          :process_time => expect[2],
-          :command      => expect[3].join(' ')
-        }
-      ].to_json
-    end
-  end
 end

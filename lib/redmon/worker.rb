@@ -27,7 +27,7 @@ class Redmon::Worker
     slowlog.map do |entry|
       {
         :id           => entry.shift,
-        :timestamp    => entry.shift,
+        :timestamp    => entry.shift * 1000,
         :process_time => entry.shift,
         :command      => entry.shift.join(' ')
       }
