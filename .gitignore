@@ -1,5 +1,7 @@
 *.gem
 .bundle
-vendor/ruby
+vendor
 .DS_Store
 dump.rdb
+Gemfile.lock
+.rvmrc
