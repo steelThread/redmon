@@ -91,17 +91,17 @@ describe "app" do
     end
   end
 
-  describe "GET /info" do
+  describe "GET /stats" do
     it "should render a single json result" do
-      stub_redis_cmd :zrange, 'redmon:redis.info', -1, -1
-      get "/info"
+      stub_redis_cmd :zrange, Redmon::Redis.stats_key, -1, -1
+      get "/stats"
       last_response.should be_ok
       last_response.headers["Content-Type"].should == json
     end
 
     it "should request the correct # of historical info entries" do
-      stub_redis_cmd :zrange, 'redmon:redis.info', -666, -1
-      get "/info?count=666"
+      stub_redis_cmd :zrange, Redmon::Redis.stats_key, -666, -1
+      get "/stats?count=666"
       last_response.should be_ok
     end
   end

@@ -28,6 +28,10 @@ module Redmon
       Redmon[:redis_url]
     end
 
+    def redis_host
+      redis_url.gsub('redis://', '')
+    end
+
     def unquoted
       %w{string OK} << '(empty list or set)'
     end
@@ -52,8 +56,8 @@ module Redmon
       "Could not connect to Redis at #{redis_url.gsub(/\w*:\/\//, '')}: Connection refused"
     end
 
-    def info_key
-      "#{ns}:redis.info"
+    def stats_key
+      "#{ns}:redis:#{redis_host}:stats"
     end
   end
 end

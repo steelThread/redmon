@@ -34,7 +34,7 @@ var Redmon = (function() {
    */
   function requestData(count, callback) {
     $.ajax({
-      url: 'info?count='+count,
+      url: 'stats?count='+count,
       success: function(data) {
         callback(
           data.map(function(info) {

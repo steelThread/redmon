@@ -64,9 +64,9 @@ class Redmon::App < Sinatra::Base
     value
   end
 
-  get '/info' do
+  get '/stats' do
     content_type :json
-    redis.zrange(info_key, count, -1).to_json
+    redis.zrange(stats_key, count, -1).to_json
   end
 
   #
