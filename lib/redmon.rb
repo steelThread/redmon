@@ -1,6 +1,5 @@
 require 'active_support/core_ext'
 require 'eventmachine'
-require 'em-hiredis'
 require 'haml'
 require 'redis'
 require 'sinatra/base'

@@ -16,10 +16,6 @@ module Redmon
       @redis ||= ::Redis.connect(:url => redis_url)
     end
 
-    def em_redis
-      @em_redis ||= ::EM::Hiredis.connect(redis_url)
-    end
-
     def ns
       Redmon[:namespace]
     end

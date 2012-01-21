@@ -3,9 +3,15 @@ ENV['RACK_ENV'] = "test"
 
 require "redmon"
 require "eventmachine"
-require 'em-hiredis'
 require 'rack'
 require 'redis'
 
 require 'rspec'
 require 'rack/test'
+
+def mock_redis
+  redis = double :redis
+  Redis.stub(:connect).and_return(redis)
+  redis
+end
+

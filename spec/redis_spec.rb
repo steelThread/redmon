@@ -9,13 +9,6 @@ describe "Redis" do
     end
   end
 
-  describe "em_redis" do
-    it "should call EM::Hiredis.connect" do
-      EM::Hiredis.should_receive(:connect).with(Redmon[:redis_url])
-      Redmon::Redis.em_redis
-    end
-  end
-
   def redis
     @redis ||= ::Redis.connect(:url => redis_url)
   end

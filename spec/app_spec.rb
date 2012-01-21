@@ -11,12 +11,6 @@ describe "app" do
     mock_redis.should_receive(cmd).with(*args).and_return({})
   end
 
-  def mock_redis
-    redis = double :redis
-    Redis.stub(:connect).and_return(redis)
-    redis
-  end
-
   let(:json) {"application/json;charset=utf-8"}
 
   describe "GET /" do
