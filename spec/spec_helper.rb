@@ -9,4 +9,3 @@ require 'redis'
 
 require 'rspec'
 require 'rack/test'
-require 'delorean'
