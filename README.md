@@ -11,28 +11,25 @@ project I was inspired to write this.  Some of the ideas there have be carried o
 
 Watch your redis server live.
 
-![](http://dl.dropbox.com/u/27525257/dash.png)
+![](http://dl.dropbox.com/u/27525257/dash-new.png)
 
 ----
 
 Interact with redis using a familiar cli interface.
 
-![](http://dl.dropbox.com/u/27525257/cli.png)
+![](http://dl.dropbox.com/u/27525257/cli-new.png)
 
 ----
 
 Dynamically update your server configuration.
 
-![](http://dl.dropbox.com/u/27525257/configuration.png)
+![](http://dl.dropbox.com/u/27525257/configuration-new.png)
 
 ----
 
 Intuitively introspect registered keys.  ** Coming Soon **
 
 ----
-
-View your slow log.  ** Coming Soon **
-
 
 ## Usage
 Currently not a registered gem, but soon.  For now clone the repo &
