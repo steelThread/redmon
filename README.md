@@ -49,7 +49,7 @@ $ ruby sample/load_sim.rb
 
 Open your browser to 0.0.0.0:4567
 
-License
+## License
 
 Copyright (c) 2012 Sean McDaniel
 
