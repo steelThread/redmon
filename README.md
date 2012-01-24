@@ -32,6 +32,8 @@ Intuitively introspect registered keys.  ** Coming Soon **
 ----
 
 ## Usage
+Note:  Current version of Redmon is dependent on [Highcharts JS](http://www.highcharts.com/) which is not included with this repo and requires a license.  This will be replaced with something open source friendly in the future.
+
 Currently not a registered gem, but soon.  For now clone the repo &
 
 ```bash
@@ -46,3 +48,13 @@ $ ruby sample/load_sim.rb
 ```
 
 Open your browser to 0.0.0.0:4567
+
+License
+
+Copyright (c) 2012 Sean McDaniel
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to use, copy and modify copies of the Software, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
