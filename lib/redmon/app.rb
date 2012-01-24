@@ -22,9 +22,7 @@ class Redmon::App < Sinatra::Base
       begin
         redis.config :get, '*'
       rescue RuntimeError => e
-        if "ERR unknown command 'config'" != e.message
-          raise e
-        end
+        raise e unless "ERR unknown command 'config'" = e.message
         {":command_disabled" => "The 'config get' command was disabled in the server config or the server is older than 2.0"}
       end
     end
