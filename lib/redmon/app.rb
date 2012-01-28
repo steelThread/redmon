@@ -19,7 +19,12 @@ class Redmon::App < Sinatra::Base
     end
 
     def config
-      redis.config :get, '*'
+      begin
+        redis.config :get, '*'
+      rescue RuntimeError => e
+        raise e unless "ERR unknown command 'config'" == e.message
+        {":command_disabled" => "The 'config get' command was disabled in the server config or the server is older than 2.0"}
+      end
     end
 
     def prompt
