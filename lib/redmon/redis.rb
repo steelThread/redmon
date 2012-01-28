@@ -13,7 +13,7 @@ module Redmon
     ]
 
     def redis
-      @redis ||= ::Redis.connect(:url => redis_url)
+      @redis ||= ::Redis.connect(:url => Redmon[:redis_url])
     end
 
     def ns
@@ -21,7 +21,7 @@ module Redmon
     end
 
     def redis_url
-      Redmon[:redis_url]
+      @redis_url ||= Redmon[:redis_url].gsub(/\w*:\w*@/, '')
     end
 
     def redis_host

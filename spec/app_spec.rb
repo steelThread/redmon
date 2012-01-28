@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'sinatra/contrib'
 
 describe "app" do
   include Rack::Test::Methods
@@ -19,15 +20,6 @@ describe "app" do
       get "/"
       last_response.should be_ok
       last_response.body.include?('Redmon')
-    end
-  end
-
-  describe "GET /config" do
-    it "should call redis#config get *" do
-      stub_redis_cmd :config, :get, '*'
-      get "/config"
-      last_response.should be_ok
-      last_response.headers["Content-Type"].should == json
     end
   end
 

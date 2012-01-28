@@ -10,22 +10,13 @@ class Redmon::App < Sinatra::Base
     register Sinatra::Reloader
   end
 
+  def count
+    -(params[:count] ? params[:count].to_i : 1)
+  end
+
   helpers do
     include Rack::Utils
     include Redmon::Redis
-
-    def count
-      -(params[:count] ? params[:count].to_i : 1)
-    end
-
-    def config
-      begin
-        redis.config :get, '*'
-      rescue RuntimeError => e
-        raise e unless "ERR unknown command 'config'" == e.message
-        {":command_disabled" => "The 'config get' command was disabled in the server config or the server is older than 2.0"}
-      end
-    end
 
     def prompt
       "#{redis_url.gsub('://', ' ')}>"
@@ -33,6 +24,10 @@ class Redmon::App < Sinatra::Base
 
     def poll_interval
       Redmon[:poll_interval] * 1000
+    end
+
+    def config
+      redis.config :get, '*' rescue {}
     end
   end
 
@@ -55,11 +50,6 @@ class Redmon::App < Sinatra::Base
     rescue Errno::ECONNREFUSED
       connection_refused
     end
-  end
-
-  get '/config' do
-    content_type :json
-    config.to_json
   end
 
   post '/config' do
