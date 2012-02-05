@@ -2,9 +2,7 @@ class Redmon::Worker
   include Redmon::Redis
 
   def run!
-    EM::PeriodicTimer.new(interval) do
-      record_stats
-    end
+    EM::PeriodicTimer.new(interval) {record_stats}
   end
 
   def record_stats
@@ -12,11 +10,10 @@ class Redmon::Worker
   end
 
   def stats
-    stats = redis.info.merge!({
+    stats = redis.info.merge! \
       :dbsize  => redis.dbsize,
       :time    => ts = Time.now.to_i * 1000,
       :slowlog => entries(redis.slowlog :get)
-    })
     [ts, stats.to_json]
   end
 

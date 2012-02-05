@@ -20,10 +20,10 @@ module Redmon
 
   def start_em(opts)
     EM.run do
-      trap('TERM', &method(:shutdown))
-      trap('INT',  &method(:shutdown))
+      trap 'TERM', &method(:shutdown)
+      trap 'INT',  &method(:shutdown)
 
-      @opts = @opts.merge opts
+      @opts.merge! opts
       start_app    if @opts[:web_interface]
       start_worker if @opts[:worker]
     end
@@ -32,7 +32,7 @@ module Redmon
   def run(opts={})
     start_em(opts)
   rescue Exception => e
-    log "!!! eventmachine died, restarting... #{e.message}"
+    log "!!! eventmachine shit the bed, restarting... #{e.message}"
     puts e.backtrace
     sleep(1); run(opts)
   end

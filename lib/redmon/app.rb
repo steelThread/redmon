@@ -2,8 +2,8 @@ class Redmon::App < Sinatra::Base
 
   set :haml, :format => :html5
   set :show_exceptions => false
-  set :views,         ::File.expand_path('../../../haml', __FILE__)
-  set :public_folder, ::File.expand_path('../../../public', __FILE__)
+  set :views,         File.expand_path('../../../haml', __FILE__)
+  set :public_folder, File.expand_path('../../../public', __FILE__)
 
   configure :development do
     require "sinatra/reloader"
