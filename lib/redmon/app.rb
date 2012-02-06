@@ -37,10 +37,10 @@ class Redmon::App < Sinatra::Base
 
   get '/cli' do
     args = params[:command].split
-    cmd  = args.shift.downcase
+    cmd  = args.shift.downcase.intern
     begin
       raise RuntimeError unless supported? cmd
-      @result = redis.send(cmd.intern, *args)
+      @result = redis.send cmd, *args
       @result = empty_result if @result == []
       haml :cli
     rescue ArgumentError

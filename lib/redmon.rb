@@ -18,23 +18,21 @@ module Redmon
     :poll_interval => 10
   }
 
-  def start_em(opts)
+  def run(opts={})
+    @opts.merge!(opts)
+    start_em
+  rescue Exception => e
+    log "!!! Redmon has shit the bed, restarting... #{e.message}"
+    sleep(1); run(opts)
+  end
+
+  def start_em
     EM.run do
       trap 'TERM', &method(:shutdown)
       trap 'INT',  &method(:shutdown)
-
-      @opts.merge! opts
-      start_app    if @opts[:web_interface]
-      start_worker if @opts[:worker]
+      start_app    if opts[:web_interface]
+      start_worker if opts[:worker]
     end
-  end
-
-  def run(opts={})
-    start_em(opts)
-  rescue Exception => e
-    log "!!! eventmachine shit the bed, restarting... #{e.message}"
-    puts e.backtrace
-    sleep(1); run(opts)
   end
 
   def start_app
@@ -42,8 +40,7 @@ module Redmon
     Thin::Server.start(*opts[:web_interface], app)
     log "listening on http##{opts[:web_interface].join(':')}"
   rescue Exception => e
-    log "got an error #{e}"
-    log "can't start Redmon::App. port in use?"
+    log "Can't start Redmon::App. port in use?  Error #{e}"
   end
 
   def start_worker
