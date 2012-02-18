@@ -1,8 +1,8 @@
 *.gem
 .bundle
-vendor
+/vendor
 .DS_Store
 dump.rdb
 Gemfile.lock
 .rvmrc
-public/vendor/highcharts.js
+highcharts.js
