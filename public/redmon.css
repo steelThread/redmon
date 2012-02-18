@@ -78,31 +78,24 @@ body {
     font-family: Monaco, monospace;
 }
 
-#terminal div {
-    padding-bottom: 15px;
-}
-
 #terminal div.line {
-    margin-bottom: 5px;
     padding: 0;
 }
 
 #terminal input {
     width: 880px;
-    margin: 1px 0 1px 10px;
     border: none;
     display: inline;
-    padding: 2px;
     background: #000;
     color: #55d839;
     font-family: Monaco, monospace;
 }
 
 #terminal p, #terminal pre {
-    margin: 2px;
-    padding: 0 8px;
     color: #55d839;
     color: #55d839 !important;
+    margin-bottom: 0px;
+    margin-left: 12px;
 }
 
 #terminal a {
