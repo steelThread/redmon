@@ -17,7 +17,7 @@ Watch your redis server live.
 
 Interact with redis using a familiar cli interface.
 
-![](http://dl.dropbox.com/u/27525257/cli-new.png)
+![](http://dl.dropbox.com/u/27525257/cli.png)
 
 ----
 
