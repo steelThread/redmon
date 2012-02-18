@@ -4,14 +4,13 @@
     %title Redmon
 
     %script(type="text/javascript" src="vendor/jquery-1.7.1.min.js")
-    %script(type="text/javascript" src="vendor/wterm.jquery.js")
     %script(type="text/javascript" src="vendor/jquery.editinplace.js")
     %script(type="text/javascript" src="vendor/highcharts.js")
     %script(type="text/javascript" src="vendor/bootstrap-modal.js")
+    %script(type="text/javascript" src="vendor/readline.js")
     %script(type="text/javascript" src="redmon.js")
 
     %link(type="text/css" rel="stylesheet" href="vendor/bootstrap.min.css")
-    %link(type="text/css" rel="stylesheet" href="vendor/wterm.css")
     %link(type="text/css" rel="stylesheet" href="redmon.css")
 
   %body
@@ -142,7 +141,7 @@
             %h1 Command Line Interface
           .row
             .span21{:style => "height:500px"}
-              #wterm.cli.wterm_terminal
+              #terminal
 
       .config.hidden
         .content

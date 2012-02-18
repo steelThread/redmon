@@ -68,4 +68,54 @@ body {
 
 .show{ display: block; }
 .hidden{ display: none; }
-#wterm input:focus{box-shadow:none; padding:0px;}
+
+#terminal {
+    margin: 1em 0 0;
+    padding: .25em 0;
+    height: 600px;
+    background: #222;
+    overflow: auto;
+    font-family: Monaco, monospace;
+}
+
+#terminal div {
+    padding-bottom: 15px;
+}
+
+#terminal div.line {
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+#terminal input.readLine {
+    border-bottom: 4px solid #222;
+}
+
+#terminal input {
+    width: 880px;
+    margin: 1px 0 1px 10px;
+    border: none;
+    display: inline;
+    padding: 2px;
+    background: #222;
+    color: #55d839;
+    font-family: Monaco, monospace;
+}
+
+#terminal p, #terminal pre {
+    margin: 2px;
+    padding: 0 8px;
+    color: #55d839;
+    color: #55d839 !important;
+}
+
+#terminal a {
+    color:  #55d839;
+}
+
+#terminal span.prompt {
+    color: #55d839;
+    margin-left: 12px;
+}
+
+#terminal input:focus{box-shadow:none;}

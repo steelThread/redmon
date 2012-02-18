@@ -108,12 +108,15 @@ var Redmon = (function() {
         current.panel.addClass('hidden');
         panel.removeClass('hidden').addClass('show');
 
+        if (tab.dom === mapping.cli.dom) {
+          cli.focus();
+        }
+
         current = {tab: tab, panel: panel};
       }
     }
 
     function onBtnClick(cmd) {
-      // TODO: error handling?
       $.ajax({url: 'cli?command='+cmd});
     }
 
@@ -400,171 +403,163 @@ var Redmon = (function() {
     }
   })();
 
-
   //////////////////////////////////////////////////////////////////////
-  // encapsulate the terminal emulator
+  // terminal emulator
   var cli = (function() {
+    var terminal;
 
     function init() {
-      $('#wterm').wterm({
-        WIDTH           : '100%',
-        HEIGHT          : '500px',
-        WELCOME_MESSAGE : 'Welcome to redmon-cli. To Begin Using type <strong>help</strong>',
-        PS1             : config.cliPrompt,
-        AJAX_PARAM      : 'command'
-      });
+      var prompt = [
+        "<div class='line'>" +
+          "<span class='prompt'>"+config.cliPrompt+"</span>" +
+          "<input type='text' class='readLine active' />" +
+        "</div>"
+      ].join('');
 
-      var command_directory = {
-        'append'           : '/cli',
-        'auth'             : '/cli',
-        'bgrewriteaof'     : '/cli',
-        'bgsave'           : '/cli',
-        'blpop'            : '/cli',
-        'brpop'            : '/cli',
-        'brpoplpush'       : '/cli',
-        'config'           : '/cli',
-        'dbsize'           : '/cli',
-        'debug'            : '/cli',
-        'decr'             : '/cli',
-        'decrby'           : '/cli',
-        'del'              : '/cli',
-        'discard'          : '/cli',
-        'echo'             : '/cli',
-        'exec'             : '/cli',
-        'exists'           : '/cli',
-        'expire'           : '/cli',
-        'expireat'         : '/cli',
-        'flushall'         : '/cli',
-        'flushdb'          : '/cli',
-        'get'              : '/cli',
-        'getbit'           : '/cli',
-        'getrange'         : '/cli',
-        'getset'           : '/cli',
-        'hdel'             : '/cli',
-        'hexists'          : '/cli',
-        'hget'             : '/cli',
-        'hgetall'          : '/cli',
-        'hincrby'          : '/cli',
-        'hkeys'            : '/cli',
-        'hlen'             : '/cli',
-        'hmget'            : '/cli',
-        'hmset'            : '/cli',
-        'hset'             : '/cli',
-        'hsetnx'           : '/cli',
-        'hvals'            : '/cli',
-        'incr'             : '/cli',
-        'incrby'           : '/cli',
-        'info'             : '/cli',
-        'keys'             : '/cli',
-        'lastsave'         : '/cli',
-        'lindex'           : '/cli',
-        'linsert'          : '/cli',
-        'llen'             : '/cli',
-        'lpop'             : '/cli',
-        'lpush'            : '/cli',
-        'lpushx'           : '/cli',
-        'lrange'           : '/cli',
-        'lrem'             : '/cli',
-        'lset'             : '/cli',
-        'ltrim'            : '/cli',
-        'mget'             : '/cli',
-        'monitor'          : '/cli',
-        'move'             : '/cli',
-        'mset'             : '/cli',
-        'msetnx'           : '/cli',
-        'multi'            : '/cli',
-        'object'           : '/cli',
-        'persist'          : '/cli',
-        'publish'          : '/cli',
-        'ping'             : '/cli',
-        'quit'             : '/cli',
-        'randomkey'        : '/cli',
-        'rename'           : '/cli',
-        'renamenx'         : '/cli',
-        'rpop'             : '/cli',
-        'rpoplpush'        : '/cli',
-        'rpush'            : '/cli',
-        'rpushx'           : '/cli',
-        'sadd'             : '/cli',
-        'save'             : '/cli',
-        'scard'            : '/cli',
-        'sdiff'            : '/cli',
-        'sdiffstore'       : '/cli',
-        'select'           : '/cli',
-        'set'              : '/cli',
-        'setbit'           : '/cli',
-        'setex'            : '/cli',
-        'setnx'            : '/cli',
-        'setrange'         : '/cli',
-        'shutdown'         : '/cli',
-        'sinter'           : '/cli',
-        'sinterstore'      : '/cli',
-        'sismember'        : '/cli',
-        'slaveof'          : '/cli',
-        'smembers'         : '/cli',
-        'smove'            : '/cli',
-        'sort'             : '/cli',
-        'spop'             : '/cli',
-        'srandmember'      : '/cli',
-        'srem'             : '/cli',
-        'strlen'           : '/cli',
-        'sunion'           : '/cli',
-        'sunionstore'      : '/cli',
-        'sync'             : '/cli',
-        'ttl'              : '/cli',
-        'type'             : '/cli',
-        'watch'            : '/cli',
-        'zadd'             : '/cli',
-        'zcard'            : '/cli',
-        'zcount'           : '/cli',
-        'zincrby'          : '/cli',
-        'zinterstore'      : '/cli',
-        'zrange'           : '/cli',
-        'zrangebyscore'    : '/cli',
-        'zrank'            : '/cli',
-        'zrem'             : '/cli',
-        'zremrangebyrank'  : '/cli',
-        'zremrangebyscore' : '/cli',
-        'zrevrange'        : '/cli',
-        'zrevrangebyscore' : '/cli',
-        'zrevrank'         : '/cli',
-        'zscore'           : '/cli',
-        'zunionstore'      : '/cli',
-
-        'strrev': {
-          PS1: 'strrev $',
-
-          EXIT_HOOK: function() {
-            return 'exit interface commands';
-          },
-
-          START_HOOK: function() {
-            return 'exit interface commands';
-          },
-
-          DISPATCH: function( tokens ) {
-            return tokens.join('').reverse();
-          }
-        }
-      };
-
-      for( var j in command_directory ) {
-        $.register_command( j, command_directory[j] );
-      }
-
-      $.register_command( 'help', function() {
-        return 'redmon-cli supports a subset of the redis commands.' + '<br>' +
-          'keys   - Find all keys matching the given pattern<br>' +
-          'dbsize - Return the number of keys in the selected database<br>' +
-          'set    - Set the string value of a key<br>' +
-          'get    - Get the value of a key<br>' +
-          'del    - Delete a key<br>' +
-          'type   - Determine the type stored at key<br>'
+      terminal = new ReadLine({
+        htmlForInput : function() {return prompt},
+        handler      : process
       });
     }
 
+    function process(command, callback) {
+      var cmd = command.split(' ')[0];
+      if (!cmds[cmd] === true) {
+          callback("(error) ERR unknown command '"+cmd+"'");
+          return;
+      }
+
+      $.ajax({
+        url     : 'cli?command='+command,
+        success :  callback
+      });
+    }
+
+    function focus() {
+      terminal.focus();
+    }
+
+    var cmds = {
+      'append'           : true,
+      'auth'             : true,
+      'bgrewriteaof'     : true,
+      'bgsave'           : true,
+      'blpop'            : true,
+      'brpop'            : true,
+      'brpoplpush'       : true,
+      'config'           : true,
+      'dbsize'           : true,
+      'debug'            : true,
+      'decr'             : true,
+      'decrby'           : true,
+      'del'              : true,
+      'discard'          : true,
+      'echo'             : true,
+      'exec'             : true,
+      'exists'           : true,
+      'expire'           : true,
+      'expireat'         : true,
+      'flushall'         : true,
+      'flushdb'          : true,
+      'get'              : true,
+      'getbit'           : true,
+      'getrange'         : true,
+      'getset'           : true,
+      'hdel'             : true,
+      'hexists'          : true,
+      'hget'             : true,
+      'hgetall'          : true,
+      'hincrby'          : true,
+      'hkeys'            : true,
+      'hlen'             : true,
+      'hmget'            : true,
+      'hmset'            : true,
+      'hset'             : true,
+      'hsetnx'           : true,
+      'hvals'            : true,
+      'incr'             : true,
+      'incrby'           : true,
+      'info'             : true,
+      'keys'             : true,
+      'lastsave'         : true,
+      'lindex'           : true,
+      'linsert'          : true,
+      'llen'             : true,
+      'lpop'             : true,
+      'lpush'            : true,
+      'lpushx'           : true,
+      'lrange'           : true,
+      'lrem'             : true,
+      'lset'             : true,
+      'ltrim'            : true,
+      'mget'             : true,
+      'monitor'          : true,
+      'move'             : true,
+      'mset'             : true,
+      'msetnx'           : true,
+      'multi'            : true,
+      'object'           : true,
+      'persist'          : true,
+      'publish'          : true,
+      'ping'             : true,
+      'quit'             : true,
+      'randomkey'        : true,
+      'rename'           : true,
+      'renamenx'         : true,
+      'rpop'             : true,
+      'rpoplpush'        : true,
+      'rpush'            : true,
+      'rpushx'           : true,
+      'sadd'             : true,
+      'save'             : true,
+      'scard'            : true,
+      'sdiff'            : true,
+      'sdiffstore'       : true,
+      'select'           : true,
+      'set'              : true,
+      'setbit'           : true,
+      'setex'            : true,
+      'setnx'            : true,
+      'setrange'         : true,
+      'shutdown'         : true,
+      'sinter'           : true,
+      'sinterstore'      : true,
+      'sismember'        : true,
+      'slaveof'          : true,
+      'smembers'         : true,
+      'smove'            : true,
+      'sort'             : true,
+      'spop'             : true,
+      'srandmember'      : true,
+      'srem'             : true,
+      'strlen'           : true,
+      'sunion'           : true,
+      'sunionstore'      : true,
+      'sync'             : true,
+      'ttl'              : true,
+      'type'             : true,
+      'watch'            : true,
+      'zadd'             : true,
+      'zcard'            : true,
+      'zcount'           : true,
+      'zincrby'          : true,
+      'zinterstore'      : true,
+      'zrange'           : true,
+      'zrangebyscore'    : true,
+      'zrank'            : true,
+      'zrem'             : true,
+      'zremrangebyrank'  : true,
+      'zremrangebyscore' : true,
+      'zrevrange'        : true,
+      'zrevrangebyscore' : true,
+      'zrevrank'         : true,
+      'zscore'           : true,
+      'zunionstore'      : true
+    }
+
     return {
-      init: init
+      focus : focus,
+      init  : init
     }
   })();
 
