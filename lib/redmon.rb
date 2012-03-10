@@ -5,18 +5,16 @@ require 'redis'
 require 'sinatra/base'
 require 'thin'
 
-#
-#
-#
 module Redmon
   extend self
 
   attr_reader :opts
 
   @opts = {
+    :server        => true,
+    :web_interface => ['0.0.0.0', 4567],
     :redis_url     => 'redis://127.0.0.1:6379',
     :namespace     => 'redmon',
-    :web_interface => ['0.0.0.0', 4567],
     :worker        => true,
     :poll_interval => 10
   }
@@ -33,7 +31,7 @@ module Redmon
     EM.run do
       trap 'TERM', &method(:shutdown)
       trap 'INT',  &method(:shutdown)
-      start_app    if opts[:web_interface]
+      start_app    if opts[:server]
       start_worker if opts[:worker]
     end
   end

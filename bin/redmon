@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib')
+require 'rubygems'
+require 'bundler/setup'
+require 'mixlib/cli'
+require 'redmon'
+
+class CLI
+  include Mixlib::CLI
+
+  option :address,
+    :short       => '-a ADDRESS',
+    :long        => '--address ADDRESS',
+    :default     => '0.0.0.0',
+    :description => "The thin bind address for the app (default: 0.0.0.0)"
+
+  option :port,
+    :short       => '-p PORT',
+    :long        => '--port PORT',
+    :default     => 4567,
+    :description => "The thin bind port for the app (default: 4567)",
+    :proc        => Proc.new {|port| port.to_i}
+
+  option :redis_url,
+    :short       => '-r URL',
+    :long        => '--redis URL',
+    :default     => 'redis://127.0.0.1:6379',
+    :description => "The Redis url for monitor (default: redis://127.0.0.1:6379)"
+
+  option :namespace,
+    :short       => '-n NAMESPACE',
+    :long        => '--namespace NAMESPACE',
+    :default     => 'redmon',
+    :description => 'The root Redis namespace (default: redmon)'
+
+  option :poll_interval,
+    :short       => '-i SECS',
+    :long        => '--interval SECS',
+    :default     => 10,
+    :description => 'Poll interval in secs for the worker (default: 10)',
+    :proc        => Proc.new {|secs| secs.to_i}
+
+  option :server,
+    :on          => :tail,
+    :long        => '--no-server',
+    :boolean     => true,
+    :default     => true,
+    :description => 'Do not run the web app to present stats'
+
+  option :worker,
+    :on          => :tail,
+    :long        => '--no-worker',
+    :boolean     => true,
+    :default     => true,
+    :description => 'Do not run a worker to collect the stats'
+
+  def opts
+    parse_options
+    if config[:server]
+      config[:web_interface] = [config[:address], config[:port]]
+    end
+    config
+  end
+
+end
+
+Redmon.run CLI.new.opts
