@@ -57,7 +57,7 @@ $ bin/redmon
 If you want to simulate a weak load on redis
 
 ```bash
-$ ruby sample/load_sim.rb
+$ ruby load_sim.rb
 ```
 
 Open your browser to 0.0.0.0:4567
