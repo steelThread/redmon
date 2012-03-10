@@ -11,7 +11,6 @@ module Redmon
   attr_reader :opts
 
   @opts = {
-    :server        => true,
     :web_interface => ['0.0.0.0', 4567],
     :redis_url     => 'redis://127.0.0.1:6379',
     :namespace     => 'redmon',
@@ -31,7 +30,7 @@ module Redmon
     EM.run do
       trap 'TERM', &method(:shutdown)
       trap 'INT',  &method(:shutdown)
-      start_app    if opts[:server]
+      start_app    if opts[:web_interface]
       start_worker if opts[:worker]
     end
   end

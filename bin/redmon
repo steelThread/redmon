@@ -6,8 +6,10 @@ require 'bundler/setup'
 require 'mixlib/cli'
 require 'redmon'
 
-class CLI
+class RedmonCLI
   include Mixlib::CLI
+
+  to_i =-> s {s.to_i}
 
   option :address,
     :short       => '-a ADDRESS',
@@ -20,7 +22,7 @@ class CLI
     :long        => '--port PORT',
     :default     => 4567,
     :description => "The thin bind port for the app (default: 4567)",
-    :proc        => Proc.new {|port| port.to_i}
+    :proc        => to_i
 
   option :redis_url,
     :short       => '-r URL',
@@ -39,11 +41,11 @@ class CLI
     :long        => '--interval SECS',
     :default     => 10,
     :description => 'Poll interval in secs for the worker (default: 10)',
-    :proc        => Proc.new {|secs| secs.to_i}
+    :proc        => to_i
 
-  option :server,
+  option :app,
     :on          => :tail,
-    :long        => '--no-server',
+    :long        => '--no-app',
     :boolean     => true,
     :default     => true,
     :description => 'Do not run the web app to present stats'
@@ -55,14 +57,18 @@ class CLI
     :default     => true,
     :description => 'Do not run a worker to collect the stats'
 
-  def opts
+  def parse
     parse_options
-    if config[:server]
+    config[:web_interface] = web_interface
+    config
+  end
+
+  def web_interface
+    if config[:app]
       config[:web_interface] = [config[:address], config[:port]]
     end
-    config
   end
 
 end
 
-Redmon.run CLI.new.opts
+Redmon.run RedmonCLI.new.parse
