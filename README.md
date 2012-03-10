@@ -34,11 +34,24 @@ Intuitively introspect registered keys.  ** Coming Soon **
 ## Usage
 Note:  Current version of Redmon is dependent on [Highcharts JS v2.1.9](http://www.highcharts.com/) which is not included with this repo and requires a license.  This will be replaced with something open source friendly in the future.  In the meantime you can download highcharts and put the highcharts.js file in public/vendor to get things working.  Do it!
 
-Currently not a registered gem, but soon.  For now clone the repo &
+Currently not a registered gem, but soon.  For now clone the repo and start the app as demonstrated below
 
 ```bash
 $ bundle install
-$ ruby sample/app.rb
+$ bin/redmon -h
+Usage: bin/redmon (options)
+    -a, --address ADDRESS            The thin bind address for the app (default: 0.0.0.0)
+    -n, --namespace NAMESPACE        The root Redis namespace (default: redmon)
+    -i, --interval SECS              Poll interval in secs for the worker (default: 10)
+    -p, --port PORT                  The thin bind port for the app (default: 4567)
+    -r, --redis URL                  The Redis url for monitor (default: redis://127.0.0.1:6379)
+        --no-app                     Do not run the web app to present stats
+        --no-worker                  Do not run a worker to collect the stats
+$ bin/redmon
+>> Thin web server (v1.3.1 codename Triple Espresso)
+>> Maximum connections set to 1024
+>> Listening on 0.0.0.0:4567, CTRL+C to stop
+[12-03-10 15:49:40] listening on http#0.0.0.0:4567
 ```
 
 If you want to simulate a weak load on redis
