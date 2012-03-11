@@ -55,5 +55,14 @@ module Redmon
     def stats_key
       "#{ns}:redis:#{redis_host}:stats"
     end
+
+    def prompt
+      "#{redis_url.gsub('://', ' ')}>"
+    end
+
+    def config
+      redis.config :get, '*' rescue {}
+    end
+
   end
 end

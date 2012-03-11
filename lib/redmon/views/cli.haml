@@ -1,4 +1,8 @@
-- if @result.respond_to? :each_with_index
+- if @cmd == :info
+  - @result.each do |item|
+    %span= item.join ':'
+    %br
+- elsif @result.respond_to? :each_with_index
   - @result.each_with_index do |item, index|
     %span= "#{index+1}) \"#{item}\""
     %br

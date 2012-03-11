@@ -64,3 +64,4 @@ end
 require 'redmon/redis'
 require 'redmon/app'
 require 'redmon/worker'
+require 'redmon/ext/titlecase'

@@ -14,16 +14,8 @@ module Redmon
       include Rack::Utils
       include Redmon::Redis
 
-      def prompt
-        "#{redis_url.gsub('://', ' ')}>"
-      end
-
       def poll_interval
         Redmon[:poll_interval] * 1000
-      end
-
-      def config
-        redis.config :get, '*' rescue {}
       end
     end
 
@@ -33,10 +25,10 @@ module Redmon
 
     get '/cli' do
       args = params[:command].split
-      cmd  = args.shift.downcase.intern
+      @cmd  = args.shift.downcase.intern
       begin
-        raise RuntimeError unless supported? cmd
-        @result = redis.send cmd, *args
+        raise RuntimeError unless supported? @cmd
+        @result = redis.send @cmd, *args
         @result = empty_result if @result == []
         haml :cli
       rescue ArgumentError
