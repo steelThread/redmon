@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Redis" do
+describe "Helpers" do
 
   describe "redis" do
     it "should call Redis.connect" do

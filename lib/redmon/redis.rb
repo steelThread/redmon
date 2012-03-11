@@ -28,6 +28,10 @@ module Redmon
       redis_url.gsub('redis://', '')
     end
 
+    def config
+      redis.config :get, '*' rescue {}
+    end
+
     def unquoted
       %w{string OK} << '(empty list or set)'
     end
@@ -55,14 +59,5 @@ module Redmon
     def stats_key
       "#{ns}:redis:#{redis_host}:stats"
     end
-
-    def prompt
-      "#{redis_url.gsub('://', ' ')}>"
-    end
-
-    def config
-      redis.config :get, '*' rescue {}
-    end
-
   end
 end

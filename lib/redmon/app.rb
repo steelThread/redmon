@@ -6,18 +6,7 @@ module Redmon
       register Sinatra::Reloader
     end
 
-    def count
-      -(params[:count] ? params[:count].to_i : 1)
-    end
-
-    helpers do
-      include Rack::Utils
-      include Redmon::Redis
-
-      def poll_interval
-        Redmon[:poll_interval] * 1000
-      end
-    end
+    helpers Redmon::Helpers
 
     get '/' do
       haml :app
@@ -25,16 +14,16 @@ module Redmon
 
     get '/cli' do
       args = params[:command].split
-      @cmd  = args.shift.downcase.intern
+      @cmd = args.shift.downcase.intern
       begin
         raise RuntimeError unless supported? @cmd
         @result = redis.send @cmd, *args
         @result = empty_result if @result == []
         haml :cli
       rescue ArgumentError
-        wrong_number_of_arguments_for cmd
+        wrong_number_of_arguments_for @cmd
       rescue RuntimeError
-        unknown cmd
+        unknown @cmd
       rescue Errno::ECONNREFUSED
         connection_refused
       end

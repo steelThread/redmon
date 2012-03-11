@@ -62,6 +62,6 @@ module Redmon
 end
 
 require 'redmon/redis'
+require 'redmon/helpers'
 require 'redmon/app'
 require 'redmon/worker'
-require 'redmon/ext/titlecase'
