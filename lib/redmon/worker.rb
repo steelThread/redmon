@@ -19,7 +19,7 @@ module Redmon
     end
 
     def entries(slowlog)
-      entries = slowlog.sort_by{|a| a[2]}.reverse!
+      entries = slowlog.sort_by{|a| a[2]}.reverse
       entries.map do |entry|
         {
           :id           => entry.shift,

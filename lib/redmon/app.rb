@@ -32,8 +32,7 @@ module Redmon
     post '/config' do
       param = params[:param].intern
       value = params[:value]
-      redis.config(:set, param, value)
-      value
+      redis.config(:set, param, value) and value
     end
 
     get '/stats' do
