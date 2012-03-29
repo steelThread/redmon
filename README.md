@@ -38,7 +38,7 @@ Currently not a registered gem, but soon.  For now clone the repo and start the 
 
 ```bash
 $ bundle install
-$ bin/redmon -h
+$ bundle exec bin/redmon -h
 Usage: bin/redmon (options)
     -a, --address ADDRESS            The thin bind address for the app (default: 0.0.0.0)
     -n, --namespace NAMESPACE        The root Redis namespace (default: redmon)
@@ -47,7 +47,7 @@ Usage: bin/redmon (options)
     -r, --redis URL                  The Redis url for monitor (default: redis://127.0.0.1:6379)
         --no-app                     Do not run the web app to present stats
         --no-worker                  Do not run a worker to collect the stats
-$ bin/redmon
+$ bundle exec bin/redmon
 >> Thin web server (v1.3.1 codename Triple Espresso)
 >> Maximum connections set to 1024
 >> Listening on 0.0.0.0:4567, CTRL+C to stop

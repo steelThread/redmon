@@ -1,12 +1,4 @@
-$:.unshift File.expand_path('../../lib', __FILE__)
-ENV['RACK_ENV'] = "test"
-
-require "redmon"
-require "eventmachine"
-require 'rack'
-require 'redis'
-
-require 'rspec'
+require 'redmon'
 require 'rack/test'
 
 def mock_redis
@@ -14,4 +6,3 @@ def mock_redis
   Redis.stub(:connect).and_return(redis)
   redis
 end
-
