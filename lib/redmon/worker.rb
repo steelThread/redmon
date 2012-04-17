@@ -19,8 +19,7 @@ module Redmon
     end
 
     def entries(slowlog)
-      entries = slowlog.sort_by{|a| a[2]}.reverse
-      entries.map do |entry|
+      sort(slowlog).map do |entry|
         {
           :id           => entry.shift,
           :timestamp    => entry.shift * 1000,
@@ -28,6 +27,10 @@ module Redmon
           :command      => entry.shift.join(' ')
         }
       end
+    end
+
+    def sort(slowlog)
+      slowlog.sort_by{|a| a[2]}.reverse!
     end
 
     def interval

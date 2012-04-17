@@ -19,7 +19,7 @@ module Redmon
   }
 
   def run(opts={})
-    @opts.merge!(opts)
+    @opts.merge! opts
     start_em
   rescue Exception => e
     log "!!! Redmon has shit the bed, restarting... #{e.message}"
