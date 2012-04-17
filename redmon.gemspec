@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = ["bin/redmon"]
+  s.executables   = ["redmon"]
   s.require_paths = ["lib"]
 
   s.add_dependency "bson_ext", ">= 1.4.0"
