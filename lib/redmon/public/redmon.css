@@ -1,4 +1,3 @@
-
 /* Override some defaults */
 html, body {
   background-color: #eee;
@@ -70,41 +69,46 @@ body {
 .hidden{ display: none; }
 
 #terminal {
-    margin: 1em 0 0;
-    padding: .25em 0;
-    height: 600px;
-    background: #000;
-    overflow: auto;
-    font-family: Monaco, monospace;
+  margin: 1em 0 0;
+  padding: .25em 0;
+  height: 600px;
+  background: #000;
+  overflow: auto;
+  font-family: Monaco, monospace;
 }
 
 #terminal div.line {
-    padding: 0;
+  padding: 0;
 }
 
 #terminal input {
-    width: 880px;
-    border: none;
-    display: inline;
-    background: #000;
-    color: #55d839;
-    font-family: Monaco, monospace;
+  width: 880px;
+  border: none;
+  display: inline;
+  background: #000;
+  color: #55d839;
+  font-family: Monaco, monospace;
 }
 
 #terminal p, #terminal pre {
-    color: #55d839;
-    color: #55d839 !important;
-    margin-bottom: 0px;
-    margin-left: 12px;
+  color: #55d839;
+  color: #55d839 !important;
+  margin-bottom: 0px;
+  margin-left: 12px;
 }
 
 #terminal a {
-    color:  #55d839;
+  color:  #55d839;
 }
 
 #terminal span.prompt {
-    color: #55d839;
-    margin-left: 12px;
+  color: #55d839;
+  margin-left: 12px;
 }
 
-#terminal input:focus{box-shadow:none;}
+#terminal input:focus{ box-shadow:none; }
+
+.chart {
+  width:880px;
+  height:225px;
+}
