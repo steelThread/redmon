@@ -46,13 +46,13 @@
                   .widget
                     .headbar
                       %h2 Memory Usage
-                    #memory-container.chart{:style => ""}
+                    #memory-container.chart
               .row
                 .span15
                   .widget
                     .headbar
                       %h2 Keyspace
-                    #keyspace-container.chart{:style => ""}
+                    #keyspace-container.chart
               .row
                 .span15
                   .widget
@@ -166,7 +166,7 @@
       .modal-body
         %p This action will, without a doubt, delete all the keys of the redis server.
       .modal-footer
-        %button.btn.secondary{:id => 'flush-cancel-btn'} Well On Second Though
+        %button.btn.secondary{:id => 'flush-cancel-btn'} Well On Second Thought
         %button.btn.danger{:id => 'flush-confirm-btn'} Just Do It Already!
 
 :javascript
