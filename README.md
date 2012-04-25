@@ -32,8 +32,6 @@ Intuitively introspect registered keys.  ** Coming Soon **
 ----
 
 ## Usage
-Note:  Current version of Redmon is dependent on [Highcharts JS v2.1.9](http://www.highcharts.com/) which is not included with this repo and requires a license.  This will be replaced with something open source friendly in the future.  In the meantime you can download highcharts and put the highcharts.js file in public/vendor to get things working.  Do it!
-
 Currently not a registered gem, but soon.  For now clone the repo and start the app as demonstrated below
 
 ```bash
