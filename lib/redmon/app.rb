@@ -1,11 +1,6 @@
 module Redmon
   class App < Sinatra::Base
 
-    configure :development do
-      require "sinatra/reloader"
-      register Sinatra::Reloader
-    end
-
     helpers Redmon::Helpers
 
     get '/' do
