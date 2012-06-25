@@ -31,8 +31,15 @@ Intuitively introspect registered keys.  ** Coming Soon **
 
 ----
 
+## Installation
+
+Redmon is available as a RubyGem:
+
+```bash
+gem install redmon
+```
+
 ## Usage
-Currently not a registered gem, but soon.  For now clone the repo and start the app as demonstrated below
 
 ```bash
 $ bundle install
