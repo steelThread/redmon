@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Redmon by steelThread</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Redmon</h1>
+        <h2>A web interface for managing redis: cli, admin, and live monitoring</h2>
+        <a href="https://github.com/steelThread/redmon" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Redmon</h1>
+
+<p>** Work in progress in the very early stages of dev **</p>
+
+<p>Simple sinatra based dashbord for redis.  After seeing the <a href="https://github.com/paulasmuth/fnordmetric">fnordmetric</a>
+project I was inspired to write this.  Some of the ideas there have be carried over here.</p>
+
+<p><a href="http://travis-ci.org/steelThread/redmon"> <img src="https://secure.travis-ci.org/steelThread/redmon.png" alt="Build status - Travis-ci"></a></p>
+
+<hr><p>Watch your redis server live.</p>
+
+<p><img src="http://dl.dropbox.com/u/27525257/dash-new.png" alt=""></p>
+
+<hr><p>Interact with redis using a familiar cli interface.</p>
+
+<p><img src="http://dl.dropbox.com/u/27525257/cli.png" alt=""></p>
+
+<hr><p>Dynamically update your server configuration.</p>
+
+<p><img src="http://dl.dropbox.com/u/27525257/configuration-new.png" alt=""></p>
+
+<hr><p>Intuitively introspect registered keys.  ** Coming Soon **</p>
+
+<hr><h2>Installation</h2>
+
+<p>Redmon is available as a RubyGem:</p>
+
+<div class="highlight">
+<pre>gem install redmon
+</pre>
+</div>
+
+
+<h2>Usage</h2>
+
+<div class="highlight">
+<pre><span class="nv">$ </span>bundle install
+<span class="nv">$ </span>bundle <span class="nb">exec </span>bin/redmon -h
+Usage: bin/redmon <span class="o">(</span>options<span class="o">)</span>
+    -a, --address ADDRESS            The thin <span class="nb">bind </span>address <span class="k">for </span>the app <span class="o">(</span>default: 0.0.0.0<span class="o">)</span>
+    -n, --namespace NAMESPACE        The root Redis namespace <span class="o">(</span>default: redmon<span class="o">)</span>
+    -i, --interval SECS              Poll interval in secs <span class="k">for </span>the worker <span class="o">(</span>default: 10<span class="o">)</span>
+    -p, --port PORT                  The thin <span class="nb">bind </span>port <span class="k">for </span>the app <span class="o">(</span>default: 4567<span class="o">)</span>
+    -r, --redis URL                  The Redis url <span class="k">for </span>monitor <span class="o">(</span>default: redis://127.0.0.1:6379<span class="o">)</span>
+        --no-app                     Do not run the web app to present stats
+        --no-worker                  Do not run a worker to collect the stats
+<span class="nv">$ </span>bundle <span class="nb">exec </span>bin/redmon
+&gt;&gt; Thin web server <span class="o">(</span>v1.3.1 codename Triple Espresso<span class="o">)</span>
+&gt;&gt; Maximum connections <span class="nb">set </span>to 1024
+&gt;&gt; Listening on 0.0.0.0:4567, CTRL+C to stop
+<span class="o">[</span>12-03-10 15:49:40<span class="o">]</span> listening on http#0.0.0.0:4567
+</pre>
+</div>
+
+
+<p>If you want to simulate a weak load on redis</p>
+
+<div class="highlight">
+<pre><span class="nv">$ </span>ruby load_sim.rb
+</pre>
+</div>
+
+
+<p>Open your browser to 0.0.0.0:4567</p>
+
+<h2>License</h2>
+
+<p>Copyright (c) 2012 Sean McDaniel</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to use, copy and modify copies of the Software, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/steelThread/redmon/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/steelThread/redmon/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/steelThread/redmon"></a> is maintained by <a href="https://github.com/steelThread">steelThread</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
