@@ -3,16 +3,16 @@
   %head
     %title Redmon
 
-    %script(type="text/javascript" src="vendor/jquery-1.7.1.min.js")
-    %script(type="text/javascript" src="vendor/jquery-effects-core.min.js")
-    %script(type="text/javascript" src="vendor/jquery.editinplace.js")
-    %script(type="text/javascript" src="vendor/jquery.flot.js")
-    %script(type="text/javascript" src="vendor/bootstrap-modal.js")
-    %script(type="text/javascript" src="vendor/terminal.js")
-    %script(type="text/javascript" src="redmon.js")
+    %script(type="text/javascript" src="#{u 'vendor/jquery-1.7.1.min.js' }")
+    %script(type="text/javascript" src="#{u 'vendor/jquery-effects-core.min.js' }")
+    %script(type="text/javascript" src="#{u 'vendor/jquery.editinplace.js' }")
+    %script(type="text/javascript" src="#{u 'vendor/jquery.flot.js' }")
+    %script(type="text/javascript" src="#{u 'vendor/bootstrap-modal.js' }")
+    %script(type="text/javascript" src="#{u 'vendor/terminal.js' }")
+    %script(type="text/javascript" src="#{u 'redmon.js' }")
 
-    %link(type="text/css" rel="stylesheet" href="vendor/bootstrap.min.css")
-    %link(type="text/css" rel="stylesheet" href="redmon.css")
+    %link(type="text/css" rel="stylesheet" href="#{u 'vendor/bootstrap.min.css'}")
+    %link(type="text/css" rel="stylesheet" href="#{u 'redmon.css'}")
 
   %body
     .topbar
@@ -173,6 +173,7 @@
   $(document).ready(function() {
     Redmon.init({
       pollInterval : #{poll_interval},
-      cliPrompt    : "#{prompt}"
+      cliPrompt    : "#{prompt}",
+      root : "#{path_prefix}",
     });
   });
