@@ -32,6 +32,10 @@ module Redmon
 
     get '/stats' do
       content_type :json
+      if path_prefix
+        @worker ||= Worker.new
+        @worker.record_stats
+      end
       redis.zrange(stats_key, count, -1).to_json
     end
 
