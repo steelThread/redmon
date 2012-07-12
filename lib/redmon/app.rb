@@ -32,7 +32,7 @@ module Redmon
 
     get '/stats' do
       content_type :json
-      if path_prefix
+      if path_prefix != ''
         @worker ||= Worker.new
         @worker.record_stats
       end
