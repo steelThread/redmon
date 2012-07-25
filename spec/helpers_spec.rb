@@ -4,7 +4,7 @@ describe "Helpers" do
 
   describe "redis" do
     it "should call Redis.connect" do
-      Redis.should_receive(:connect).with({:url => Redmon[:redis_url]})
+      Redis.should_receive(:connect).with({:url => Redmon.config.redis_url})
       Redmon::Redis.redis
     end
   end
@@ -19,19 +19,19 @@ describe "Helpers" do
 
   describe "#ns" do
     it "should return the configured namespace" do
-      Redmon[:namespace].should == Redmon::Redis.ns
+      Redmon.config.namespace.should == Redmon::Redis.ns
     end
   end
 
   describe "#redis_url" do
     it "should return the configured redis url" do
-      Redmon[:redis_url].should == Redmon::Redis.redis_url
+      Redmon.config.redis_url.should == Redmon::Redis.redis_url
     end
   end
 
   describe "#redis_host" do
     it "should return the configured redis host" do
-      Redmon[:redis_url].gsub('redis://', '').should == Redmon::Redis.redis_host
+      Redmon.config.redis_url.gsub('redis://', '').should == Redmon::Redis.redis_host
     end
   end
 

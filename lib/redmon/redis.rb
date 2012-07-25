@@ -1,3 +1,5 @@
+require 'redmon/config'
+
 module Redmon
   module Redis
     extend self
@@ -13,15 +15,15 @@ module Redmon
     ]
 
     def redis
-      @redis ||= ::Redis.connect(:url => Redmon[:redis_url])
+      @redis ||= ::Redis.connect(:url => Redmon.config.redis_url)
     end
 
     def ns
-      Redmon[:namespace]
+      Redmon.config.namespace
     end
 
     def redis_url
-      @redis_url ||= Redmon[:redis_url].gsub(/\w*:\w*@/, '')
+      @redis_url ||= Redmon.config.redis_url.gsub(/\w*:\w*@/, '')
     end
 
     def redis_host

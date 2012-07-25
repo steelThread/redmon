@@ -34,7 +34,7 @@ module Redmon
     end
 
     def interval
-      Redmon[:poll_interval]
+      Redmon.config.poll_interval
     end
 
   end
