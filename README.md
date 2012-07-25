@@ -67,6 +67,30 @@ $ ruby load_sim.rb
 
 Open your browser to 0.0.0.0:4567
 
+
+## Using in a Rails application
+
+Add to Gemfile:
+
+    gem 'redmon', require: false
+
+Add to config/routes.rb:
+
+    require 'redmon/app'
+    mount Redmon::App => '/redmon'
+
+You can configure the Redmon using an initializer config/initializers/redmon.rb:
+
+```ruby
+Redmon.configure do |config|
+  config.redis_url = 'redis://127.0.0.1:6379'
+  config.namespace = 'redmon'
+  config.poll_interval = 10
+end
+```
+
+This will mount the Redmon application to the /redmon/ path. The trailing slash is important.
+
 ## License
 
 Copyright (c) 2012 Sean McDaniel

@@ -55,7 +55,7 @@ describe "worker" do
 
   describe "#interval" do
     it "should return the configured poll interval" do
-      @worker.interval.should == Redmon[:poll_interval]
+      @worker.interval.should == Redmon.config.poll_interval
     end
   end
 

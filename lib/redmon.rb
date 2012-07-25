@@ -1,3 +1,4 @@
+require 'redmon/config'
 require 'active_support/core_ext'
 require 'eventmachine'
 require 'haml'
@@ -10,16 +11,8 @@ module Redmon
 
   attr_reader :opts
 
-  @opts = {
-    :web_interface => ['0.0.0.0', 4567],
-    :redis_url     => 'redis://127.0.0.1:6379',
-    :namespace     => 'redmon',
-    :worker        => true,
-    :poll_interval => 10
-  }
-
   def run(opts={})
-    @opts.merge! opts
+    @opts = Redmon::Config::DEFAULTS.merge(opts)
     start_em
   rescue Exception => e
     log "!!! Redmon has shit the bed, restarting... #{e.message}"
@@ -55,6 +48,7 @@ module Redmon
     puts "[#{Time.now.strftime('%y-%m-%d %H:%M:%S')}] #{msg}"
   end
 
+  # @deprecated
   def [](option)
     opts[option]
   end
