@@ -1,5 +1,12 @@
+require 'redmon/helpers'
+
 module Redmon
   class App < Sinatra::Base
+    use Rack::Static, {
+      urls: [/\.css$/, /\.js$/],
+      root: "#{root}/public",
+      cache_control: 'public, max-age=3600'
+    }
 
     helpers Redmon::Helpers
 

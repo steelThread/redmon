@@ -1,3 +1,5 @@
+require 'redmon/redis'
+
 module Redmon
   module Helpers
     include Redmon::Redis
@@ -7,7 +9,7 @@ module Redmon
     end
 
     def poll_interval
-      Redmon[:poll_interval] * 1000
+      Redmon.config.poll_interval * 1000
     end
 
     def count
