@@ -27,10 +27,6 @@ Dynamically update your server configuration.
 
 ----
 
-Intuitively introspect registered keys.  ** Coming Soon **
-
-----
-
 ## Installation
 
 Redmon is available as a RubyGem:
