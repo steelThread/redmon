@@ -40,7 +40,7 @@ module Redmon
     Worker.new.run!
   end
 
-  def shutdown
+  def shutdown(code)
     EM.stop
   end
 
