@@ -16,7 +16,7 @@ module Redmon
       :poll_interval => 10
     }
 
-    attr_accessor *DEFAULTS.keys
+    attr_accessor(*DEFAULTS.keys)
 
     def initialize
       DEFAULTS.each {|k,v| send("#{k}=", v)}

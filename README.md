@@ -68,12 +68,16 @@ Open your browser to 0.0.0.0:4567
 
 Add to Gemfile:
 
-    gem 'redmon', require: false
+```ruby
+gem 'redmon', require: false
+```
 
 Add to config/routes.rb:
 
-    require 'redmon/app'
-    mount Redmon::App => '/redmon'
+```ruby
+require 'redmon/app'
+mount Redmon::App => '/redmon'
+```
 
 You can configure the Redmon using an initializer config/initializers/redmon.rb:
 
@@ -85,7 +89,8 @@ Redmon.configure do |config|
 end
 ```
 
-This will mount the Redmon application to the /redmon/ path. The trailing slash is important.
+This will mount the Redmon application to the /redmon/ path. The trailing slash
+is important.
 
 ## License
 
