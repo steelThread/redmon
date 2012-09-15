@@ -9,6 +9,7 @@ module Redmon
 
   class Config
     DEFAULTS = {
+      :app           => true,
       :web_interface => ['0.0.0.0', 4567],
       :redis_url     => 'redis://127.0.0.1:6379',
       :namespace     => 'redmon',
@@ -19,7 +20,11 @@ module Redmon
     attr_accessor(*DEFAULTS.keys)
 
     def initialize
-      DEFAULTS.each {|k,v| send("#{k}=", v)}
+      apply DEFAULTS
+    end
+
+    def apply(opts)
+      opts.each {|k,v| send("#{k}=", v) if respond_to? k}
     end
 
   end

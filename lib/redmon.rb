@@ -9,10 +9,8 @@ require 'thin'
 module Redmon
   extend self
 
-  attr_reader :opts
-
   def run(opts={})
-    @opts = Redmon::Config::DEFAULTS.merge(opts)
+    config.apply opts
     start_em
   rescue Exception => e
     log "!!! Redmon has shit the bed, restarting... #{e.message}"
@@ -23,15 +21,15 @@ module Redmon
     EM.run do
       trap 'TERM', &method(:shutdown)
       trap 'INT',  &method(:shutdown)
-      start_app    if opts[:web_interface]
-      start_worker if opts[:worker]
+      start_app    if config.web_interface
+      start_worker if config.worker
     end
   end
 
   def start_app
     app = Redmon::App.new
-    Thin::Server.start(*opts[:web_interface], app)
-    log "listening on http##{opts[:web_interface].join(':')}"
+    Thin::Server.start(*config.web_interface, app)
+    log "listening on http##{config.web_interface.join(':')}"
   rescue Exception => e
     log "Can't start Redmon::App. port in use?  Error #{e}"
   end
@@ -50,7 +48,7 @@ module Redmon
 
   # @deprecated
   def [](option)
-    opts[option]
+    config.send :option
   end
 
 end

@@ -57,12 +57,13 @@ class RedmonCLI
   def parse
     parse_options
     config[:web_interface] = web_interface
+    [:address, :port].each {|k| config.delete k}
     config
   end
 
   def web_interface
     if config[:app]
-      config[:web_interface] = [config[:address], config[:port]]
+      [config[:address], config[:port]]
     end
   end
 
