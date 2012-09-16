@@ -54,19 +54,12 @@ class RedmonCLI
     :default     => true,
     :description => 'Do not run a worker to collect the stats'
 
-  def parse
+  def run
     parse_options
-    config[:web_interface] = web_interface
-    [:address, :port].each {|k| config.delete k}
+    config[:web_interface] = [config[:address], config[:port]]
     config
-  end
-
-  def web_interface
-    if config[:app]
-      [config[:address], config[:port]]
-    end
   end
 
 end
 
-Redmon.run RedmonCLI.new.parse
+Redmon.run RedmonCLI.new.run

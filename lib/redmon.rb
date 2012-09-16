@@ -21,7 +21,7 @@ module Redmon
     EM.run do
       trap 'TERM', &method(:shutdown)
       trap 'INT',  &method(:shutdown)
-      start_app    if config.web_interface
+      start_app    if config.app
       start_worker if config.worker
     end
   end
