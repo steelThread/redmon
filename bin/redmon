@@ -33,6 +33,11 @@ class RedmonCLI
     :default     => 'redmon',
     :description => 'The root Redis namespace (default: redmon)'
 
+  option :secure,
+    :short       => '-s CREDENTIALS',
+    :long        => '--secure CREDENTIALS',
+    :description => "Use basic auth. Colon separated credentials, eg admin:admin."
+
   option :poll_interval,
     :short       => '-i SECS',
     :long        => '--interval SECS',
@@ -56,7 +61,7 @@ class RedmonCLI
 
   def run
     parse_options
-    config[:web_interface] = [config[:address], config[:port]]
+    config[:web_interface] = [config[:address], config[:port]] if config[:app]
     config
   end
 

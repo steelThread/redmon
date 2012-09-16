@@ -1,5 +1,3 @@
-require 'redmon/redis'
-
 module Redmon
   module Helpers
     include Redmon::Redis

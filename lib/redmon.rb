@@ -1,10 +1,4 @@
-require 'redmon/config'
-require 'active_support/core_ext'
 require 'eventmachine'
-require 'haml'
-require 'redis'
-require 'sinatra/base'
-require 'thin'
 
 module Redmon
   extend self
@@ -27,8 +21,8 @@ module Redmon
   end
 
   def start_app
-    app = Redmon::App.new
-    Thin::Server.start(*config.web_interface, app)
+    require 'thin'
+    Thin::Server.start(*config.web_interface, Redmon::App.new)
     log "listening on http##{config.web_interface.join(':')}"
   rescue Exception => e
     log "Can't start Redmon::App. port in use?  Error #{e}"
@@ -46,14 +40,9 @@ module Redmon
     puts "[#{Time.now.strftime('%y-%m-%d %H:%M:%S')}] #{msg}"
   end
 
-  # @deprecated
-  def [](option)
-    config.send :option
-  end
+  require 'redmon/config'
+  require 'redmon/redis'
+  autoload :App,    'redmon/app'
+  autoload :Worker, 'redmon/worker'
 
 end
-
-require 'redmon/redis'
-require 'redmon/helpers'
-require 'redmon/app'
-require 'redmon/worker'

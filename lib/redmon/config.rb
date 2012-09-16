@@ -14,7 +14,8 @@ module Redmon
       :app           => true,
       :worker        => true,
       :web_interface => ['0.0.0.0', 4567],
-      :poll_interval => 10
+      :poll_interval => 10,
+      :secure        => false
     }
 
     attr_accessor(*DEFAULTS.keys)

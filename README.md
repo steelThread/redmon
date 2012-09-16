@@ -46,8 +46,10 @@ Usage: bin/redmon (options)
     -i, --interval SECS              Poll interval in secs for the worker (default: 10)
     -p, --port PORT                  The thin bind port for the app (default: 4567)
     -r, --redis URL                  The Redis url for monitor (default: redis://127.0.0.1:6379)
+    -s, --secure CREDENTIALS         Use basic auth. Colon separated credentials, eg admin:admin.
         --no-app                     Do not run the web app to present stats
         --no-worker                  Do not run a worker to collect the stats
+
 $ bundle exec bin/redmon
 >> Thin web server (v1.3.1 codename Triple Espresso)
 >> Maximum connections set to 1024

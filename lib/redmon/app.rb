@@ -1,4 +1,7 @@
+require 'sinatra/base'
+require 'active_support/core_ext'
 require 'redmon/helpers'
+require 'haml'
 
 module Redmon
   class App < Sinatra::Base
@@ -10,6 +13,12 @@ module Redmon
       root: "#{root}/public",
       cache_control: 'public, max-age=3600'
     }
+
+    if Redmon.config.secure
+      use Rack::Auth::Basic do |username, password|
+        [username, password] == Redmon.config.secure.split(':')
+      end
+    end
 
     get '/' do
       haml :app

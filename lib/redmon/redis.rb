@@ -1,4 +1,4 @@
-require 'redmon/config'
+require 'redis'
 
 module Redmon
   module Redis
