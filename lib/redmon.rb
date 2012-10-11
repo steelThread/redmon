@@ -1,4 +1,5 @@
 require 'eventmachine'
+require 'active_support/core_ext'
 
 module Redmon
   extend self
