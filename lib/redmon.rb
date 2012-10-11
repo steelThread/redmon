@@ -8,8 +8,10 @@ module Redmon
     config.apply opts
     start_em
   rescue Exception => e
-    log "!!! Redmon has shit the bed, restarting... #{e.message}"
-    sleep(1); run(opts)
+    unless e.is_a?(SystemExit)
+      log "!!! Redmon has shit the bed, restarting... #{e.message}"
+      sleep(1); run(opts)
+    end
   end
 
   def start_em
