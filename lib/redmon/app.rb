@@ -1,5 +1,4 @@
 require 'sinatra/base'
-require 'active_support/core_ext'
 require 'redmon/helpers'
 require 'haml'
 
