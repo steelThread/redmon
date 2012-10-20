@@ -36,7 +36,13 @@ describe "app" do
 
     it "should execute the passed command" do
       stub_redis_cmd :keys, '*'
-      get URI.encode("/cli?command=keys *")
+      get "/cli?command=#{command}"
+      last_response.should be_ok
+    end
+
+    it "should execute a passed command with quoted values" do
+      stub_redis_cmd :set, 'key', 'quoted value'
+      get URI.encode('/cli?command=set key "quoted value"')
       last_response.should be_ok
     end
 
