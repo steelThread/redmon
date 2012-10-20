@@ -25,6 +25,7 @@ module Redmon
 
     get '/cli' do
       args = params[:command].split(/ *"(.*?)" *| *'(.*?)' *| /)
+      args.reject!(&:blank?)
       @cmd = args.shift.downcase.intern
       begin
         raise RuntimeError unless supported? @cmd

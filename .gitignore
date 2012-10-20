@@ -4,4 +4,5 @@
 .DS_Store
 dump.rdb
 pkg
+vendor
 Gemfile.lock
