@@ -1,7 +1,5 @@
 # Redmon
 
-** Work in progress in the very early stages of dev **
-
 Simple sinatra based dashbord for redis.  After seeing the [fnordmetric](https://github.com/paulasmuth/fnordmetric)
 project I was inspired to write this.  Some of the ideas there have be carried over here.
 
@@ -38,9 +36,8 @@ gem install redmon
 ## Usage
 
 ```bash
-$ bundle install
-$ bundle exec bin/redmon -h
-Usage: bin/redmon (options)
+$ redmon -h
+Usage: /Users/sean/codez/steelThread/redmon/vendor/ruby/1.9.1/bin/redmon (options)
     -a, --address ADDRESS            The thin bind address for the app (default: 0.0.0.0)
     -n, --namespace NAMESPACE        The root Redis namespace (default: redmon)
     -i, --interval SECS              Poll interval in secs for the worker (default: 10)
@@ -50,7 +47,7 @@ Usage: bin/redmon (options)
         --no-app                     Do not run the web app to present stats
         --no-worker                  Do not run a worker to collect the stats
 
-$ bundle exec bin/redmon
+$ redmon
 >> Thin web server (v1.3.1 codename Triple Espresso)
 >> Maximum connections set to 1024
 >> Listening on 0.0.0.0:4567, CTRL+C to stop
@@ -64,7 +61,6 @@ $ ruby load_sim.rb
 ```
 
 Open your browser to 0.0.0.0:4567
-
 
 ## Using in a Rails application
 
@@ -87,12 +83,14 @@ You can configure the Redmon using an initializer config/initializers/redmon.rb:
 Redmon.configure do |config|
   config.redis_url = 'redis://127.0.0.1:6379'
   config.namespace = 'redmon'
-  config.poll_interval = 10
 end
 ```
 
 This will mount the Redmon application to the /redmon/ path. The trailing slash
-is important.
+is important.  The worker that gathers the redis info stats will not be started
+when Redmon is mounted.  In order to get a worker running inside of your Rails
+app you can try this [Railtie](https://github.com/steelThread/redmon/pull/19#issuecomment-7273659)
+based approach.
 
 ## License
 
