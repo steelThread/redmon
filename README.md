@@ -62,7 +62,6 @@ $ ruby load_sim.rb
 
 Open your browser to 0.0.0.0:4567
 
-
 ## Using in a Rails application
 
 Add to Gemfile:
