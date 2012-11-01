@@ -5,4 +5,5 @@
 dump.rdb
 pkg
 vendor
+!/lib/redmon/public/vendor
 Gemfile.lock

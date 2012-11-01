@@ -108,7 +108,42 @@ body {
 
 #terminal input:focus{ box-shadow:none; }
 
-.chart {
+.chart-container {
+  position: relative;
   width:880px;
   height:225px;
+  margin-top: 10px;
+}
+
+.y-axis {
+  position: absolute;
+  width: 60px;
+}
+
+.chart {
+  position: relative;
+  left: 60px;
+}
+
+.label {
+  padding: none;
+  font-size: inherit;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  background-color: #404040;
+  -webkit-border-radius: none;
+  -moz-border-radius: none;
+  border-radius: none;
+}
+
+.rickshaw_legend li {
+  min-width: 0px;
+}
+
+#keyspace-legend-container {
+  position: absolute;
+  right: 60px;
+  bottom: 0px;
+  opacity: .7;
 }
