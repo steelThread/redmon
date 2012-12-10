@@ -4,6 +4,7 @@ Simple sinatra based dashbord for redis.  After seeing the [fnordmetric](https:/
 project I was inspired to write this.  Some of the ideas there have be carried over here.
 
 [ ![Build status - Travis-ci](https://secure.travis-ci.org/steelThread/redmon.png) ](http://travis-ci.org/steelThread/redmon)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/steelThread/redmon)
 
 ----
 
