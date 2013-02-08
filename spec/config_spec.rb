@@ -12,7 +12,7 @@ describe "Redmon" do
 end
 
 describe "Config" do
-  subject {Redmon::Config.new}
+  subject { Redmon::Config.new }
   describe "#initialize" do
     it "should apply the defaults" do
       Redmon::Config::DEFAULTS.each do |k,v|
@@ -26,7 +26,7 @@ describe "Config" do
       subject.app.should be_true
       subject.worker.should be_true
 
-      subject.apply app: false, worker: false
+      subject.apply :app => false, :worker => false
       subject.app.should be_false
       subject.worker.should be_false
     end

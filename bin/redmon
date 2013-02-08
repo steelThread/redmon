@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
 require 'mixlib/cli'
 require 'redmon'
 
 class RedmonCLI
   include Mixlib::CLI
 
-  to_i =-> s {s.to_i}
+  to_i = lambda { |s| s.to_i }
 
   option :address,
     :short       => '-a ADDRESS',

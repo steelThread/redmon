@@ -25,7 +25,7 @@ module Redmon
     end
 
     def apply(opts)
-      opts.each {|k,v| send("#{k}=", v) if respond_to? k}
+      opts.each { |k,v| send("#{k}=", v) if respond_to? k }
     end
 
   end
