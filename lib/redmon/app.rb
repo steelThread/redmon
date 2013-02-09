@@ -8,9 +8,9 @@ module Redmon
     helpers Redmon::Helpers
 
     use Rack::Static, {
-      urls: [/\.css$/, /\.js$/],
-      root: "#{root}/public",
-      cache_control: 'public, max-age=3600'
+      :urls => [/\.css$/, /\.js$/],
+      :root => "#{root}/public",
+      :cache_control => 'public, max-age=3600'
     }
 
     if Redmon.config.secure
