@@ -7,14 +7,13 @@
     %script(type="text/javascript" src="vendor/jquery-effects-core.min.js")
     %script(type="text/javascript" src="vendor/jquery.editinplace.js")
     %script(type="text/javascript" src="vendor/bootstrap-modal.js")
-    %script(type="text/javascript" src="vendor/d3.min.js")
-    %script(type="text/javascript" src="vendor/d3.layout.min.js")
-    %script(type="text/javascript" src="vendor/rickshaw.min.js")
+    %script(type="text/javascript" src="vendor/d3.v3.min.js")
+    %script(type="text/javascript" src="vendor/nv.d3.min.js")
     %script(type="text/javascript" src="vendor/terminal.js")
     %script(type="text/javascript" src="redmon.js")
 
     %link(type="text/css" rel="stylesheet" href="vendor/bootstrap.min.css")
-    %link(type="text/css" rel="stylesheet" href="vendor/rickshaw.min.css")
+    %link(type="text/css" rel="stylesheet" href="vendor/nv.d3.css")
     %link(type="text/css" rel="stylesheet" href="redmon.css")
 
   %body
@@ -48,17 +47,16 @@
                     .headbar
                       %h2 Memory Usage
                     #memory-container.chart-container
-                      .y-axis
                       #memory-chart.chart
+                        %svg
               .row
                 .span15
                   .widget
                     .headbar
                       %h2 Keyspace
                     #keyspace-container.chart-container
-                      .y-axis
                       #keyspace-chart.chart
-                        #keyspace-legend-container
+                        %svg
               .row
                 .span15
                   .widget
