@@ -10,7 +10,8 @@ module Redmon
   rescue Exception => e
     unless e.is_a?(SystemExit)
       log "!!! Redmon has shit the bed, restarting... #{e.message}"
-      sleep(1); run(opts)
+      sleep(1)
+      run(opts)
     end
   end
 
@@ -25,7 +26,9 @@ module Redmon
 
   def start_app
     require 'thin'
-    Thin::Server.start(*config.web_interface, Redmon::App.new)
+    Thin::Server.start(*config.web_interface) do
+      run Redmon::App.new
+    end
     log "listening on http##{config.web_interface.join(':')}"
   rescue Exception => e
     log "Can't start Redmon::App. port in use?  Error #{e}"
@@ -45,6 +48,7 @@ module Redmon
 
   require 'redmon/config'
   require 'redmon/redis'
+
   autoload :App,    'redmon/app'
   autoload :Worker, 'redmon/worker'
 
