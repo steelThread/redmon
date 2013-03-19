@@ -88,11 +88,38 @@ Redmon.configure do |config|
 end
 ```
 
-This will mount the Redmon application to the /redmon/ path. The trailing slash
-is important.  The worker that gathers the redis info stats will not be started
-when Redmon is mounted.  In order to get a worker running inside of your Rails
-app you can try this [Railtie](https://github.com/steelThread/redmon/pull/19#issuecomment-7273659)
+This will mount the Redmon application to the /redmon path. The worker that 
+gathers the redis info stats will not be started when Redmon is mounted. In 
+order to get a worker running inside of your Rails app you can try this 
+[Railtie](https://github.com/steelThread/redmon/pull/19#issuecomment-7273659)
 based approach.
+
+## Using with another Sinatra application
+
+Create/Edit config.ru:
+
+```ruby
+require './app.rb'
+require 'redmon'
+
+map '/' do
+  run Sinatra::Application
+end
+map '/redmon' do
+  run Redmon::App
+end
+```
+
+In order to configure Redmon use this code in your app.rb file:
+
+```ruby
+Redmon.configure do |config|
+  config.redis_url = 'redis://127.0.0.1:6379'
+  config.namespace = 'redmon'
+end
+```
+
+This will mount the Redmon application to the /redmon path.
 
 ## License
 
