@@ -15,10 +15,7 @@ module Redmon
     end
 
     def absolute_url path = ''
-      uri = uri(nil, false).sub(%r{\/$}, '')
-      path.sub!(%r{^\/+}, '')
-      
-      "#{url}/#{path}"
+      "#{uri(nil, false)}#{path.sub(%r{^\/+}, '')}"
     end
 
   end
