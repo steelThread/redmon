@@ -106,6 +106,16 @@ map '/' do
   run Sinatra::Application
 end
 map '/redmon' do
+  if EM.reactor_running?
+    Redmon::Worker.new.run!
+  else
+    fork do
+    trap('INT') { EM.stop }
+    trap('TERM') { EM.stop }
+    EM.run { Redmon::Worker.new.run! }
+    end
+  end
+
   run Redmon::App
 end
 ```
