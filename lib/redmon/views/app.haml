@@ -3,20 +3,20 @@
   %head
     %title Redmon
 
-    %script(type="text/javascript" src="vendor/jquery-1.7.1.min.js")
-    %script(type="text/javascript" src="vendor/jquery-effects-core.min.js")
-    %script(type="text/javascript" src="vendor/jquery.editinplace.js")
-    %script(type="text/javascript" src="vendor/bootstrap-modal.js")
-    %script(type="text/javascript" src="vendor/d3.v3.min.js")
-    %script(type="text/javascript" src="vendor/nv.d3.min.js")
-    %script(type="text/javascript" src="vendor/terminal.js")
-    %script(type="text/javascript" src="redmon.js")
+    %script(type="text/javascript" src="#{root_path}vendor/jquery-1.7.1.min.js")
+    %script(type="text/javascript" src="#{root_path}vendor/jquery-effects-core.min.js")
+    %script(type="text/javascript" src="#{root_path}vendor/jquery.editinplace.js")
+    %script(type="text/javascript" src="#{root_path}vendor/bootstrap-modal.js")
+    %script(type="text/javascript" src="#{root_path}vendor/d3.v3.min.js")
+    %script(type="text/javascript" src="#{root_path}vendor/nv.d3.min.js")
+    %script(type="text/javascript" src="#{root_path}vendor/terminal.js")
+    %script(type="text/javascript" src="#{root_path}redmon.js")
 
-    %link(type="text/css" rel="stylesheet" href="vendor/bootstrap.min.css")
-    %link(type="text/css" rel="stylesheet" href="vendor/nv.d3.css")
-    %link(type="text/css" rel="stylesheet" href="redmon.css")
+    %link(type="text/css" rel="stylesheet" href="#{root_path}vendor/bootstrap.min.css")
+    %link(type="text/css" rel="stylesheet" href="#{root_path}vendor/nv.d3.css")
+    %link(type="text/css" rel="stylesheet" href="#{root_path}redmon.css")
 
-  %body
+  %body{ data: { :'root-path' => root_path } }
     .topbar
       .fill
         .container

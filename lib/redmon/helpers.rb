@@ -14,5 +14,9 @@ module Redmon
       -(params[:count] ? params[:count].to_i : 1)
     end
 
+    def root_path
+      "#{env['SCRIPT_NAME']}/"
+    end
+
   end
 end
