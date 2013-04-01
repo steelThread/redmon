@@ -14,5 +14,9 @@ module Redmon
       -(params[:count] ? params[:count].to_i : 1)
     end
 
+    def absolute_url(path = '')
+      "#{uri(nil, false)}#{path.sub(%r{^\/+}, '')}"
+    end
+
   end
 end

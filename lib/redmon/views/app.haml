@@ -3,18 +3,18 @@
   %head
     %title Redmon
 
-    %script(type="text/javascript" src="vendor/jquery-1.7.1.min.js")
-    %script(type="text/javascript" src="vendor/jquery-effects-core.min.js")
-    %script(type="text/javascript" src="vendor/jquery.editinplace.js")
-    %script(type="text/javascript" src="vendor/bootstrap-modal.js")
-    %script(type="text/javascript" src="vendor/d3.v3.min.js")
-    %script(type="text/javascript" src="vendor/nv.d3.min.js")
-    %script(type="text/javascript" src="vendor/terminal.js")
-    %script(type="text/javascript" src="redmon.js")
+    %script(type="text/javascript" src="#{absolute_url('vendor/jquery-1.7.1.min.js')}")
+    %script(type="text/javascript" src="#{absolute_url('vendor/jquery-effects-core.min.js')}")
+    %script(type="text/javascript" src="#{absolute_url('vendor/jquery.editinplace.js')}")
+    %script(type="text/javascript" src="#{absolute_url('vendor/bootstrap-modal.js')}")
+    %script(type="text/javascript" src="#{absolute_url('vendor/d3.v3.min.js')}")
+    %script(type="text/javascript" src="#{absolute_url('vendor/nv.d3.min.js')}")
+    %script(type="text/javascript" src="#{absolute_url('vendor/terminal.js')}")
+    %script(type="text/javascript" src="#{absolute_url('redmon.js')}")
 
-    %link(type="text/css" rel="stylesheet" href="vendor/bootstrap.min.css")
-    %link(type="text/css" rel="stylesheet" href="vendor/nv.d3.css")
-    %link(type="text/css" rel="stylesheet" href="redmon.css")
+    %link(type="text/css" rel="stylesheet" href="#{absolute_url('vendor/bootstrap.min.css')}")
+    %link(type="text/css" rel="stylesheet" href="#{absolute_url('vendor/nv.d3.css')}")
+    %link(type="text/css" rel="stylesheet" href="#{absolute_url('redmon.css')}")
 
   %body
     .topbar
@@ -167,6 +167,7 @@
   $(document).ready(function() {
     Redmon.init({
       pollInterval : #{poll_interval},
-      cliPrompt    : "#{prompt}"
+      cliPrompt    : "#{prompt}",
+      absoluteUrl  : "#{absolute_url}"
     });
   });
