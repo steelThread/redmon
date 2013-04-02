@@ -88,12 +88,11 @@ Redmon.configure do |config|
 end
 ```
 
-This will mount the Redmon application to the /redmon/ path. The trailing slash
-is important.
+This will mount the Redmon application to the /redmon path.
 
 ### Stats worker
 
-The worker that gathers the Redis info stats will not be started when Redmon is mounted like this. In order to get a EventMachine worker running inside of your Rails app you can try this [Railtie based approach](https://github.com/steelThread/redmon/pull/19#issuecomment-7273659). If you are using a system to execute background tasks in your app (like Sidekiq, Resque, or Delayed Job), you can write your own worker to update the info stats.
+The worker that gathers the Redis info stats will not be started when Redmon is mounted like this. In order to get a EventMachine worker running inside your Rails app you can try this [Railtie based approach](https://github.com/steelThread/redmon/pull/19#issuecomment-7273659). If you are using a system to execute background tasks in your app (like Sidekiq, Resque, or Delayed Job), you can write your own worker to update the info stats.
 
 A simple worker for Sidekiq looks like this:
 
@@ -110,6 +109,43 @@ end
 ```
 
 Once enqueued, the worker updates the stats and automatically enqueues itself to be performed again after the defined poll interval.
+
+## Using with another Sinatra application
+
+Create/Edit config.ru:
+
+```ruby
+require './app.rb'
+require 'redmon'
+
+map '/' do
+  run Sinatra::Application
+end
+map '/redmon' do
+  if EM.reactor_running?
+    Redmon::Worker.new.run!
+  else
+    fork do
+    trap('INT') { EM.stop }
+    trap('TERM') { EM.stop }
+    EM.run { Redmon::Worker.new.run! }
+    end
+  end
+
+  run Redmon::App
+end
+```
+
+In order to configure Redmon use this code in your app.rb file:
+
+```ruby
+Redmon.configure do |config|
+  config.redis_url = 'redis://127.0.0.1:6379'
+  config.namespace = 'redmon'
+end
+```
+
+This will mount the Redmon application to the /redmon path.
 
 ## License
 
