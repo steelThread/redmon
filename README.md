@@ -88,11 +88,27 @@ Redmon.configure do |config|
 end
 ```
 
-This will mount the Redmon application to the /redmon path. The worker that 
-gathers the redis info stats will not be started when Redmon is mounted. In 
-order to get a worker running inside of your Rails app you can try this 
-[Railtie](https://github.com/steelThread/redmon/pull/19#issuecomment-7273659)
-based approach.
+This will mount the Redmon application to the /redmon path.
+
+### Stats worker
+
+The worker that gathers the Redis info stats will not be started when Redmon is mounted like this. In order to get a EventMachine worker running inside your Rails app you can try this [Railtie based approach](https://github.com/steelThread/redmon/pull/19#issuecomment-7273659). If you are using a system to execute background tasks in your app (like Sidekiq, Resque, or Delayed Job), you can write your own worker to update the info stats.
+
+A simple worker for Sidekiq looks like this:
+
+```ruby
+class RedmonWorker
+  include Sidekiq::Worker
+
+  def perform
+    Redmon::Worker.new.record_stats
+  ensure
+    self.class.perform_in Redmon.config.poll_interval.seconds
+  end
+end
+```
+
+Once enqueued, the worker updates the stats and automatically enqueues itself to be performed again after the defined poll interval.
 
 ## Using with another Sinatra application
 
