@@ -126,9 +126,9 @@ map '/redmon' do
     Redmon::Worker.new.run!
   else
     fork do
-    trap('INT') { EM.stop }
-    trap('TERM') { EM.stop }
-    EM.run { Redmon::Worker.new.run! }
+      trap('INT') { EM.stop }
+      trap('TERM') { EM.stop }
+      EM.run { Redmon::Worker.new.run! }
     end
   end
 

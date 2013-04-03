@@ -3,18 +3,18 @@
   %head
     %title Redmon
 
-    %script(type="text/javascript" src="#{absolute_url('vendor/jquery-1.7.1.min.js')}")
-    %script(type="text/javascript" src="#{absolute_url('vendor/jquery-effects-core.min.js')}")
-    %script(type="text/javascript" src="#{absolute_url('vendor/jquery.editinplace.js')}")
-    %script(type="text/javascript" src="#{absolute_url('vendor/bootstrap-modal.js')}")
-    %script(type="text/javascript" src="#{absolute_url('vendor/d3.v3.min.js')}")
-    %script(type="text/javascript" src="#{absolute_url('vendor/nv.d3.min.js')}")
-    %script(type="text/javascript" src="#{absolute_url('vendor/terminal.js')}")
-    %script(type="text/javascript" src="#{absolute_url('redmon.js')}")
+    %script(type='text/javascript' src='#{absolute_url('vendor/jquery-1.7.1.min.js')}')
+    %script(type='text/javascript' src='#{absolute_url('vendor/jquery-effects-core.min.js')}')
+    %script(type='text/javascript' src='#{absolute_url('vendor/jquery.editinplace.js')}')
+    %script(type='text/javascript' src='#{absolute_url('vendor/bootstrap-modal.js')}')
+    %script(type='text/javascript' src='#{absolute_url('vendor/d3.v3.min.js')}')
+    %script(type='text/javascript' src='#{absolute_url('vendor/nv.d3.min.js')}')
+    %script(type='text/javascript' src='#{absolute_url('vendor/terminal.js')}')
+    %script(type='text/javascript' src='#{absolute_url('redmon.js')}')
 
-    %link(type="text/css" rel="stylesheet" href="#{absolute_url('vendor/bootstrap.min.css')}")
-    %link(type="text/css" rel="stylesheet" href="#{absolute_url('vendor/nv.d3.css')}")
-    %link(type="text/css" rel="stylesheet" href="#{absolute_url('redmon.css')}")
+    %link(type='text/css' rel='stylesheet' href='#{absolute_url('vendor/bootstrap.min.css')}')
+    %link(type='text/css' rel='stylesheet' href='#{absolute_url('vendor/nv.d3.css')}')
+    %link(type='text/css' rel='stylesheet' href='#{absolute_url('redmon.css')}')
 
   %body
     .topbar
@@ -22,17 +22,17 @@
         .container
           %a.brand Redmon
           %ul.nav
-            %li.active{:id => 'dashboard'}
+            %li#dashboard.active
               %a Dashboard
-            %li{:id => 'cli'}
+            %li#cli
               %a CLI
-            %li{:id => 'config'}
+            %li#config
               %a Configuration
           .pull-right
             %a.brand #{redis_url}
             .btns
-              %button.btn.primary{:id => 'flush-btn'} Flush DB
-              %button.btn.primary{:id => 'reset-btn'} Reset Statistics
+              %button#flush-btn.btn.primary Flush DB
+              %button#reset-btn.btn.primary Reset Statistics
 
     .container.viewport
       .dashboard
@@ -62,80 +62,80 @@
                   .widget
                     .headbar
                       %h2 Slow Log
-                    %div{:style => "height:225px;overflow-y:scroll;"}
-                      %table.condensed-table{:id => "slow-tbl"}
+                    %div{:style => 'height:225px;overflow-y:scroll;'}
+                      %table.#slow-tbl.condensed-table
                         %tbody
 
             .span6
               .widget
                 .headbar
                   %h2 Info
-                %table.condensed-table{:id => "info-tbl"}
+                %table.#info-tbl.condensed-table
                   %tbody
                     %tr
-                      %td{:style => "width: 65%"} Version
-                      %td{:id => "redis_version"}
+                      %td{:style => 'width: 65%'} Version
+                      %td#redis_version
                     %tr
                       %td Role
-                      %td{:id => "role"}
+                      %td#role
                     %tr
                       %td Uptime Days
-                      %td{:id => "uptime_in_days"}
+                      %td#uptime_in_days
                     %tr
                       %td Memory Used
-                      %td{:id => "used_memory_human"}
+                      %td#used_memory_human
                     %tr
                       %td Memory Peak
-                      %td{:id => "used_memory_peak_human"}
+                      %td#used_memory_peak_human
                     %tr
                       %td Memory Fragmentation Ratio
-                      %td{:id => "mem_fragmentation_ratio"}
+                      %td#mem_fragmentation_ratio
                     %tr
                       %td DB Size (Keys)
-                      %td{:id => "dbsize", :type => 'number'}
+                      %td#dbsize{:data => {:type => 'number'}}
                     %tr
                       %td Keyspace Hits
-                      %td{:id => "keyspace_hits", :type => 'number'}
+                      %td#keyspace_hits{:data => {:type => 'number'}}
                     %tr
                       %td Keyspace Misses
-                      %td{:id => "keyspace_misses", :type => 'number'}
+                      %td#keyspace_misses{:data => {:type => 'number'}}
                     %tr
                       %td Pub/Sub Channels
-                      %td{:id => "pubsub_channels", :type => 'number'}
+                      %td#pubsub_channels{:data => {:type => 'number'}}
                     %tr
                       %td Pub/Sub Patterns
-                      %td{:id => "pubsub_patterns", :type => 'number'}
+                      %td#pubsub_patterns{:data => {:type => 'number'}}
                     %tr
                       %td Total Connections Received
-                      %td{:id => "total_connections_received", :type => 'number'}
+                      %td#total_connections_received{:data => {:type => 'number'}}
                     %tr
                       %td Total Commands Processed
-                      %td{:id => "total_commands_processed", :type => 'number'}
+                      %td#total_commands_processed{:data => {:type => 'number'}}
                     %tr
                       %td Blocked Clients
-                      %td{:id => "blocked_clients", :type => 'number'}
+                      %td#blocked_clients{:data => {:type => 'number'}}
                     %tr
                       %td Connected Slaves
-                      %td{:id => "connected_slaves", :type => 'number'}
+                      %td#connected_slaves{:data => {:type => 'number'}}
                     %tr
                       %td Last Save
-                      %td{:id => "last_save_time", :type => 'date'}
+                      %td#last_save_time{:data => {:type => 'date'}}
                     %tr
                       %td Changes Since Last Save
-                      %td{:id => "changes_since_last_save", :type => 'number'}
+                      %td#changes_since_last_save{:data => {:type => 'number'}}
                     %tr
                       %td AOF Enabled
-                      %td{:id => "aof_enabled"}
+                      %td#aof_enabled
                     %tr
                       %td VM Enabled
-                      %td{:id => "vm_enabled"}
+                      %td#vm_enabled
 
       .cli.hidden
         .content
           .page-header
             %h1 Command Line Interface
           .row
-            .span21{:style => "height:620px"}
+            .span21{:style => 'height:620px'}
               #terminal
 
       .config.hidden
@@ -145,11 +145,11 @@
             .widget
               .headbar
                 %h2 Parameters
-              %table.condensed-table{:id => "config-table"}
+              %table#config-table.condensed-table
                 %tbody
                 - config.each do |k,v|
                   %tr
-                    %td{:style => "width: 20%"}= k
+                    %td{:style => 'width: 20%'}= k
                     %td
                       .editable{:id => "#{k}"}= v
 
@@ -160,14 +160,14 @@
       .modal-body
         %p This action will, without a doubt, delete all the keys of the redis server.
       .modal-footer
-        %button.btn.secondary{:id => 'flush-cancel-btn'} Well On Second Thought
-        %button.btn.danger{:id => 'flush-confirm-btn'} Just Do It Already!
+        %button#flush-cancel-btn.btn.secondary Well On Second Thought
+        %button#flush-confirm-btn.btn.danger Just Do It Already!
 
 :javascript
   $(document).ready(function() {
     Redmon.init({
       pollInterval : #{poll_interval},
-      cliPrompt    : "#{prompt}",
-      absoluteUrl  : "#{absolute_url}"
+      cliPrompt    : '#{prompt}',
+      absoluteUrl  : '#{absolute_url}'
     });
   });
