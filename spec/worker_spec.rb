@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "worker" do
 
-  before(:all) do
+  before(:each) do
     @worker = Redmon::Worker.new
   end
 
