@@ -24,6 +24,14 @@ describe "worker" do
     end
   end
 
+  describe "#cleanup_old_stats" do
+    it "should remove old stats entries from a redis sorted set" do
+      redis = mock_redis
+      redis.should_receive(:zremrangebyrank).with(Redmon::Redis.stats_key, 0, -(@worker.num_samples_to_keep + 1))
+      @worker.cleanup_old_stats
+    end
+  end
+
   describe "#stats" do
     it "should fetch info, dbsize and slowlog from redis" do
       pending
@@ -56,6 +64,12 @@ describe "worker" do
   describe "#interval" do
     it "should return the configured poll interval" do
       @worker.interval.should == Redmon.config.poll_interval
+    end
+  end
+
+  describe "#num_samples_to_keep" do
+    it "should return the configured number of samples to keep" do
+      @worker.num_samples_to_keep.should == Redmon.config.num_samples_to_keep
     end
   end
 
