@@ -46,6 +46,13 @@ class RedmonCLI
     :description => 'Poll interval in secs for the worker (default: 10)',
     :proc        => to_i
 
+  option :data_lifespan,
+      :short       => '-l MINUTES',
+      :long        => '--lifespan MINUTES',
+      :default     => 30,
+      :description => 'Lifespan(in minutes) for polled data (default: 30)',
+      :proc        => to_i
+
   option :app,
     :on          => :tail,
     :long        => '--no-app',

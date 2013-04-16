@@ -10,6 +10,7 @@ module Redmon
   rescue Exception => e
     unless e.is_a?(SystemExit)
       log "!!! Redmon has shit the bed, restarting... #{e.message}"
+      e.backtrace.each { |line| log line }
       sleep(1)
       run(opts)
     end

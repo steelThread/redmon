@@ -1,4 +1,7 @@
 require 'spec_helper'
+require 'redmon/helpers'
+
+include Redmon::Helpers
 
 describe "Helpers" do
 
@@ -80,6 +83,15 @@ describe "Helpers" do
   describe "#stats_key" do
     it "should return the namespaced scoped stats key" do
       "redmon:redis:127.0.0.1:6379:stats".should == Redmon::Redis.stats_key
+    end
+  end
+
+  describe "#num_samples_to_request" do
+    it "should return the number of samples to request based on poll interval and data lifespan" do
+      Redmon.config.stub(:data_lifespan).and_return(31)
+      Redmon.config.stub(:poll_interval).and_return(10)
+
+      num_samples_to_request.should == (31 * 60) / 10
     end
   end
 
