@@ -10,8 +10,8 @@ module Redmon
       Redmon.config.poll_interval * 1000
     end
 
-    def num_samples_to_keep
-      Redmon.config.num_samples_to_keep
+    def num_samples_to_request
+      (Redmon.config.data_lifespan * 60) / Redmon.config.poll_interval
     end
 
     def count

@@ -27,7 +27,7 @@ describe "worker" do
   describe "#cleanup_old_stats" do
     it "should remove old stats entries from a redis sorted set" do
       redis = mock_redis
-      redis.should_receive(:zremrangebyrank).with(Redmon::Redis.stats_key, 0, -(@worker.num_samples_to_keep + 1))
+      redis.should_receive(:zremrangebyscore).with(Redmon::Redis.stats_key, '-inf', '(' + @worker.oldest_data_to_keep.to_s)
       @worker.cleanup_old_stats
     end
   end
@@ -67,9 +67,18 @@ describe "worker" do
     end
   end
 
-  describe "#num_samples_to_keep" do
-    it "should return the configured number of samples to keep" do
-      @worker.num_samples_to_keep.should == Redmon.config.num_samples_to_keep
+  describe "#data_lifespan" do
+    it "should return the data lifspan" do
+      @worker.data_lifespan.should == Redmon.config.data_lifespan
+    end
+  end
+
+  describe "#oldest_data_to_keep" do
+    it "should return the oldest data timestamp that should be kept" do
+      Time.stub(:now).and_return(Time.at(1366044862))
+      @worker.stub(:data_lifespan).and_return(30)
+
+      @worker.oldest_data_to_keep.should == 1366043062000
     end
   end
 

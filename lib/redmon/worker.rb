@@ -16,7 +16,7 @@ module Redmon
     def cleanup_old_stats
       # When indexing from the end of a sorted set, we start at -1, so we need to add 1 here or we'll be keeping one
       # fewer samples than expected
-      redis.zremrangebyrank stats_key, 0, -(num_samples_to_keep + 1)
+      redis.zremrangebyscore stats_key,  '-inf', '(' + oldest_data_to_keep.to_s
     end
 
     def stats
@@ -46,9 +46,14 @@ module Redmon
       Redmon.config.poll_interval
     end
 
-    def num_samples_to_keep
-      Redmon.config.num_samples_to_keep
+    def data_lifespan
+      Redmon.config.data_lifespan
     end
 
+    def oldest_data_to_keep
+      lifespan_seconds = data_lifespan * 60
+      oldest_time_to_keep = Time.now - lifespan_seconds
+      oldest_time_to_keep.to_i * 1000
+    end
   end
 end
