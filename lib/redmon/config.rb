@@ -15,6 +15,7 @@ module Redmon
       :worker        => true,
       :web_interface => ['0.0.0.0', 4567],
       :poll_interval => 10,
+      :data_lifespan => 30,
       :secure        => false
     }
 

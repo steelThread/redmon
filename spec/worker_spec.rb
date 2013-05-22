@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "worker" do
 
-  before(:all) do
+  before(:each) do
     @worker = Redmon::Worker.new
   end
 
@@ -21,6 +21,14 @@ describe "worker" do
 
       @worker.stub(:stats).and_return(['ts', 'stats'])
       @worker.record_stats
+    end
+  end
+
+  describe "#cleanup_old_stats" do
+    it "should remove old stats entries from a redis sorted set" do
+      redis = mock_redis
+      redis.should_receive(:zremrangebyscore).with(Redmon::Redis.stats_key, '-inf', '(' + @worker.oldest_data_to_keep.to_s)
+      @worker.cleanup_old_stats
     end
   end
 
@@ -56,6 +64,21 @@ describe "worker" do
   describe "#interval" do
     it "should return the configured poll interval" do
       @worker.interval.should == Redmon.config.poll_interval
+    end
+  end
+
+  describe "#data_lifespan" do
+    it "should return the data lifspan" do
+      @worker.data_lifespan.should == Redmon.config.data_lifespan
+    end
+  end
+
+  describe "#oldest_data_to_keep" do
+    it "should return the oldest data timestamp that should be kept" do
+      Time.stub(:now).and_return(Time.at(1366044862))
+      @worker.stub(:data_lifespan).and_return(30)
+
+      @worker.oldest_data_to_keep.should == 1366043062000
     end
   end
 

@@ -42,6 +42,7 @@ $ redmon -h
 Usage: /Users/sean/codez/steelThread/redmon/vendor/ruby/1.9.1/bin/redmon (options)
     -a, --address ADDRESS            The thin bind address for the app (default: 0.0.0.0)
     -n, --namespace NAMESPACE        The root Redis namespace (default: redmon)
+    -l, --lifespan MINUTES           Lifespan(in minutes) for polled data (default: 30)
     -i, --interval SECS              Poll interval in secs for the worker (default: 10)
     -p, --port PORT                  The thin bind port for the app (default: 4567)
     -r, --redis URL                  The Redis url for monitor (default: redis://127.0.0.1:6379)
