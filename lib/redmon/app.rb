@@ -7,6 +7,9 @@ module Redmon
 
     helpers Redmon::Helpers
 
+    set :root, File.dirname(__FILE__)
+    set :views, Proc.new { File.join(root, "./views") }
+
     use Rack::Static, {
       :urls => [/\.css$/, /\.js$/],
       :root => "#{root}/public",
