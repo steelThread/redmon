@@ -1,5 +1,10 @@
-require 'coveralls'
-Coveralls.wear!
+if ENV["TRAVIS"]
+  require 'coveralls'
+  Coveralls.wear!
+else
+  require 'simplecov'
+  SimpleCov.start
+end
 
 require 'redmon'
 require 'rack/test'
