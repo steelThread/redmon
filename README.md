@@ -1,6 +1,7 @@
 [![Build status - Travis-ci](https://secure.travis-ci.org/steelThread/redmon.png) ](http://travis-ci.org/steelThread/redmon)
 [![Code Climate](https://codeclimate.com/github/steelThread/redmon.png)](https://codeclimate.com/github/steelThread/redmon)
 [![Gem Version](https://badge.fury.io/rb/redmon.png)](http://badge.fury.io/rb/redmon)
+[![Coverage Status](https://coveralls.io/repos/steelThread/redmon/badge.png?branch=master)](https://coveralls.io/r/steelThread/redmon?branch=master)
 # Redmon
 
 Simple sinatra based dashbord for redis.  After seeing the [fnordmetric](https://github.com/paulasmuth/fnordmetric)
