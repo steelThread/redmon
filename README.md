@@ -73,16 +73,22 @@ Add to Gemfile:
 gem 'redmon', require: false
 ```
 
-Add to config/routes.rb:
+Mount redmon in config/routes.rb:
 
 ```ruby
-require 'redmon/app'
 mount Redmon::App => '/redmon'
 ```
 
-You can configure the Redmon using an initializer config/initializers/redmon.rb:
+Create a config/initializers/redmon.rb file:
 
 ```ruby
+require 'redmon/config'
+require 'redmon/redis'
+require 'redmon/app'
+
+#
+# Optional config overrides
+#
 Redmon.configure do |config|
   config.redis_url = 'redis://127.0.0.1:6379'
   config.namespace = 'redmon'
