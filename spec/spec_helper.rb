@@ -1,9 +1,12 @@
+require 'simplecov'
+require 'coveralls'
+
 if ENV["TRAVIS"]
-  require 'coveralls'
-  Coveralls.wear!
-else
-  require 'simplecov'
-  SimpleCov.start
+  SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+end
+
+SimpleCov.start do
+  add_filter '/spec/'
 end
 
 require 'redmon'

@@ -8,3 +8,4 @@ vendor
 coverage
 !/lib/redmon/public/vendor
 Gemfile.lock
+.coveralls.yml
