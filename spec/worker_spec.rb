@@ -11,7 +11,26 @@ describe "worker" do
   end
 
   describe "#run!" do
-    it "should poll and record stats"
+    it "should poll and record stats" do
+      Redmon.config.poll_interval = 1 #reduce the interval to a second for testing
+      redis = mock_redis
+      redis.should_receive(:zadd).at_least(:twice)
+      redis.should_receive(:zremrangebyscore).at_least(:twice)
+      
+      @worker.stub(:stats).and_return(['ts', 'stats'])
+
+      emThread = Thread.new do
+        EM.run do
+          @timer = @worker.run! 
+        end
+      end
+
+      puts "sleeping for 3 cycles of Redmon.config.poll_interval: #{Redmon.config.poll_interval} seconds to ensure polling occurred"
+      sleep 3 * Redmon.config.poll_interval.seconds
+      @timer.cancel
+      emThread.kill
+      @worker.cleanup_old_stats
+    end
   end
 
   describe "#record_stats" do
@@ -34,13 +53,12 @@ describe "worker" do
 
   describe "#stats" do
     it "should fetch info, dbsize and slowlog from redis" do
-      pending
       redis = mock_redis
       redis.should_receive(:info).with(no_args()).and_return({})
       redis.should_receive(:dbsize).with(no_args()).and_return(0)
       redis.should_receive(:slowlog).with(:get).and_return({})
 
-      @worker.stub(:entires).and_return([{}])
+      @worker.stub(:entries).and_return([{}])
       @worker.stats
     end
   end

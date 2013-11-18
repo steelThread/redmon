@@ -22,25 +22,26 @@ describe "Helpers" do
 
   describe "#ns" do
     it "should return the configured namespace" do
-      Redmon.config.namespace.should == Redmon::Redis.ns
+      Redmon::Redis.ns.should == Redmon.config.namespace
     end
   end
 
   describe "#redis_url" do
     it "should return the configured redis url" do
-      Redmon.config.redis_url.should == Redmon::Redis.redis_url
+      Redmon::Redis.redis_url.should == Redmon.config.redis_url
     end
   end
 
   describe "#redis_host" do
     it "should return the configured redis host" do
-      Redmon.config.redis_url.gsub('redis://', '').should == Redmon::Redis.redis_host
+      config_uri = URI.parse(Redmon.config.redis_url)
+      Redmon::Redis.redis_host.should == "#{config_uri.host}:#{config_uri.port}"
     end
   end
 
   describe "#unquoted" do
     it "should return the configured redis host" do
-      (%w{string OK} << '(empty list or set)').should == Redmon::Redis.unquoted
+      Redmon::Redis.unquoted.should == (%w{string OK} << '(empty list or set)')
     end
   end
 
@@ -56,33 +57,32 @@ describe "Helpers" do
 
   describe "#empty_result" do
     it "should return the empty list message" do
-      '(empty list or set)'.should == Redmon::Redis.empty_result
+      Redmon::Redis.empty_result.should == '(empty list or set)'
     end
   end
 
   describe "#unknown" do
     it "should return the unknown command message" do
-      "(error) ERR unknown command 'unknown'".should == Redmon::Redis.unknown('unknown')
+      Redmon::Redis.unknown("unknown").should == "(error) ERR unknown command 'unknown'"
     end
   end
 
   describe "#wrong_number_of_arguments_for" do
     it "" do
-      "(error) ERR wrong number of arguments for 'unknown' command".should ==
-        Redmon::Redis.wrong_number_of_arguments_for('unknown')
+      Redmon::Redis.wrong_number_of_arguments_for("unknown").should ==
+        "(error) ERR wrong number of arguments for 'unknown' command"
     end
   end
 
   describe "#connection_refused" do
     it "should return the connection refused message" do
-      "Could not connect to Redis at 127.0.0.1:6379: Connection refused".should ==
-        Redmon::Redis.connection_refused
+      Redmon::Redis.connection_refused.should == "Could not connect to Redis at 127.0.0.1:6379: Connection refused"
     end
   end
 
   describe "#stats_key" do
     it "should return the namespaced scoped stats key" do
-      "redmon:redis:127.0.0.1:6379:stats".should == Redmon::Redis.stats_key
+      Redmon::Redis.stats_key.should == "redmon:redis:127.0.0.1:6379:stats"
     end
   end
 

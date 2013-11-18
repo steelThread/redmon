@@ -26,7 +26,7 @@ class RedmonCLI
     :short       => '-r URL',
     :long        => '--redis URL',
     :default     => 'redis://127.0.0.1:6379',
-    :description => "The Redis url for monitor (default: redis://127.0.0.1:6379)"
+    :description => "The Redis url for monitor (default: redis://127.0.0.1:6379, note: password is support, ie redis://:password@127.0.0.1:6379)"
 
   option :namespace,
     :short       => '-n NAMESPACE',
