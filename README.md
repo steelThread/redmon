@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/steelThread/redmon/badge.png?branch=master)](https://coveralls.io/r/steelThread/redmon?branch=master)
 # Redmon
 
-Simple sinatra based dashbord for redis.  After seeing the [fnordmetric](https://github.com/paulasmuth/fnordmetric)
+Simple sinatra based dashboard for redis.  After seeing the [fnordmetric](https://github.com/paulasmuth/fnordmetric)
 project I was inspired to write this.  Some of the ideas there have be carried over here.
 
 
