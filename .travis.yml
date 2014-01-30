@@ -7,4 +7,3 @@ rvm:
 branches:
   only:
     - master
-    - ruby-1.8
