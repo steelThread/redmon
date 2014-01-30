@@ -4,6 +4,13 @@ rvm:
   - 1.9.2
   - 1.9.3
   - 2.0.0
+  - 2.1.0
+  - ruby-head
 branches:
   only:
     - master
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+  fast_finish: true
