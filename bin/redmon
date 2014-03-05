@@ -58,14 +58,14 @@ class RedmonCLI
     :long        => '--no-app',
     :boolean     => true,
     :default     => true,
-    :description => 'Do not run the web app to present stats'
+    :description => 'Do not run the web app to present stats (default: true)'
 
   option :worker,
     :on          => :tail,
     :long        => '--no-worker',
     :boolean     => true,
     :default     => true,
-    :description => 'Do not run a worker to collect the stats'
+    :description => 'Do not run a worker to collect the stats (default: true)'
 
   def run
     parse_options
