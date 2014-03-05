@@ -32,7 +32,7 @@ module Redmon
     end
     log "listening on http##{config.web_interface.join(':')}"
   rescue Exception => e
-    log "Can't start Redmon::App. port in use?  Error #{e}"
+    log "Can't start Redmon::App. port in use? Error: #{e}"
   end
 
   def start_worker
