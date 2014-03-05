@@ -1,2 +1,2 @@
 --color
---format <%= true ? 'documentation' : 'progress' %>
+--format documentation
