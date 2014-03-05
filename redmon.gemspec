@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Redmon::VERSION
   s.authors     = ["Sean McDaniel"]
   s.email       = ["sean.mcdaniel@me.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/steelThread/redmon"
   s.summary     = %q{Redis monitor}
   s.description = %q{Redis Admin interface and monitor.}
 
