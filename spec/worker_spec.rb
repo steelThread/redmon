@@ -16,17 +16,17 @@ describe "worker" do
       redis = mock_redis
       redis.should_receive(:zadd).at_least(:twice)
       redis.should_receive(:zremrangebyscore).at_least(:twice)
-      
+
       @worker.stub(:stats).and_return(['ts', 'stats'])
 
       emThread = Thread.new do
         EM.run do
-          @timer = @worker.run! 
+          @timer = @worker.run!
         end
       end
 
       puts "sleeping for 3 cycles of Redmon.config.poll_interval: #{Redmon.config.poll_interval} seconds to ensure polling occurred"
-      sleep 3 * Redmon.config.poll_interval.seconds
+      sleep 3 * Redmon.config.poll_interval
       @timer.cancel
       emThread.kill
       @worker.cleanup_old_stats

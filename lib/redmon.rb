@@ -1,7 +1,5 @@
 require 'eventmachine'
-require 'active_support'
-require 'active_support/deprecation'
-require 'active_support/core_ext'
+require 'json'
 
 module Redmon
   extend self
