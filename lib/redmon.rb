@@ -27,10 +27,13 @@ module Redmon
 
   def start_app
     require 'thin'
+    base_path = config.base_path
     Thin::Server.start(*config.web_interface) do
-      run Redmon::App.new
+      map base_path do
+        run Redmon::App.new
+      end
     end
-    log "listening on http##{config.web_interface.join(':')}"
+    log "listening on http://#{config.web_interface.join(':')}#{base_path}"
   rescue Exception => e
     log "Can't start Redmon::App. port in use? Error: #{e}"
   end
