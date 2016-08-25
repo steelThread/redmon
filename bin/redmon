@@ -22,6 +22,12 @@ class RedmonCLI
     :description => "The thin bind port for the app (default: 4567)",
     :proc        => to_i
 
+  option :base_path,
+    :short       => '-b BASE_PATH',
+    :long        => '--base-path BASE_PATH',
+    :default     => '/',
+    :description => "The base path to expose the service at (default: /)"
+
   option :redis_url,
     :short       => '-r URL',
     :long        => '--redis URL',

@@ -11,6 +11,7 @@ module Redmon
     DEFAULTS = {
       :namespace     => 'redmon',
       :redis_url     => 'redis://127.0.0.1:6379',
+      :base_path     => '',
       :app           => true,
       :worker        => true,
       :web_interface => ['0.0.0.0', 4567],
