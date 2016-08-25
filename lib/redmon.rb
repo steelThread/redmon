@@ -29,8 +29,9 @@ module Redmon
     require 'thin'
     base_path = config.base_path
     Thin::Server.start(*config.web_interface) do
+      app = Redmon::App.new
       map base_path do
-        run Redmon::App.new
+        run app
       end
     end
     log "listening on http://#{config.web_interface.join(':')}#{base_path}"

@@ -56,7 +56,7 @@ $ redmon
 Thin web server (v1.7.0 codename Dunder Mifflin)
 Maximum connections set to 1024
 Listening on 0.0.0.0:4567, CTRL+C to stop
-[16-08-22 19:36:53] listening on http://0.0.0.0:4567/
+[16-08-22 19:36:53] listening on http://0.0.0.0:4567
 ```
 
 If you want to simulate a weak load on redis
