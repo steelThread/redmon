@@ -33,4 +33,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'rack'
   s.add_dependency 'thin'
   s.add_dependency 'mixlib-cli'
+  s.add_dependency 'json'
 end
