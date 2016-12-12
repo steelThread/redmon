@@ -158,6 +158,23 @@ end
 
 This will mount the Redmon application to the /redmon path.
 
+## Using as Docker container
+
+After cloning this repo, build redmon docker image
+```
+docker build -t my/redmon .
+```
+
+View redmon help
+```
+docker run --rm -ti -p 4567:4567 my/redmon -h
+```
+
+Launch redmon docker (if redis runs on the same docker host)
+```
+docker run --restart=always -p 4567:4567 -d --name redmon my/redmon -r redis://172.17.0.1:6379
+```
+
 ## License
 
 Copyright (c) 2012 Sean McDaniel
