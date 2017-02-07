@@ -28,7 +28,7 @@ module Redmon
   def start_app
     require 'thin'
     base_path = config.base_path
-    Thin::Server.start(*config.web_interface) do
+    Thin::Server.start(*config.web_interface, signals: false) do
       app = Redmon::App.new
       map base_path do
         run app
@@ -44,6 +44,7 @@ module Redmon
   end
 
   def shutdown(code)
+    log "Shutting down"
     EM.stop
   end
 

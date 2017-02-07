@@ -18,15 +18,15 @@ Gem::Specification.new do |s|
   s.executables   = ["redmon"]
   s.require_paths = ["lib"]
 
-  s.add_development_dependency 'bundler', '~> 1.3'
-  s.add_development_dependency 'sinatra-contrib', '~> 1.3.1'
+  s.add_development_dependency 'bundler'
+  s.add_development_dependency 'sinatra-contrib'
   s.add_development_dependency 'rack-test'
-  s.add_development_dependency 'rspec', '~> 2.8.0'
+  s.add_development_dependency 'rspec'
   s.add_development_dependency 'rake'
-  
-  s.add_dependency 'sinatra', '>= 1.2.6'
-  s.add_dependency 'hiredis', '~> 0.4.0'
-  s.add_dependency 'redis', '>= 2.2.2'
+
+  s.add_dependency 'sinatra'
+  s.add_dependency 'hiredis'
+  s.add_dependency 'redis'
   s.add_dependency 'eventmachine'
   s.add_dependency 'i18n'
   s.add_dependency 'haml'
