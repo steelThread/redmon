@@ -10,21 +10,21 @@ project I was inspired to write this.  Some of the ideas there have be carried o
 
 ----
 
-Watch your redis server live.
+Watch your redis server live (with configurable pooling seconds).
 
-![](http://dl.dropbox.com/u/27525257/dash-new.png)
+![Watch your redis server live](./screenshots/dashboard.png)
 
 ----
 
 Interact with redis using a familiar cli interface.
 
-![](http://dl.dropbox.com/u/27525257/cli.png)
+![Interact with redis using a familiar cli interface.](./screenshots/cli.png)
 
 ----
 
 Dynamically update your server configuration.
 
-![](http://dl.dropbox.com/u/27525257/configuration-new.png)
+![Dynamically update your server configuration.](./screenshots/configuration.png)
 
 ----
 
@@ -160,7 +160,7 @@ This will mount the Redmon application to the /redmon path.
 
 ## License
 
-Copyright (c) 2012 Sean McDaniel
+Copyright (c) 2012-2017 Sean McDaniel
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to use, copy and modify copies of the Software, subject to the following conditions:
 
