@@ -1,0 +1,28 @@
+#!/bin/bash
+
+redmon_path="/usr/share/redmon"
+pid="$(ps aux | grep bin/redmon | grep -v grep | awk '{print $2}')"
+
+case "$1" in
+start)
+	if [ -z "$pid" ] 
+	then 
+		echo "Starting daemon";
+		nohup $redmon/bin/redmon &> /dev/null &
+	else
+		echo "Service is running";
+	fi
+;;
+
+stop)
+	echo "Stoping daemon...";
+	kill -9 $pid
+;;
+
+*)
+	echo "Usage: /etc/init.d/redmon {start|stop}"
+        exit 1
+        
+;;
+esac
+exit 0
