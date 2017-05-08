@@ -158,6 +158,13 @@ end
 
 This will mount the Redmon application to the /redmon path.
 
+## Using as Docker container
+
+```
+docker build -t my/redmon .
+docker run --rm -ti -p 4567:4567 my/redmon -h
+```
+
 ## License
 
 Copyright (c) 2012-2017 Sean McDaniel
