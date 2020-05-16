@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{Redis monitor}
   s.description = %q{Redis Admin interface and monitor.}
 
-  s.rubyforge_project = "redmon"
+  #s.rubyforge_project = "redmon"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
